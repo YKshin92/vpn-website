@@ -1,0 +1,38 @@
+{
+  "mode": "simulation",
+  "allowMutations": false,
+  "referenceTime": "2026-10-14T00:00:00Z",
+  "aws": {
+    "accountAlias": "demo-account",
+    "region": "ap-northeast-1",
+    "instanceName": "demo-outline-tokyo-01",
+    "instanceState": "running",
+    "staticIpName": "demo-outline-current",
+    "publicIp": "192.0.2.10",
+    "candidateStaticIpName": "demo-outline-candidate",
+    "candidatePublicIp": "192.0.2.20"
+  },
+  "dns": {
+    "provider": "mock-dns",
+    "zone": "vpn.example.test",
+    "hostname": "connect.vpn.example.test",
+    "recordType": "A",
+    "ttlSeconds": 300,
+    "recordValue": "192.0.2.10",
+    "updateOwner": "manual-admin",
+    "proxyEnabled": false
+  },
+  "outline": {
+    "serverId": "demo-server-01",
+    "hostnameForAccessKeys": "connect.vpn.example.test",
+    "portForAccessKeys": 18443,
+    "managementApiUrl": "https://manage.vpn.example.test:24443/DEMO-NOT-A-SECRET",
+    "certificateMode": "mock-only",
+    "version": "unverified-demo"
+  },
+  "customerPolicy": {
+    "sharedKeys": false,
+    "oneKeyPerCustomerForDemo": true,
+    "expiryEnforcement": "manual-review-only"
+  }
+}

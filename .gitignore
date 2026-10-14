@@ -1,0 +1,12 @@
+.site-stage/
+.sites-runtime/
+site-preview.tar.gz
+*.tar.gz
+node_modules/
+.env
+.env.*
+!.env.example
+.aws/
+*.log
+*.sqlite
+*.sqlite3

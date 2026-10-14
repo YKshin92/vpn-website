@@ -1,0 +1,7 @@
+[
+  {"id":"demo-customer-001","displayName":"가상 고객 01","email":"customer01@example.test","status":"active","outlineKeyId":"demo-key-001","startsAt":"2026-10-01T00:00:00Z","expiresAt":"2026-10-31T00:00:00Z","paymentStatus":"confirmed","paymentMethod":"manual-demo","amountMinor":12000,"currency":"KRW"},
+  {"id":"demo-customer-002","displayName":"가상 고객 02","email":"customer02@example.test","status":"active","outlineKeyId":"demo-key-002","startsAt":"2026-10-10T00:00:00Z","expiresAt":"2027-01-08T00:00:00Z","paymentStatus":"confirmed","paymentMethod":"manual-demo","amountMinor":30000,"currency":"KRW"},
+  {"id":"demo-customer-003","displayName":"가상 고객 03","email":"customer03@example.test","status":"expired","outlineKeyId":"demo-key-003","startsAt":"2026-09-01T00:00:00Z","expiresAt":"2026-10-01T00:00:00Z","paymentStatus":"confirmed","paymentMethod":"manual-demo","amountMinor":12000,"currency":"KRW"},
+  {"id":"demo-customer-004","displayName":"가상 고객 04","email":"customer04@example.test","status":"payment_pending","outlineKeyId":"demo-key-004","startsAt":null,"expiresAt":null,"paymentStatus":"pending","paymentMethod":"manual-demo","amountMinor":12000,"currency":"KRW"},
+  {"id":"demo-customer-005","displayName":"가상 고객 05","email":"customer05@example.test","status":"review_required","outlineKeyId":"demo-key-005","startsAt":null,"expiresAt":null,"paymentStatus":"unknown","paymentMethod":"manual-demo","amountMinor":null,"currency":"KRW"}
+]

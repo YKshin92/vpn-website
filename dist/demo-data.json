@@ -1,0 +1,169 @@
+{
+  "infrastructure": {
+    "mode": "simulation",
+    "allowMutations": false,
+    "referenceTime": "2026-10-14T00:00:00Z",
+    "aws": {
+      "accountAlias": "demo-account",
+      "region": "ap-northeast-1",
+      "instanceName": "demo-outline-tokyo-01",
+      "instanceState": "running",
+      "staticIpName": "demo-outline-current",
+      "publicIp": "192.0.2.10",
+      "candidateStaticIpName": "demo-outline-candidate",
+      "candidatePublicIp": "192.0.2.20"
+    },
+    "dns": {
+      "provider": "mock-dns",
+      "zone": "vpn.example.test",
+      "hostname": "connect.vpn.example.test",
+      "recordType": "A",
+      "ttlSeconds": 300,
+      "recordValue": "192.0.2.10",
+      "updateOwner": "manual-admin",
+      "proxyEnabled": false
+    },
+    "outline": {
+      "serverId": "demo-server-01",
+      "hostnameForAccessKeys": "connect.vpn.example.test",
+      "portForAccessKeys": 18443,
+      "managementApiUrl": "https://manage.vpn.example.test:24443/DEMO-NOT-A-SECRET",
+      "certificateMode": "mock-only",
+      "version": "unverified-demo"
+    },
+    "customerPolicy": {
+      "sharedKeys": false,
+      "oneKeyPerCustomerForDemo": true,
+      "expiryEnforcement": "manual-review-only"
+    }
+  },
+  "customers": [
+    {
+      "id": "demo-customer-001",
+      "displayName": "가상 고객 01",
+      "email": "customer01@example.test",
+      "status": "active",
+      "outlineKeyId": "demo-key-001",
+      "startsAt": "2026-10-01T00:00:00Z",
+      "expiresAt": "2026-10-31T00:00:00Z",
+      "paymentStatus": "confirmed",
+      "paymentMethod": "manual-demo",
+      "amountMinor": 12000,
+      "currency": "KRW"
+    },
+    {
+      "id": "demo-customer-002",
+      "displayName": "가상 고객 02",
+      "email": "customer02@example.test",
+      "status": "active",
+      "outlineKeyId": "demo-key-002",
+      "startsAt": "2026-10-10T00:00:00Z",
+      "expiresAt": "2027-01-08T00:00:00Z",
+      "paymentStatus": "confirmed",
+      "paymentMethod": "manual-demo",
+      "amountMinor": 30000,
+      "currency": "KRW"
+    },
+    {
+      "id": "demo-customer-003",
+      "displayName": "가상 고객 03",
+      "email": "customer03@example.test",
+      "status": "expired",
+      "outlineKeyId": "demo-key-003",
+      "startsAt": "2026-09-01T00:00:00Z",
+      "expiresAt": "2026-10-01T00:00:00Z",
+      "paymentStatus": "confirmed",
+      "paymentMethod": "manual-demo",
+      "amountMinor": 12000,
+      "currency": "KRW"
+    },
+    {
+      "id": "demo-customer-004",
+      "displayName": "가상 고객 04",
+      "email": "customer04@example.test",
+      "status": "payment_pending",
+      "outlineKeyId": "demo-key-004",
+      "startsAt": null,
+      "expiresAt": null,
+      "paymentStatus": "pending",
+      "paymentMethod": "manual-demo",
+      "amountMinor": 12000,
+      "currency": "KRW"
+    },
+    {
+      "id": "demo-customer-005",
+      "displayName": "가상 고객 05",
+      "email": "customer05@example.test",
+      "status": "review_required",
+      "outlineKeyId": "demo-key-005",
+      "startsAt": null,
+      "expiresAt": null,
+      "paymentStatus": "unknown",
+      "paymentMethod": "manual-demo",
+      "amountMinor": null,
+      "currency": "KRW"
+    }
+  ],
+  "accessKeys": [
+    {
+      "id": "demo-key-001",
+      "serverId": "demo-server-01",
+      "name": "가상 고객 01",
+      "customerId": "demo-customer-001",
+      "port": 18443,
+      "method": "chacha20-ietf-poly1305",
+      "password": "DEMO-ONLY-NOT-FOR-USE-001",
+      "accessUrl": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpERU1PLU9OTFktTk9ULUZPUi1VU0UtMDAx@connect.vpn.example.test:18443/?outline=1",
+      "state": "demo-enabled",
+      "source": "synthetic-fixture"
+    },
+    {
+      "id": "demo-key-002",
+      "serverId": "demo-server-01",
+      "name": "가상 고객 02",
+      "customerId": "demo-customer-002",
+      "port": 18443,
+      "method": "chacha20-ietf-poly1305",
+      "password": "DEMO-ONLY-NOT-FOR-USE-002",
+      "accessUrl": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpERU1PLU9OTFktTk9ULUZPUi1VU0UtMDAy@connect.vpn.example.test:18443/?outline=1",
+      "state": "demo-enabled",
+      "source": "synthetic-fixture"
+    },
+    {
+      "id": "demo-key-003",
+      "serverId": "demo-server-01",
+      "name": "가상 고객 03",
+      "customerId": "demo-customer-003",
+      "port": 18443,
+      "method": "chacha20-ietf-poly1305",
+      "password": "DEMO-ONLY-NOT-FOR-USE-003",
+      "accessUrl": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpERU1PLU9OTFktTk9ULUZPUi1VU0UtMDAz@connect.vpn.example.test:18443/?outline=1",
+      "state": "demo-disabled",
+      "source": "synthetic-fixture"
+    },
+    {
+      "id": "demo-key-004",
+      "serverId": "demo-server-01",
+      "name": "가상 고객 04",
+      "customerId": "demo-customer-004",
+      "port": 18443,
+      "method": "chacha20-ietf-poly1305",
+      "password": "DEMO-ONLY-NOT-FOR-USE-004",
+      "accessUrl": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpERU1PLU9OTFktTk9ULUZPUi1VU0UtMDA0@connect.vpn.example.test:18443/?outline=1",
+      "state": "demo-disabled",
+      "source": "synthetic-fixture"
+    },
+    {
+      "id": "demo-key-005",
+      "serverId": "demo-server-01",
+      "name": "가상 고객 05",
+      "customerId": "demo-customer-005",
+      "port": 18443,
+      "method": "chacha20-ietf-poly1305",
+      "password": "DEMO-ONLY-NOT-FOR-USE-005",
+      "accessUrl": "ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpERU1PLU9OTFktTk9ULUZPUi1VU0UtMDA1@connect.vpn.example.test:18443/?outline=1",
+      "state": "demo-disabled",
+      "source": "synthetic-fixture"
+    }
+  ]
+}
