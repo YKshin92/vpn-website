@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '24'
       - name: Test synthetic customer and trial flows
-        run: node --test tests/demo-data.test.mjs tests/portal-model.test.mjs tests/trial.test.mjs
+        run: node --test tests/demo-data.test.mjs tests/portal-model.test.mjs tests/trial.test.mjs tests/server-model.test.mjs
       - name: Check browser scripts
         run: |
           node --check dist/portal.js
