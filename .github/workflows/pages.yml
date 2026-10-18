@@ -3,7 +3,7 @@ name: Website preview on GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ['dist/**', 'tests/**', 'fixtures/**', 'tools/demo-data.mjs', '.github/workflows/pages.yml']
+    paths: ['dist/**', 'backend/**', 'tests/**', 'fixtures/**', 'tools/demo-data.mjs', 'tools/package-public-site.mjs', 'package*.json', 'tsconfig.json', '.github/workflows/pages.yml']
   workflow_dispatch:
 
 permissions:
@@ -21,18 +21,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Test synthetic customer and trial flows
-        run: node --test tests/demo-data.test.mjs tests/portal-model.test.mjs tests/trial.test.mjs tests/server-model.test.mjs
+      - run: npm ci
+      - name: Build backend types
+        run: npm run build
+      - name: Test synthetic flows and controllers without live services
+        run: npm test
       - name: Check browser scripts
         run: |
           node --check dist/portal.js
           node --check dist/installation.js
+          node --check dist/admin.js
+          node --check dist/key-admin.js
+      - name: Package public website only
+        run: node tools/package-public-site.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload website only
         uses: actions/upload-pages-artifact@v4
         with:
-          path: dist
+          path: .pages-preview
   deploy:
     needs: validate
     runs-on: ubuntu-latest

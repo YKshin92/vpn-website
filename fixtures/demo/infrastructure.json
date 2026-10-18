@@ -4,8 +4,8 @@
   "referenceTime": "2026-10-14T00:00:00Z",
   "aws": {
     "accountAlias": "demo-account",
-    "region": "ap-northeast-1",
-    "instanceName": "demo-outline-tokyo-01",
+    "region": "ap-northeast-2",
+    "instanceName": "demo-outline-seoul-01",
     "instanceState": "running",
     "staticIpName": "demo-outline-current",
     "publicIp": "192.0.2.10",

@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {validReportRange} from '../.build/customer-billing.js';
+test('revenue dates reject impossible dates, reverse ranges and excessive history',()=>{assert.equal(validReportRange('2026-02-30','2026-03-01'),false);assert.equal(validReportRange('2026-10-02','2026-10-01'),false);assert.equal(validReportRange('2024-01-01','2026-10-01'),false);assert.equal(validReportRange('2026-01-01','2026-12-31'),true);});

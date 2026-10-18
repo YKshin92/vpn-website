@@ -4,7 +4,7 @@ const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=
 const won=n=>'₩'+Number(n).toLocaleString('ko-KR'),date=s=>s?new Date(s).toLocaleDateString('ko-KR',{timeZone:'Asia/Seoul'}):'미확인';
 let store,selected=30,customerId=null,extendTarget=null;
 const checkout=$('#checkout'),wallet=$('#wallet'),admin=document.createElement('dialog');admin.id='admin';admin.setAttribute('aria-labelledby','admin-title');document.body.append(admin);
-const adminButton=document.createElement('button');adminButton.className='outline small';adminButton.textContent='관리자 데모';$('#demo-tools').append(adminButton);adminButton.onclick=showAdmin;
+const adminButton=document.createElement('button');adminButton.className='outline small';adminButton.textContent='관리자 로그인';$('#demo-tools').append(adminButton);adminButton.onclick=()=>{if(["127.0.0.1","localhost"].includes(location.hostname))location.assign("http://127.0.0.1:3000/admin");else notify("관리자 기능은 현재 로컬 개발 환경에서만 사용할 수 있습니다");};
 const select=document.createElement('select');select.id='demo-customer';select.setAttribute('aria-label','체험할 가상 고객');$('#demo-tools').prepend(select);select.onchange=()=>customerId=select.value;
 function updateSelect(){select.innerHTML='<option value="">신규 고객 체험</option>'+store.customers.map(c=>`<option value="${esc(c.id)}">${esc(c.displayName)}</option>`).join('');select.value=customerId??'';}
 function notify(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(notify.timer);notify.timer=setTimeout(()=>t.classList.remove('show'),4000);}

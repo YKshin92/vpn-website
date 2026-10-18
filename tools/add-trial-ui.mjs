@@ -1,0 +1,14 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const htmlPath=new URL('../dist/index.html',import.meta.url);let html=await readFile(htmlPath,'utf8');
+const banner='<div class="trial-offer"><div><span class="trial-label">무료 1일 체험</span><h3>먼저 연결을 확인해 보세요</h3><p>결제정보 없이 24시간 이용할 수 있는 체험 키를 신청하세요 고객당 1회, 자동 유료 전환은 없습니다</p><small>현재는 가상 키로 신청 과정을 체험하는 데모입니다</small></div><button class="primary" id="request-trial" type="button" disabled>무료 체험 키 신청</button></div>';
+if(!html.includes('id="request-trial"'))html=html.replace('<div class="plan-grid">',banner+'<div class="plan-grid">');
+const dialog='<dialog id="trial-dialog" aria-labelledby="trial-title"><button class="close" type="button" aria-label="체험 신청 닫기">×</button><h2 id="trial-title">무료 1일 체험 신청</h2><p>신청 완료 시점부터 24시간 · 결제정보 불필요</p><form id="trial-form"><label for="trial-email">이용권 안내 이메일</label><input type="email" id="trial-email" required placeholder="demo@example.test" autocomplete="email"><p class="fine">예시 이메일을 입력하세요 이 데모는 정보를 전송·저장하지 않습니다</p><label class="consent"><input type="checkbox" required> 가상 체험 키이며 실제 연결은 제공하지 않는 데모임을 확인했습니다</label><button type="submit" class="primary full">무료 체험 신청 완료</button><p id="trial-error" role="alert" class="trial-error"></p></form></dialog>';
+if(!html.includes('id="trial-dialog"'))html=html.replace('<dialog id="checkout"',dialog+'<dialog id="checkout"');
+if(!html.includes('trial.css'))html=html.replace('</head>','<link rel="stylesheet" href="trial.css"></head>');await writeFile(htmlPath,html);
+const jsPath=new URL('../dist/portal.js',import.meta.url);let js=await readFile(jsPath,'utf8');
+js=js.replace('addCustomer,labels,plans','addCustomer,requestTrial,labels,plans');
+js=js.replaceAll('${date(c.expiresAt)}','${expiryDate(c.expiresAt)}');
+js=js.replace('${o.days}일 이용권 · 확인 완료',"${o.type==='trial'?'무료 1일 체험':o.days+'일 이용권'} · 확인 완료");
+js=js.replace("store=createStore(data);updateSelect();","store=createStore(data);updateSelect();$('#request-trial').disabled=false;");
+js+=`\nfunction expiryDate(value){return value?new Date(value).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})+' (한국시간)':'미확인';}\nconst trialDialog=$('#trial-dialog');\n$('#request-trial').onclick=()=>{if(!store)return;$('#trial-error').textContent='';$('#trial-form').reset();$('#trial-email').value=store.customers.find(c=>c.id===customerId)?.email??'';trialDialog.showModal();};\n$('#trial-form').onsubmit=e=>{e.preventDefault();try{const c=requestTrial(store,{customerId,email:$('#trial-email').value});customerId=c.id;updateSelect();trialDialog.close();showWallet();notify('무료 24시간 체험을 신청했습니다 현재는 가상 키입니다');}catch(error){$('#trial-error').textContent=error.message;}};\n`;
+await writeFile(jsPath,js);

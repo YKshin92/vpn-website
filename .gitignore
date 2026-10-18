@@ -10,3 +10,11 @@ node_modules/
 *.log
 *.sqlite
 *.sqlite3
+local-postgres-setup-result.json
+.build/
+backups/
+*.dump
+.pages-preview/
+admin-login-preview.png
+server-admin-preview.png
+github-pages-preview.png

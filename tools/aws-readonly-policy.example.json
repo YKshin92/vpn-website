@@ -1,0 +1,31 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadSeoulLightsailServer",
+      "Effect": "Allow",
+      "Action": ["lightsail:GetInstance", "lightsail:GetStaticIps"],
+      "Resource": "*",
+      "Condition": {"StringEquals": {"aws:RequestedRegion": "ap-northeast-2"}}
+    },
+    {
+      "Sid": "ReadGlobalLightsailDns",
+      "Effect": "Allow",
+      "Action": "lightsail:GetDomain",
+      "Resource": "*",
+      "Condition": {"StringEquals": {"aws:RequestedRegion": "us-east-1"}}
+    },
+    {
+      "Sid": "ReadRoute53PublicDns",
+      "Effect": "Allow",
+      "Action": ["route53:ListHostedZonesByName", "route53:GetHostedZone", "route53:ListResourceRecordSets"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "IdentifyAwsAccount",
+      "Effect": "Allow",
+      "Action": "sts:GetCallerIdentity",
+      "Resource": "*"
+    }
+  ]
+}
