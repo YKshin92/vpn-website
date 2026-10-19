@@ -3,7 +3,7 @@ name: Website preview on GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ['dist/**', 'backend/**', 'tests/**', 'fixtures/**', 'tools/demo-data.mjs', 'tools/package-public-site.mjs', 'package*.json', 'tsconfig.json', '.github/workflows/pages.yml']
+    paths: ['partner-preview/**', 'tools/check-review-artifact.mjs', 'dist/**', 'backend/**', 'tests/**', 'fixtures/**', 'tools/demo-data.mjs', 'tools/package-public-site.mjs', 'package*.json', 'tsconfig.json', '.github/workflows/pages.yml']
   workflow_dispatch:
 
 permissions:
@@ -32,14 +32,14 @@ jobs:
           node --check dist/installation.js
           node --check dist/admin.js
           node --check dist/key-admin.js
-      - name: Package public website only
-        run: node tools/package-public-site.mjs
+      - name: Check partner review screens
+        run: node tools/check-review-artifact.mjs partner-preview
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload website only
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .pages-preview
+          path: partner-preview
   deploy:
     needs: validate
     runs-on: ubuntu-latest

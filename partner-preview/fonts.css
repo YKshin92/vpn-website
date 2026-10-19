@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "Noto Sans KR";
+  src: url("./fonts/NotoSansKR-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+:root, body {
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+button, input, select, textarea { font-family: inherit; }
+.account-language-preview{display:flex;align-items:center;gap:8px;font-size:11px;max-width:100%}
+.has-language-preview>.brand{flex-shrink:0;white-space:nowrap}
+@media(max-width:760px){
+ header.has-language-preview{flex-wrap:wrap;row-gap:12px;padding-top:16px;padding-bottom:16px;height:auto}
+ .account-language-preview{flex-basis:100%;justify-content:flex-end}
+ .account-language-preview select{min-height:36px;max-width:140px}
+}

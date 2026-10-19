@@ -1,0 +1,6 @@
+import {readFile,access,readdir} from 'node:fs/promises';import path from 'node:path';
+const root=path.resolve(process.argv[2]??'partner-preview');
+const pages=['index.html','signup.html','account.html','admin.html','keys.html','customer-keys.html'];
+for(const page of pages){const html=await readFile(path.join(root,page),'utf8');if(!html.includes('review-runtime.js'))throw Error('Missing isolated review adapter');for(const [,ref] of html.matchAll(/(?:href|src)="([^"#?]+)(?:\?[^"#]*)?"/g)){if(/^(https?:|data:)/.test(ref))continue;const file=path.resolve(root,ref);if(!file.startsWith(root+path.sep))throw Error('Link escapes preview');await access(file);}}
+async function inspect(dir){for(const entry of await readdir(dir,{withFileTypes:true})){const file=path.join(dir,entry.name);if(entry.isDirectory()){await inspect(file);continue;}if(/\.(?:env|xml|dump|log|pem|key)$/.test(entry.name))throw Error('Private file in preview');if(/\.(?:js|mjs|html|json|css)$/.test(entry.name)){const text=await readFile(file,'utf8');if(/AKIA[A-Z0-9]{16}|-----BEGIN .*PRIVATE KEY-----|newyingguo@|D8jCEZ8MH5f93Wp9oMOnZA|2322EBE5F82EF547/i.test(text))throw Error('Private value in preview');}}}
+await inspect(root);console.log('PASS: six linked screens, contained dependencies, no known private values or credential files');

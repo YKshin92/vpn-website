@@ -1,0 +1,862 @@
+{
+  "purpose": "partner-ui-review",
+  "synthetic": true,
+  "routes": {
+    "/api/admin/customers": {
+      "status": 200,
+      "body": {
+        "mode": "synthetic",
+        "customers": [
+          {
+            "id": "demo-customer-001",
+            "displayName": "가상 고객 01",
+            "email": "customer01@example.test",
+            "storedStatus": "active",
+            "keyId": "demo-key-001",
+            "serverId": "demo-server-01",
+            "planCode": null,
+            "startsAt": null,
+            "expiresAt": null,
+            "note": "",
+            "revision": 0,
+            "status": "unconfigured",
+            "remainingDays": null,
+            "total": 5
+          },
+          {
+            "id": "demo-customer-002",
+            "displayName": "가상 고객 02",
+            "email": "customer02@example.test",
+            "storedStatus": "active",
+            "keyId": "demo-key-002",
+            "serverId": "demo-server-01",
+            "planCode": null,
+            "startsAt": null,
+            "expiresAt": null,
+            "note": "",
+            "revision": 0,
+            "status": "unconfigured",
+            "remainingDays": null,
+            "total": 5
+          },
+          {
+            "id": "demo-customer-003",
+            "displayName": "가상 고객 03",
+            "email": "customer03@example.test",
+            "storedStatus": "expired",
+            "keyId": "demo-key-003",
+            "serverId": "demo-server-01",
+            "planCode": null,
+            "startsAt": null,
+            "expiresAt": null,
+            "note": "",
+            "revision": 0,
+            "status": "expired",
+            "remainingDays": null,
+            "total": 5
+          },
+          {
+            "id": "demo-customer-004",
+            "displayName": "가상 고객 04",
+            "email": "customer04@example.test",
+            "storedStatus": "payment_pending",
+            "keyId": "demo-key-004",
+            "serverId": "demo-server-01",
+            "planCode": null,
+            "startsAt": null,
+            "expiresAt": null,
+            "note": "",
+            "revision": 0,
+            "status": "payment_pending",
+            "remainingDays": null,
+            "total": 5
+          },
+          {
+            "id": "demo-customer-005",
+            "displayName": "가상 고객 05",
+            "email": "customer05@example.test",
+            "storedStatus": "review_required",
+            "keyId": "demo-key-005",
+            "serverId": "demo-server-01",
+            "planCode": null,
+            "startsAt": null,
+            "expiresAt": null,
+            "note": "",
+            "revision": 0,
+            "status": "review_required",
+            "remainingDays": null,
+            "total": 5
+          }
+        ],
+        "total": 5,
+        "page": 1,
+        "pageSize": 50,
+        "summary": {
+          "total": 5,
+          "active": 0,
+          "soon": 0,
+          "pending": 1
+        }
+      }
+    },
+    "/api/admin/revenue": {
+      "status": 200,
+      "body": {
+        "mode": "synthetic-ledger",
+        "currency": "KRW",
+        "timezone": "Asia/Seoul",
+        "basis": "paid-at/refunded-at cash-flow; no processor fees",
+        "group": "month",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "rows": [
+          {
+            "period": "2026-01",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-02",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-03",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-04",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-05",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-06",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-07",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-08",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-09",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-10",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-11",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          },
+          {
+            "period": "2026-12",
+            "gross": 0,
+            "refunded": 0,
+            "net": 0,
+            "count": 0
+          }
+        ],
+        "totals": {
+          "gross": 0,
+          "refunded": 0,
+          "net": 0,
+          "count": 0
+        }
+      }
+    },
+    "/api/admin/simulation": {
+      "status": 200,
+      "body": {
+        "mode": "simulation",
+        "state": {
+          "originalIp": "192.0.2.10",
+          "candidateIp": "192.0.2.20",
+          "attachedIp": "192.0.2.10",
+          "dnsIp": "192.0.2.10",
+          "running": false,
+          "status": "ready",
+          "logs": []
+        },
+        "revision": 0,
+        "jobs": []
+      }
+    },
+    "/api/admin/infrastructure": {
+      "status": 200,
+      "body": {
+        "mode": "aws-read-only",
+        "region": "ap-northeast-2",
+        "instanceName": "demo-seoul-one",
+        "domain": "vpn0.example.test",
+        "observedAt": "2026-10-19T14:32:12.179Z",
+        "changesAllowed": false,
+        "status": "ok",
+        "accountSuffix": "3333",
+        "instance": {
+          "status": "ok",
+          "data": {
+            "name": "demo-seoul-one",
+            "state": "running",
+            "publicIp": "192.0.2.10",
+            "isStaticIp": true
+          }
+        },
+        "staticIps": {
+          "status": "ok",
+          "data": [
+            {
+              "name": "demo-ip",
+              "ip": "192.0.2.10",
+              "attachedTo": "demo-seoul-one"
+            }
+          ]
+        },
+        "lightsail": {
+          "status": "ok",
+          "data": [
+            {
+              "id": "demo",
+              "provider": "lightsail",
+              "nameServers": [
+                "ns.example.test"
+              ],
+              "records": [
+                {
+                  "type": "A",
+                  "values": [
+                    "192.0.2.10"
+                  ],
+                  "ttl": 300
+                }
+              ]
+            }
+          ]
+        },
+        "route53": {
+          "status": "ok",
+          "data": []
+        },
+        "publicDns": {
+          "status": "ok",
+          "data": {
+            "nameServers": [
+              "ns.example.test"
+            ],
+            "addresses": [
+              "192.0.2.10"
+            ]
+          }
+        },
+        "dnsManager": {
+          "status": "ns-match",
+          "provider": "lightsail",
+          "zoneId": "demo"
+        },
+        "ipMatch": true,
+        "servers": [
+          {
+            "mode": "aws-read-only",
+            "region": "ap-northeast-2",
+            "instanceName": "demo-seoul-one",
+            "domain": "vpn0.example.test",
+            "observedAt": "2026-10-19T14:32:12.179Z",
+            "changesAllowed": false,
+            "status": "ok",
+            "accountSuffix": "3333",
+            "instance": {
+              "status": "ok",
+              "data": {
+                "name": "demo-seoul-one",
+                "state": "running",
+                "publicIp": "192.0.2.10",
+                "isStaticIp": true
+              }
+            },
+            "staticIps": {
+              "status": "ok",
+              "data": [
+                {
+                  "name": "demo-ip",
+                  "ip": "192.0.2.10",
+                  "attachedTo": "demo-seoul-one"
+                }
+              ]
+            },
+            "lightsail": {
+              "status": "ok",
+              "data": [
+                {
+                  "id": "demo",
+                  "provider": "lightsail",
+                  "nameServers": [
+                    "ns.example.test"
+                  ],
+                  "records": [
+                    {
+                      "type": "A",
+                      "values": [
+                        "192.0.2.10"
+                      ],
+                      "ttl": 300
+                    }
+                  ]
+                }
+              ]
+            },
+            "route53": {
+              "status": "ok",
+              "data": []
+            },
+            "publicDns": {
+              "status": "ok",
+              "data": {
+                "nameServers": [
+                  "ns.example.test"
+                ],
+                "addresses": [
+                  "192.0.2.10"
+                ]
+              }
+            },
+            "dnsManager": {
+              "status": "ns-match",
+              "provider": "lightsail",
+              "zoneId": "demo"
+            },
+            "ipMatch": true
+          },
+          {
+            "mode": "aws-read-only",
+            "region": "ap-northeast-2",
+            "instanceName": "demo-seoul-two",
+            "domain": "vpn1.example.test",
+            "observedAt": "2026-10-19T14:32:12.179Z",
+            "changesAllowed": false,
+            "status": "ok",
+            "accountSuffix": "3333",
+            "instance": {
+              "status": "ok",
+              "data": {
+                "name": "demo-seoul-two",
+                "state": "running",
+                "publicIp": "192.0.2.10",
+                "isStaticIp": true
+              }
+            },
+            "staticIps": {
+              "status": "ok",
+              "data": [
+                {
+                  "name": "demo-ip",
+                  "ip": "192.0.2.10",
+                  "attachedTo": "demo-seoul-two"
+                }
+              ]
+            },
+            "lightsail": {
+              "status": "ok",
+              "data": [
+                {
+                  "id": "demo",
+                  "provider": "lightsail",
+                  "nameServers": [
+                    "ns.example.test"
+                  ],
+                  "records": [
+                    {
+                      "type": "A",
+                      "values": [
+                        "192.0.2.10"
+                      ],
+                      "ttl": 300
+                    }
+                  ]
+                }
+              ]
+            },
+            "route53": {
+              "status": "ok",
+              "data": []
+            },
+            "publicDns": {
+              "status": "ok",
+              "data": {
+                "nameServers": [
+                  "ns.example.test"
+                ],
+                "addresses": [
+                  "192.0.2.10"
+                ]
+              }
+            },
+            "dnsManager": {
+              "status": "ns-match",
+              "provider": "lightsail",
+              "zoneId": "demo"
+            },
+            "ipMatch": true
+          }
+        ]
+      }
+    },
+    "/api/admin/ip-jobs": {
+      "status": 200,
+      "body": {
+        "mode": "mock",
+        "liveChangesAllowed": false,
+        "jobs": []
+      }
+    },
+    "/api/admin/live-ip-jobs": {
+      "status": 200,
+      "body": {
+        "enabled": false,
+        "jobs": []
+      }
+    },
+    "/api/admin/outline/servers": {
+      "status": 200,
+      "body": {
+        "servers": [
+          {
+            "enabled": true,
+            "instance": "demo-seoul-one",
+            "domain": "vpn0.example.test",
+            "region": "ap-northeast-2",
+            "account": "111122223333",
+            "profile": "unused",
+            "dnsServers": [],
+            "servicePort": 12345
+          },
+          {
+            "enabled": true,
+            "instance": "demo-seoul-two",
+            "domain": "vpn1.example.test",
+            "region": "ap-northeast-2",
+            "account": "111122223333",
+            "profile": "unused",
+            "dnsServers": [],
+            "servicePort": 12345
+          }
+        ]
+      }
+    },
+    "/api/admin/customer-keys": {
+      "status": 200,
+      "body": {
+        "schemaReady": true,
+        "enabled": false,
+        "customers": [],
+        "limit": 500
+      }
+    },
+    "/api/admin/portal-customers": {
+      "status": 200,
+      "body": {
+        "mode": "server-demo-read-only",
+        "ready": true,
+        "customers": [],
+        "summary": {
+          "total": 0,
+          "active": 0,
+          "pending": 0,
+          "failed": 0
+        },
+        "total": 0,
+        "page": 1,
+        "pageSize": 50
+      }
+    },
+    "/api/admin/customer-auth/overview": {
+      "status": 200,
+      "body": {
+        "schemaReady": true,
+        "runtime": {
+          "authApiConnected": false,
+          "realMailConnected": false,
+          "signupEnabled": false
+        },
+        "summary": {
+          "requests": 0,
+          "consents": 0,
+          "activeSessions": 0,
+          "unconfirmedMail": 0
+        },
+        "requests": [],
+        "policies": [],
+        "limit": 20
+      }
+    },
+    "/api/admin/customer-credentials/overview": {
+      "status": 200,
+      "body": {
+        "schemaReady": false,
+        "readOnly": true,
+        "runtime": {
+          "authApiConnected": false,
+          "realMailConnected": false,
+          "signupEnabled": false
+        },
+        "summary": null,
+        "requests": [],
+        "limit": 20
+      }
+    },
+    "/api/admin/customers/demo-customer-001": {
+      "status": 200,
+      "body": {
+        "customer": {
+          "id": "demo-customer-001",
+          "displayName": "가상 고객 01",
+          "email": "customer01@example.test",
+          "storedStatus": "active",
+          "keyId": "demo-key-001",
+          "serverId": "demo-server-01",
+          "planCode": null,
+          "startsAt": null,
+          "expiresAt": null,
+          "note": "",
+          "revision": 0,
+          "status": "unconfigured",
+          "remainingDays": null
+        },
+        "payments": [],
+        "refunds": [],
+        "audit": []
+      }
+    },
+    "/api/admin/customers/demo-customer-002": {
+      "status": 200,
+      "body": {
+        "customer": {
+          "id": "demo-customer-002",
+          "displayName": "가상 고객 02",
+          "email": "customer02@example.test",
+          "storedStatus": "active",
+          "keyId": "demo-key-002",
+          "serverId": "demo-server-01",
+          "planCode": null,
+          "startsAt": null,
+          "expiresAt": null,
+          "note": "",
+          "revision": 0,
+          "status": "unconfigured",
+          "remainingDays": null
+        },
+        "payments": [],
+        "refunds": [],
+        "audit": []
+      }
+    },
+    "/api/admin/customers/demo-customer-003": {
+      "status": 200,
+      "body": {
+        "customer": {
+          "id": "demo-customer-003",
+          "displayName": "가상 고객 03",
+          "email": "customer03@example.test",
+          "storedStatus": "expired",
+          "keyId": "demo-key-003",
+          "serverId": "demo-server-01",
+          "planCode": null,
+          "startsAt": null,
+          "expiresAt": null,
+          "note": "",
+          "revision": 0,
+          "status": "expired",
+          "remainingDays": null
+        },
+        "payments": [],
+        "refunds": [],
+        "audit": []
+      }
+    },
+    "/api/admin/customers/demo-customer-004": {
+      "status": 200,
+      "body": {
+        "customer": {
+          "id": "demo-customer-004",
+          "displayName": "가상 고객 04",
+          "email": "customer04@example.test",
+          "storedStatus": "payment_pending",
+          "keyId": "demo-key-004",
+          "serverId": "demo-server-01",
+          "planCode": null,
+          "startsAt": null,
+          "expiresAt": null,
+          "note": "",
+          "revision": 0,
+          "status": "payment_pending",
+          "remainingDays": null
+        },
+        "payments": [],
+        "refunds": [],
+        "audit": []
+      }
+    },
+    "/api/admin/customers/demo-customer-005": {
+      "status": 200,
+      "body": {
+        "customer": {
+          "id": "demo-customer-005",
+          "displayName": "가상 고객 05",
+          "email": "customer05@example.test",
+          "storedStatus": "review_required",
+          "keyId": "demo-key-005",
+          "serverId": "demo-server-01",
+          "planCode": null,
+          "startsAt": null,
+          "expiresAt": null,
+          "note": "",
+          "revision": 0,
+          "status": "review_required",
+          "remainingDays": null
+        },
+        "payments": [],
+        "refunds": [],
+        "audit": []
+      }
+    },
+    "/api/admin/servers/demo-seoul-one/outline/overview": {
+      "status": 200,
+      "body": {
+        "instanceName": "demo-seoul-one",
+        "domain": "vpn0.example.test",
+        "publicIp": "192.0.2.10",
+        "checkedAt": "2026-10-19T14:32:12.482Z",
+        "server": {
+          "status": "ok",
+          "id": "synthetic-generation",
+          "name": "UI 시험 서버",
+          "version": "test",
+          "hostname": "example.test",
+          "defaultPort": 12345,
+          "defaultLimitBytes": 1073741824,
+          "defaultLimitKnown": true
+        },
+        "keys": [
+          {
+            "id": "1",
+            "name": "시험 고객 키",
+            "port": 12345,
+            "limitKnown": true,
+            "limitBytes": 1073741824,
+            "limitSource": "server",
+            "usedBytes": 1024,
+            "remainingBytes": 1073740800,
+            "createdAt": null,
+            "startedAt": null,
+            "customer": null,
+            "lastUsedAt": null,
+            "peakDevices": null,
+            "peakDevicesAt": null
+          },
+          {
+            "id": "2",
+            "name": "체험 키",
+            "port": 12346,
+            "limitKnown": true,
+            "limitBytes": 1073741824,
+            "limitSource": "server",
+            "usedBytes": 1024,
+            "remainingBytes": 1073740800,
+            "createdAt": null,
+            "startedAt": null,
+            "customer": null,
+            "lastUsedAt": null,
+            "peakDevices": null,
+            "peakDevicesAt": null
+          }
+        ],
+        "count": 2,
+        "transfer": {
+          "status": "ok",
+          "scope": "합성 시험 사용량"
+        },
+        "experimental": {
+          "status": "unsupported",
+          "scope": "합성 시험"
+        },
+        "writesEnabled": false,
+        "journalReady": true,
+        "operationBlocked": false,
+        "history": []
+      }
+    },
+    "/api/admin/servers/demo-seoul-one/outline/connection": {
+      "status": 200,
+      "body": {
+        "configured": true
+      }
+    },
+    "/api/admin/servers/demo-seoul-one/outline/keys": {
+      "status": 200,
+      "body": {
+        "instanceName": "demo-seoul-one",
+        "status": "ok",
+        "checkedAt": "2026-10-19T14:32:12.512Z",
+        "keys": [
+          {
+            "id": "1",
+            "name": "시험 고객 키",
+            "port": 12345
+          },
+          {
+            "id": "2",
+            "name": "체험 키",
+            "port": 12346
+          }
+        ],
+        "count": 2,
+        "readOnly": true,
+        "customerMapping": "not-linked"
+      }
+    },
+    "/api/admin/servers/demo-seoul-one/health": {
+      "status": 404,
+      "body": {
+        "error": "등록된 서버만 점검할 수 있습니다"
+      }
+    },
+    "/api/admin/servers/demo-seoul-two/outline/overview": {
+      "status": 200,
+      "body": {
+        "instanceName": "demo-seoul-two",
+        "domain": "vpn1.example.test",
+        "publicIp": "192.0.2.10",
+        "checkedAt": "2026-10-19T14:32:12.536Z",
+        "server": {
+          "status": "ok",
+          "id": "synthetic-generation",
+          "name": "UI 시험 서버",
+          "version": "test",
+          "hostname": "example.test",
+          "defaultPort": 12345,
+          "defaultLimitBytes": 1073741824,
+          "defaultLimitKnown": true
+        },
+        "keys": [
+          {
+            "id": "1",
+            "name": "시험 고객 키",
+            "port": 12345,
+            "limitKnown": true,
+            "limitBytes": 1073741824,
+            "limitSource": "server",
+            "usedBytes": 1024,
+            "remainingBytes": 1073740800,
+            "createdAt": null,
+            "startedAt": null,
+            "customer": null,
+            "lastUsedAt": null,
+            "peakDevices": null,
+            "peakDevicesAt": null
+          },
+          {
+            "id": "2",
+            "name": "체험 키",
+            "port": 12346,
+            "limitKnown": true,
+            "limitBytes": 1073741824,
+            "limitSource": "server",
+            "usedBytes": 1024,
+            "remainingBytes": 1073740800,
+            "createdAt": null,
+            "startedAt": null,
+            "customer": null,
+            "lastUsedAt": null,
+            "peakDevices": null,
+            "peakDevicesAt": null
+          }
+        ],
+        "count": 2,
+        "transfer": {
+          "status": "ok",
+          "scope": "합성 시험 사용량"
+        },
+        "experimental": {
+          "status": "unsupported",
+          "scope": "합성 시험"
+        },
+        "writesEnabled": false,
+        "journalReady": true,
+        "operationBlocked": false,
+        "history": []
+      }
+    },
+    "/api/admin/servers/demo-seoul-two/outline/connection": {
+      "status": 200,
+      "body": {
+        "configured": true
+      }
+    },
+    "/api/admin/servers/demo-seoul-two/outline/keys": {
+      "status": 200,
+      "body": {
+        "instanceName": "demo-seoul-two",
+        "status": "ok",
+        "checkedAt": "2026-10-19T14:32:12.552Z",
+        "keys": [
+          {
+            "id": "1",
+            "name": "시험 고객 키",
+            "port": 12345
+          },
+          {
+            "id": "2",
+            "name": "체험 키",
+            "port": 12346
+          }
+        ],
+        "count": 2,
+        "readOnly": true,
+        "customerMapping": "not-linked"
+      }
+    },
+    "/api/admin/servers/demo-seoul-two/health": {
+      "status": 404,
+      "body": {
+        "error": "등록된 서버만 점검할 수 있습니다"
+      }
+    }
+  }
+}
