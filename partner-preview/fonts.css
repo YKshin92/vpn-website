@@ -16,3 +16,6 @@ button, input, select, textarea { font-family: inherit; }
  .account-language-preview{flex-basis:100%;justify-content:flex-end}
  .account-language-preview select{min-height:36px;max-width:140px}
 }
+
+header.has-language-preview{flex-wrap:wrap;row-gap:12px}.account-language-preview{margin-left:auto;white-space:nowrap}.account-language-preview select{max-width:150px;padding:6px 10px;border:1px solid #dfe5ed;border-radius:6px;background:white;color:#14213b}html:not([lang=ko]) h1,html:not([lang=ko]) h2{overflow-wrap:break-word}html:not([lang=ko]) .hero-copy h1{font-size:clamp(32px,4vw,52px);letter-spacing:-1px}
+html:not([lang=ko]) .price span,html:not([lang=ko]) .quick-price span{margin-inline-start:.2em}
