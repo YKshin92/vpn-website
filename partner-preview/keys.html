@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>서버 키 관리 · 이음 VPN</title><link rel="stylesheet" href="./fonts.css"><link rel="stylesheet" href="./key-admin.css"><script type="module" src="./key-admin.js"></script><link rel="stylesheet" href="./review.css"><script src="./review-runtime.js"></script></head>
 <body><header><a class="brand" href="./admin.html">↔ 이음 <span>관리자</span></a><a href="./admin.html">고객·서버 관리로 돌아가기</a><span id="identity"></span></header>
-<main><div class="page-heading"><div><p class="eyebrow">SERVER / ACCESS KEYS</p><h1>서버 키 관리</h1><p class="subtitle">키별 사용량과 한도를 확인하고 이용 설정을 관리하세요 · <a href="./customer-keys.html">고객·키 연결</a></p></div><div class="heading-actions"><button id="refresh">새로고침</button><button id="create-key" class="primary" disabled>키 생성</button></div></div>
+<main><div class="page-heading"><div><p class="eyebrow">SERVER / ACCESS KEYS</p><h1>서버 키 관리</h1><p class="subtitle">키별 사용량과 한도를 확인하고 이용 설정을 관리하세요</p></div><div class="heading-actions"><button id="refresh">새로고침</button><button id="create-key" class="primary" disabled>키 생성</button></div></div>
 <p id="page-status" role="status">관리자 로그인 상태를 확인하고 있습니다</p><section id="auth-required" hidden><h2>관리자 로그인이 필요합니다</h2><p>기존 관리자 계정으로 로그인한 뒤 이 페이지로 돌아오세요</p><a class="button" href="./admin.html">관리자 로그인</a></section>
 <div id="key-workspace" hidden><section class="server-strip" aria-label="관리 대상 서버"><label>대상 서버<select id="server-select"></select></label><div id="server-meta"></div></section>
 <p id="write-status" class="mode-note" role="status"></p><section id="summary" class="summary" aria-label="키 현황"></section>

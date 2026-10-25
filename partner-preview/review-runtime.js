@@ -27,7 +27,7 @@
  document.addEventListener('DOMContentLoaded',()=>{
   const nav=document.createElement('nav');nav.className='review-nav';nav.setAttribute('aria-label','공유 미리보기 화면 이동');
   const label=document.createElement('strong');label.textContent='화면 공유용 · 예시 데이터';nav.append(label);
-  for(const [label,href] of [['홈페이지','index.html'],['회원가입','signup.html'],['로그인','account.html?view=login'],['내 이용권','account.html?view=active'],['고객관리','admin.html'],['서버관리','admin.html?tab=server'],['키 관리','keys.html?server=demo-seoul-one'],['고객·키 연결','customer-keys.html']]){const a=document.createElement('a');a.textContent=label;a.href='./'+href;nav.append(a);}document.body.prepend(nav);
+  for(const [label,href] of [['홈페이지','index.html'],['회원가입','signup.html'],['로그인','account.html?view=login'],['내 이용권','account.html?view=active'],['고객관리','admin.html'],['서버관리','admin.html?tab=server'],['키 관리','keys.html?server=demo-seoul-one']]){const a=document.createElement('a');a.textContent=label;a.href='./'+href;nav.append(a);}document.body.prepend(nav);
   if(query.get('tab')==='server'){const switchTab=()=>{const button=document.querySelector('[data-tab="server-management"]');if(button)button.click();};setTimeout(switchTab,300);}
   const note=document.createElement('p');note.className='review-safety';note.textContent='구성 검토용입니다 · 실제 개인정보·관리자 자격증명·VPN 키를 입력하지 마세요 · 결제·메일·서버 변경은 실행되지 않습니다';nav.after(note);
  });
