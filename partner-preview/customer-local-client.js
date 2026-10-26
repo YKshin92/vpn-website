@@ -1,3 +1,6 @@
+import {mountSupportNotice} from './customer-support-notice.mjs';
+import {mountPaymentHistory} from './customer-payment-history.mjs';
+import {mountSupportInbox} from './customer-support-client.mjs';
 import {mountCustomerSettings} from './customer-settings.mjs';
 import {mountUsernameCheck} from './customer-username-check.mjs';
 import {mountHomeSession} from './customer-home-session.mjs';
@@ -12,7 +15,7 @@ const $=id=>document.getElementById(id);let csrf='';
 async function api(path,body){const r=await fetch('/api/local-customer/'+path,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(15000),headers:body?{'Content-Type':'application/json','X-Local-CSRF':csrf}:{},...(body?{body:JSON.stringify(body)}:{})});const data=await r.json();if(!r.ok){const error=Error(data.reason??'요청 실패');error.reason=data.reason;error.status=r.status;throw error;}return data;}
 const text=(id,value)=>{if($(id))$(id).textContent=value;};
 const notice=value=>text($('signup-status')?'signup-status':'status',value);
-let state;try{state=await api('session');csrf=state.csrf;}catch{notice('격리 체험 서버에 연결하지 못했습니다');}
+let supportInbox,supportNotice,paymentHistory;let state;try{state=await api('session');csrf=state.csrf;}catch{notice('격리 체험 서버에 연결하지 못했습니다');}
 const realMail=state?.mode==='private-email-test';
 const chosen=new URLSearchParams(location.search).get('plan');const plan=['trial','30','90','180'].includes(chosen)?chosen:null;
 if($('account')){
@@ -64,7 +67,7 @@ if($('credential-form')){
  text('credential-status','격리 DB의 시험 계정으로 로그인합니다 실제 계정이 아닙니다');
  mountLocalRecovery({api,memory:pendingMemory});
  $('login').hidden=!!state?.authenticated;$('logout').hidden=!state?.authenticated;
- let logoutBusy=false;$('logout').onclick=async()=>{if(logoutBusy)return;logoutBusy=true;$('logout').disabled=true;try{await api('logout',{});location.reload();}catch(e){notice(authMessage(e));}finally{logoutBusy=false;$('logout').disabled=false;}};
+ let logoutBusy=false;$('logout').onclick=async()=>{if(logoutBusy)return;logoutBusy=true;$('logout').disabled=true;try{await api('logout',{});supportInbox?.dispose();supportNotice?.dispose();paymentHistory?.dispose();location.reload();}catch(e){notice(authMessage(e));}finally{logoutBusy=false;$('logout').disabled=false;}};
  if(state?.authenticated){
   await mountLocalPass({api,state,selectedPlan:plan,notice});
   await mountCustomerSettings({api,onSessionEnded:()=>location.assign('./account.html')});
@@ -72,3 +75,15 @@ if($('credential-form')){
 }
 
 addAccountLanguagePreview();
+if(state?.authenticated&&state.paymentStatusEnabled&&$('payment-history')){
+ let language='ko';try{language=localStorage.getItem('ieum-language')??'ko';}catch{}
+ paymentHistory=mountPaymentHistory({root:$('payment-history'),enabled:true,language,load:async page=>{const r=await fetch('/api/customer/payment-status?page='+page,{credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(15000)});const value=await r.json();if(!r.ok){const e=Error('payment-status-unavailable');e.status=r.status;throw e;}return value;},onAuthLoss:()=>location.reload()});
+ window.addEventListener('pagehide',()=>paymentHistory?.dispose(),{once:true});
+}
+
+if(state?.authenticated&&state.supportEnabled&&$('customer-support')){
+ $('support-section').hidden=false;
+ const supportCall=async(path,body)=>{const response=await fetch('/api/customer/support'+path,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(15000),...(body?{headers:{'Content-Type':'application/json','X-Local-CSRF':csrf},body:JSON.stringify(body)}:{})});const result=await response.json();if(!response.ok){const error=Error(result.reason??'support-unavailable');error.status=response.status;throw error;}return result;};
+ if($('support-notice'))supportNotice=mountSupportNotice({node:$('support-notice'),api:supportCall,intervalMs:30000,onAuthLoss:()=>{supportInbox?.dispose();location.reload();}});
+ supportInbox=mountSupportInbox({root:$('customer-support'),api:supportCall,readOnly:state.mode==='partner-preview',onChange:()=>supportNotice?.refresh()});if($('support-notice'))$('support-notice').onclick=()=>{void supportInbox?.refresh();};
+}

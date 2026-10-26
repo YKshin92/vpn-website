@@ -2924,3 +2924,57 @@ Object.assign(pageMessages,{
  '화면 공유용 · 예시 데이터':['Screen preview · Sample data','页面预览 · 示例数据','画面共有用・サンプルデータ'],
  '구성 검토용입니다 · 실제 개인정보·관리자 자격증명·VPN 키를 입력하지 마세요 · 결제·메일·서버 변경은 실행되지 않습니다':['For layout review · Do not enter personal information, administrator credentials or VPN keys · Payments, email and server changes are disabled','仅供页面审核 · 请勿输入真实个人信息、管理员凭据或 VPN 密钥 · 不会执行付款、发送邮件或更改服务器','構成確認用です・実際の個人情報、管理者認証情報、VPN キーを入力しないでください・決済、メール送信、サーバー変更は実行されません']
 });
+Object.assign(pageMessages,{
+ '월간 데이터':['Monthly data','每月流量','月間データ'],
+ '월간 데이터 정보가 아직 없습니다':['Monthly data is not available yet','暂无每月流量信息','月間データ情報はまだありません'],
+ '사용량을 확인하고 있습니다':['We are checking your usage','正在核实使用量','使用量を確認しています'],
+ '관리자가 데이터 기준점을 확인한 뒤 안내합니다':['An administrator will review the usage baseline','管理员核实流量基准后将提供说明','管理者がデータの基準値を確認してご案内します'],
+ '기본 제공량:':['Base allowance:','基本流量：','基本容量：'],
+ '이번 주기 추가량:':['Added this cycle:','本周期追加流量：','今周期の追加容量：'],
+ '이번 주기 종료:':['Current cycle ends:','本周期结束：','今周期の終了：'],
+ '관측 사용량:':['Observed usage:','已观测使用量：','観測した使用量：'],
+ '서버 반영 확인 전입니다':['Server application has not been verified','尚未确认服务器已应用','サーバーへの反映は未確認です'],
+ '다음 주기에는 추가 구매량이 이월되지 않습니다':['Additional purchases do not carry over to the next cycle','追加购买的流量不结转至下个周期','追加購入分は次の周期に繰り越されません']
+});
+Object.assign(pageMessages,{
+ '1:1 문의':['Contact support','一对一咨询','個別お問い合わせ'],
+ '새 문의':['New inquiry','新咨询','新しいお問い合わせ'],
+ '문의 제목':['Subject','咨询标题','件名'],
+ '문의 내용':['Message','咨询内容','お問い合わせ内容'],
+ '문의 등록':['Submit inquiry','提交咨询','問い合わせを送信'],
+ '비밀번호나 VPN 접속 키를 문의에 입력하지 마세요':['Do not include passwords or VPN access keys in your message','请勿在咨询中填写密码或 VPN 访问密钥','パスワードやVPN接続キーを入力しないでください'],
+ '내 문의':['My inquiries','我的咨询','自分のお問い合わせ'],
+ '고객 문의':['Customer inquiries','客户咨询','お客様のお問い合わせ'],
+ '답변 대기':['Awaiting reply','等待回复','返信待ち'],
+ '답변 도착':['Reply received','收到回复','返信あり'],
+ '미답변':['Needs reply','待回复','未返信'],
+ '고객 확인 대기':['Awaiting customer','等待客户确认','お客様の確認待ち'],
+ '문의 종료':['Close inquiry','结束咨询','お問い合わせを終了'],
+ '문의 다시 열기':['Reopen inquiry','重新打开咨询','お問い合わせを再開'],
+ '등록된 문의가 없습니다':['No inquiries yet','暂无咨询','お問い合わせはまだありません'],
+ '답변 내용':['Reply message','回复内容','返信内容'],
+ '메시지 보내기':['Send message','发送消息','メッセージを送信'],
+ '새 메시지':['New messages','新消息','新着メッセージ'],
+ '이전 조회 이후 메시지 더 보기':['Load more messages','加载更多消息','続きを表示'],
+ '요청을 완료하지 못했습니다 잠시 후 다시 시도해 주세요':['Unable to complete the request. Please try again shortly.','无法完成请求，请稍后重试。','処理できませんでした。しばらくしてから再度お試しください。']
+});
+Object.assign(pageMessages,{
+ '문의 제목 검색':['Search subject','搜索咨询标题','件名を検索'],
+ '문의 상태':['Inquiry status','咨询状态','お問い合わせの状態'],
+ '전체 문의':['All inquiries','全部咨询','すべてのお問い合わせ'],
+ '문의 검색':['Search inquiries','搜索咨询','お問い合わせを検索'],
+ '이전 목록':['Previous page','上一页','前のページ'],
+ '다음 목록':['Next page','下一页','次のページ'],
+ '문의 새로 확인':['Refresh inquiries','刷新咨询','お問い合わせを更新'],
+ '페이지':['Page','页码','ページ'],
+ '내가 담당':['Assign to me','由我负责','自分が担当'],
+ '담당 해제':['Release assignment','取消负责','担当を解除'],
+ '담당자 없음':['Unassigned','未分配负责人','担当者なし']
+});
+Object.assign(pageMessages,{'메시지를 너무 자주 보냈습니다 1분 후 다시 시도해 주세요':['Too many messages. Please try again in one minute.','发送过于频繁，请一分钟后重试。','送信回数が多すぎます。1分後にもう一度お試しください。']});
+Object.assign(pageMessages,{'문의 답변':['Support replies','咨询回复','お問い合わせの返信']});
+Object.assign(pageMessages,{
+ '예시 대화 · 읽기 전용입니다. 실제 문의나 답변은 전송하지 않습니다':['Example conversation · read only. No real messages are sent.','示例对话 · 只读，不发送实际咨询或回复。','サンプル会話 · 読み取り専用です。実際のメッセージは送信しません。'],
+ '중국 접속 시험':['China connection tests','中国连接测试','中国接続テスト'],
+ '결제 내역':['Payment updates','付款记录','決済履歴']
+});
