@@ -483,7 +483,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-03T11:25:00+09:00",
+ "updated": "2026-11-03T22:35:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -700,10 +700,11 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "task": "집 PC 최신 작업을 GitHub에 반영",
    "owner": "신영국",
    "start": "2026-11-03",
-   "end": "2026-11-05",
-   "status": "todo",
+   "end": "2026-11-03",
+   "status": "done",
    "critical": true,
-   "note": "집 PC에만 있는 최근 작업을 먼저 모아야 시험 서버에 올릴 수 있음. 집 PC 연결 후 진행"
+   "note": "집 PC 파일을 모두 GitHub 기록과 비교. 집에만 있는 새 작업은 없었고 GitHub가 최신",
+   "done_on": "2026-11-03"
   },
   {
    "id": "T13",
@@ -1047,18 +1048,19 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 1,
    "task": "통합 관리자 화면을 시험 서버에 올리기",
    "owner": "Claude",
-   "start": "2026-11-05",
-   "end": "2026-11-08",
-   "status": "todo",
+   "start": "2026-11-03",
+   "end": "2026-11-03",
+   "status": "done",
    "critical": true,
-   "note": "고객관리·서버관리·키관리·1:1 문의를 한 관리자 화면에서 쓰도록 연결. 지금 시험 서버에는 따로 떨어진 관리자 화면만 있음",
+   "note": "고객관리·서버관리·키관리 화면을 시험 서버에 모의 실행으로 올림. 로그인은 시험 사이트와 같음. 실제 데이터 연결은 T41~T43",
    "added_on": "2026-11-03",
    "with": [
     "신영국"
    ],
    "after": [
     "T12"
-   ]
+   ],
+   "done_on": "2026-11-03"
   },
   {
    "id": "T37",
@@ -1276,7 +1278,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "date": "2026-11-03",
    "health": "on_track",
    "title": "오픈 일정을 세우고 두 사람의 담당을 나눴습니다",
-   "body": "12월 1일 오픈에서 거꾸로 작업을 나누고, 신영국(개발)과 김선용(기획·홍보·고객관리) 역할에 맞춰 담당을 정했습니다. 시험 사이트는 로그인을 하나로 합치고, 기간 연장 화면을 넓히고, 공용 시험 계정을 만들었습니다. 이번 주는 정책 결정, 신고, PG 가입 신청이 가장 중요합니다."
+   "body": "12월 1일 오픈에서 거꾸로 작업을 나누고, 신영국(개발)과 김선용(기획·홍보·고객관리) 역할에 맞춰 담당을 정했습니다. 시험 사이트는 로그인을 하나로 합치고, 기간 연장 화면을 넓히고, 공용 시험 계정을 만들었습니다. 저녁에는 고객관리·서버관리·키관리를 한 관리자 화면으로 시험 서버에 올렸습니다. 이번 주는 정책 결정, 신고, PG 가입 신청이 가장 중요합니다."
   },
   {
    "date": "2026-11-02",
@@ -1535,8 +1537,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "area": "관리자 화면",
    "name": "고객관리",
-   "test": "none",
-   "test_note": "예시 사이트에만 있음",
+   "test": "mock",
+   "test_note": "시험 서버 통합 관리자, 모의 실행",
    "tasks": [
     "T36",
     "T41"
@@ -1545,8 +1547,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "area": "관리자 화면",
    "name": "서버관리",
-   "test": "none",
-   "test_note": "예시 사이트에만 있음",
+   "test": "mock",
+   "test_note": "예시 서버 목록으로 모의 실행",
    "tasks": [
     "T36",
     "T42"
@@ -1555,8 +1557,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "area": "관리자 화면",
    "name": "키관리",
-   "test": "part",
-   "test_note": "키 작업 화면만",
+   "test": "mock",
+   "test_note": "키 작업·키 관리 화면, 모의 실행",
    "tasks": [
     "T36",
     "T43"
