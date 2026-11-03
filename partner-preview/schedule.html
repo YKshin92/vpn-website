@@ -72,30 +72,27 @@ main.wrap { display: grid; gap: 20px; padding-block: 24px 48px; }
 .split > .stack { display: grid; gap: 20px; min-width: 0; }
 
 /* Status hero */
-.hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; padding: 28px; }
-.hero-main { display: grid; gap: 14px; align-content: start; }
-.hero-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 13px; color: var(--muted); }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 18px 28px; padding: 24px 28px; }
+.hero-main { display: grid; gap: 8px; justify-items: start; }
 .health { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 3px 11px 3px 9px; border-radius: 999px; }
 .health::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
 .health.ok { color: var(--ok); background: var(--ok-soft); }
 .health.warn { color: var(--warn); background: var(--warn-soft); }
 .health.bad { color: var(--bad); background: var(--bad-soft); }
-.hero h1 { margin: 0; font-size: clamp(30px, 4.6vw, 46px); line-height: 1.15; font-weight: 800; letter-spacing: -1.6px; text-wrap: balance; }
+.hero h1 { margin: 0; font-size: clamp(30px, 4.6vw, 44px); line-height: 1.15; font-weight: 800; letter-spacing: -1.6px; }
 .hero h1 em { font-style: normal; color: var(--blue); }
-.launch { margin: -6px 0 0; font-size: 15px; color: var(--muted); }
-.note { border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 4px; }
-.note h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.2px; }
-.note p { margin: 0; color: var(--muted); max-width: 40em; }
-.stats { margin: 0; display: grid; gap: 12px; align-content: start; }
-.stat { background: var(--bg); border-radius: 10px; padding: 14px 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 12px; }
-.stat dt { font-size: 13px; color: var(--muted); }
-.stat dd { margin: 0; grid-row: span 2; align-self: center; text-align: right; font-size: 26px; font-weight: 800; letter-spacing: -.8px; line-height: 1.1; }
-.stat dd small { font-size: 15px; font-weight: 600; letter-spacing: 0; margin-left: 1px; }
-.stat p { margin: 0; font-size: 12.5px; color: var(--faint); }
+.launch { margin: 0; font-size: 15px; color: var(--muted); }
+.kpis { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(96px, auto)); gap: 10px; }
+.kpis > div { background: var(--bg); border-radius: 10px; padding: 12px 16px; display: grid; gap: 1px; align-content: start; }
+.kpis dt { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.kpis dd { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -.6px; line-height: 1.25; white-space: nowrap; }
+.kpis dd small { font-size: 14px; font-weight: 600; letter-spacing: 0; margin-left: 1px; }
+.kpis dd.ok { color: var(--ok); } .kpis dd.bad { color: var(--bad); }
+.kpi-sub { font-size: 12px; color: var(--faint); min-height: 1.2em; }
+.latest { grid-column: 1 / -1; margin: 0; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 2px 10px; }
+.latest b { color: var(--ink); font-weight: 600; }
 .meter { height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; }
 .meter span { display: block; height: 100%; border-radius: inherit; background: var(--blue); }
-.stat .meter { grid-column: 1 / -1; margin-top: 8px; }
-.stat dd.ok { color: var(--ok); } .stat dd.bad { color: var(--bad); }
 
 /* Phase route */
 .route { list-style: none; margin: 0; padding: 0; position: relative; display: grid; grid-template-columns: repeat(var(--n, 6), minmax(0, 1fr)); }
@@ -129,7 +126,10 @@ main.wrap { display: grid; gap: 20px; padding-block: 24px 48px; }
 .rows { list-style: none; margin: 0; padding: 0; }
 .rows > li { border-top: 1px solid var(--line); }
 .rows > li:first-child { border-top: 0; }
-.row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto auto; align-items: center; gap: 10px; min-height: 44px; padding-block: 7px; list-style: none; cursor: pointer; }
+.row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto auto 8px; align-items: center; gap: 10px; min-height: 44px; padding-block: 7px; list-style: none; cursor: pointer; }
+.row::after { content: "›"; color: var(--faint); font-size: 16px; line-height: 1; transition: transform .15s; }
+details[open] > .row::after { transform: rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .row::after { transition: none; } }
 .row::-webkit-details-marker { display: none; }
 .row-task { min-width: 0; font-size: 15px; }
 .key { font-size: 11.5px; font-weight: 700; color: var(--warn); margin-left: 6px; white-space: nowrap; }
@@ -255,7 +255,53 @@ details[open] > .row .row-task { color: var(--blue-ink); font-weight: 700; }
 .risk-meta { grid-column: 2; font-size: 12.5px; color: var(--faint); }
 .risk-resp { grid-column: 2; margin: 0; font-size: 14px; color: var(--muted); }
 
-footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; }
+/* Features */
+.fsum { font-size: 13px; color: var(--muted); }
+.fsum b { color: var(--ink); font-weight: 800; }
+.farea { margin: 8px 0 2px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.farea:first-child { margin-top: 0; }
+.frow { display: grid; grid-template-columns: minmax(0, 1.1fr) 52px minmax(0, 1.5fr) 6.5em 8px; align-items: center; gap: 12px; min-height: 46px; padding-block: 7px; list-style: none; cursor: pointer; }
+.frow::-webkit-details-marker { display: none; }
+.frow::after { content: "›"; color: var(--faint); font-size: 16px; line-height: 1; transition: transform .15s; }
+details[open] > .frow::after { transform: rotate(90deg); }
+.fname { font-size: 15px; font-weight: 600; min-width: 0; }
+.fnext { font-size: 13px; color: var(--muted); min-width: 0; }
+.fnext b { color: var(--ink); font-weight: 600; }
+.fdue { font-size: 13px; color: var(--muted); text-align: right; white-space: nowrap; }
+.fdue.ok { color: var(--ok); font-weight: 700; }
+.fchip { display: inline-block; font-style: normal; text-align: center; font-size: 12px; font-weight: 700; padding: 1px 0; min-width: 44px; border-radius: 6px; }
+.fchip.ok { color: var(--ok); background: var(--ok-soft); } .fchip.mock { color: var(--blue-ink); background: var(--blue-soft); }
+.fchip.part { color: var(--warn); background: var(--warn-soft); } .fchip.none { color: var(--muted); background: var(--bg); border: 1px solid var(--line-strong); }
+.legend .fchip { margin-right: 2px; }
+.finfo { margin: -2px 0 12px; padding: 10px 12px; border-radius: var(--r-sm); background: var(--bg); display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+.finfo p { margin: 0; }
+.finfo ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.finfo li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.finfo li .t { color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .frow::after { transition: none; } }
+
+/* Test environment */
+.sites { display: grid; gap: 18px; }
+.site-group { display: grid; gap: 6px; }
+.site-group + .site-group { border-top: 1px solid var(--line); padding-top: 18px; }
+.site-group h3 { margin: 0; font-size: 15px; font-weight: 700; display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; }
+.site-group h3 span { font-size: 13px; font-weight: 400; color: var(--muted); }
+.links { list-style: none; margin: 0; padding: 0; }
+.links li { display: grid; grid-template-columns: minmax(150px, 230px) minmax(0, 1fr); gap: 2px 14px; padding-block: 9px; border-top: 1px solid var(--line); align-items: baseline; }
+.links li:first-child { border-top: 0; }
+.links .nm { font-size: 14px; font-weight: 600; }
+.links a { font-size: 14px; word-break: break-all; }
+.links .nt { grid-column: 2; font-size: 12.5px; color: var(--faint); }
+.accs { list-style: none; margin: 0; padding: 0; }
+.accs li { display: grid; grid-template-columns: minmax(110px, 160px) minmax(0, 1fr); gap: 2px 14px; padding-block: 10px; border-top: 1px solid var(--line); font-size: 14px; }
+.accs li:first-child { border-top: 0; padding-top: 0; }
+.accs .nm { font-weight: 600; }
+.accs .v { color: var(--muted); }
+.accs code { font-family: inherit; font-weight: 700; color: var(--ink); background: var(--bg); border-radius: 5px; padding: 0 6px; }
+.steps { margin: 0; padding-left: 1.4em; display: grid; gap: 9px; font-size: 14.5px; }
+.steps li::marker { color: var(--blue); font-weight: 700; }
+
+footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); font-size: 13px; display: flex; justify-content: flex-end; }
 
 @media (max-width: 860px) {
   .split { grid-template-columns: minmax(0, 1fr); }
@@ -270,13 +316,20 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   main.wrap { gap: 14px; padding-block: 14px 36px; }
   .view { gap: 14px; }
   .block { padding: 18px 16px; border-radius: 12px; }
-  .hero { grid-template-columns: 1fr; gap: 20px; padding: 20px 16px; }
+  .hero { grid-template-columns: 1fr; gap: 16px; padding: 20px 16px; }
+  .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .kpis > div { padding: 10px 12px; }
+  .kpis dd { font-size: 21px; }
   .person { grid-template-columns: minmax(0, 1fr); padding: 20px 16px; gap: 14px; }
   .copy { justify-self: start; grid-row: 3; }
   .who { gap: 12px; }
   .av.lg { width: 44px; height: 44px; font-size: 19px; }
   .pstats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .entry { grid-template-columns: 1fr; }
+  .links li, .accs li { grid-template-columns: minmax(0, 1fr); }
+  .frow { grid-template-columns: minmax(0, 1fr) 48px 5.6em 8px; gap: 8px; }
+  .fnext { display: none; }
+  .links .nt { grid-column: 1; }
   .row { gap: 8px; }
   .row-task { font-size: 14.5px; }
   .route { grid-template-columns: 1fr; }
@@ -300,46 +353,30 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   <div class="view" id="view-all">
     <section class="block hero" aria-labelledby="hero-title">
       <div class="hero-main">
-        <div class="hero-top"><span class="health" id="health">—</span><span id="note-date" class="num"></span></div>
+        <span class="health" id="health">—</span>
         <h1 id="hero-title">정식 오픈까지 <em class="num" id="dday">—</em></h1>
         <p class="launch num" id="launch">—</p>
-        <div class="note">
-          <h3 id="note-title">—</h3>
-          <p id="note-body"></p>
-        </div>
       </div>
-      <dl class="stats">
-        <div class="stat">
-          <dt>전체 진척</dt>
-          <dd class="num"><span id="pct">—</span><small>%</small></dd>
-          <p class="num" id="pct-sub">—</p>
-          <div class="meter" aria-hidden="true"><span id="pct-bar" style="width:0"></span></div>
-        </div>
-        <div class="stat">
-          <dt>계획 대비</dt>
-          <dd id="pace">—</dd>
-          <p class="num" id="pace-sub">—</p>
-        </div>
-        <div class="stat">
-          <dt>이번 주 할 일</dt>
-          <dd class="num"><span id="week-n">—</span><small>개</small></dd>
-          <p class="num" id="week-sub">—</p>
-        </div>
+      <dl class="kpis">
+        <div><dt>진척</dt><dd class="num"><span id="pct">—</span><small>%</small></dd><span class="kpi-sub num" id="pct-sub"></span></div>
+        <div><dt>계획 대비</dt><dd id="pace">—</dd><span class="kpi-sub num" id="pace-sub"></span></div>
+        <div><dt>이번 주 할 일</dt><dd class="num"><span id="week-n">—</span><small>개</small></dd></div>
       </dl>
-    </section>
-
-    <section class="block" aria-labelledby="route-h">
-      <div class="block-head">
-        <div><h2 id="route-h">단계</h2><p class="sub">정식 오픈 날짜에서 거꾸로 나눈 여섯 단계입니다. 파란 선이 지금까지 온 곳입니다.</p></div>
-      </div>
-      <ol class="route" id="route"></ol>
+      <p class="latest"><span class="num" id="latest-date"></span><b id="latest-title"></b></p>
     </section>
 
     <div class="team" id="team"></div>
 
+    <section class="block" aria-labelledby="route-h">
+      <div class="block-head">
+        <div><h2 id="route-h">단계</h2></div>
+      </div>
+      <ol class="route" id="route"></ol>
+    </section>
+
     <section class="block" aria-labelledby="schedule-h">
       <div class="block-head">
-        <div><h2 id="schedule-h">전체 일정</h2><p class="sub">작업에 마우스를 올리거나 누르면 기간과 메모가 보입니다.</p></div>
+        <div><h2 id="schedule-h">전체 일정</h2></div>
         <div class="chips" id="chips" role="group" aria-label="담당으로 보기"></div>
       </div>
       <div class="tl" id="timeline"></div>
@@ -358,26 +395,26 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     <div class="grid-2">
       <section class="block" aria-labelledby="trend-h">
         <div class="block-head">
-          <div><h2 id="trend-h">계획 대비 진척</h2><p class="sub">날짜마다 끝냈어야 할 작업 비율과 실제로 끝낸 비율입니다.</p></div>
+          <div><h2 id="trend-h">계획 대비 진척</h2></div>
         </div>
         <div class="chart" id="chart"></div>
         <div class="legend"><span><i class="sw sw-line"></i>실제</span><span><i class="sw sw-dash"></i>계획</span></div>
       </section>
       <section class="block" aria-labelledby="unknowns-h">
-        <div class="block-head"><div><h2 id="unknowns-h">아직 확인되지 않은 것</h2><p class="sub">오픈 날짜를 흔들 수 있는 일과 미리 정해 둔 대응입니다.</p></div></div>
+        <div class="block-head"><div><h2 id="unknowns-h">아직 확인되지 않은 것</h2></div></div>
         <div id="risk-list"></div>
       </section>
     </div>
 
     <section class="block" aria-labelledby="updates-h">
-      <div class="block-head"><div><h2 id="updates-h">업데이트 기록</h2><p class="sub">작업한 날마다 무엇이 끝났고 무엇이 바뀌었는지 남깁니다.</p></div></div>
+      <div class="block-head"><div><h2 id="updates-h">업데이트 기록</h2></div></div>
       <ol class="feed" id="feed"></ol>
     </section>
   </div>
 
   <div class="view" id="view-person" hidden>
     <section class="block person">
-      <div class="who"><span class="av lg" id="p-av"></span><div><h1 id="p-name">—</h1><p id="p-role"></p></div></div>
+      <div class="who"><span class="av lg" id="p-av"></span><h1 id="p-name">—</h1></div>
       <button type="button" class="copy" id="p-copy">내 화면 주소 복사</button>
       <dl class="pstats">
         <div><dt>이번 주 할 일</dt><dd class="num"><span id="p-week">—</span><small>개</small></dd></div>
@@ -389,23 +426,23 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
     <div class="split">
       <section class="block" aria-labelledby="p-own-h">
-        <div class="block-head"><div><h2 id="p-own-h">내가 할 일</h2><p class="sub">마감이 가까운 순서입니다. 줄을 누르면 메모와 먼저 끝나야 할 일이 보입니다.</p></div></div>
+        <div class="block-head"><div><h2 id="p-own-h">내가 할 일</h2></div></div>
         <div id="p-own"></div>
       </section>
       <div class="stack">
         <section class="block" aria-labelledby="p-review-h">
-          <div class="block-head"><div><h2 id="p-review-h">확인·검토할 일</h2><p class="sub">다른 담당(Claude, PG사 등)이 하고 내가 확인하거나 돕는 일입니다.</p></div></div>
+          <div class="block-head"><div><h2 id="p-review-h">확인·검토할 일</h2></div></div>
           <div id="p-review"></div>
         </section>
         <section class="block" aria-labelledby="p-next-h">
-          <div class="block-head"><div><h2 id="p-next-h">내 작업을 기다리는 일</h2><p class="sub">내 작업이 끝나야 시작할 수 있는 다른 사람의 일입니다.</p></div></div>
+          <div class="block-head"><div><h2 id="p-next-h">내 작업을 기다리는 일</h2></div></div>
           <ul class="rows" id="p-blocking"></ul>
         </section>
       </div>
     </div>
 
     <section class="block" aria-labelledby="p-tl-h">
-      <div class="block-head"><div><h2 id="p-tl-h">내 일정</h2><p class="sub">내가 하거나 확인할 작업만 모았습니다.</p></div></div>
+      <div class="block-head"><div><h2 id="p-tl-h">내 일정</h2></div></div>
       <div class="tl" id="p-timeline"></div>
     </section>
 
@@ -414,16 +451,39 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
       <ul class="rows" id="p-donelist"></ul>
     </section>
   </div>
+  <div class="view" id="view-features" hidden>
+    <section class="block" aria-labelledby="f-h">
+      <div class="block-head"><div><h2 id="f-h">기능별 진행</h2></div><div class="fsum num" id="f-sum"></div></div>
+      <div id="f-list"></div>
+      <div class="legend"><span><i class="fchip ok">동작</i>시험 서버에서 실제처럼 동작</span><span><i class="fchip mock">모의</i>결제·사용량 등은 흉내만</span><span><i class="fchip part">일부</i>일부 화면만</span><span><i class="fchip none">없음</i>시험 서버에 아직 없음</span></div>
+    </section>
+  </div>
+  <div class="view" id="view-test" hidden>
+    <section class="block" aria-labelledby="t-sites-h">
+      <div class="block-head"><div><h2 id="t-sites-h">주소</h2></div></div>
+      <div class="sites" id="t-sites"></div>
+    </section>
+    <div class="grid-2">
+      <section class="block" aria-labelledby="t-acc-h">
+        <div class="block-head"><div><h2 id="t-acc-h">시험 계정</h2></div></div>
+        <ul class="accs" id="t-accounts"></ul>
+        <p class="legend-note" id="t-naming"></p>
+      </section>
+      <section class="block" aria-labelledby="t-steps-h">
+        <div class="block-head"><div><h2 id="t-steps-h">테스트 방법</h2></div></div>
+        <ol class="steps" id="t-steps"></ol>
+      </section>
+    </div>
+  </div>
 </main>
 
 <footer class="wrap">
-  <span>작업이 끝나거나 일정이 바뀔 때마다 이 페이지를 갱신합니다.</span>
   <a href="./index.html">예시 화면 둘러보기</a>
 </footer>
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-03T10:25:00+09:00",
+ "updated": "2026-11-03T11:25:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -637,13 +697,13 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "id": "T12",
    "phase": 1,
-   "task": "집 PC 작업 폴더 정리",
+   "task": "집 PC 최신 작업을 GitHub에 반영",
    "owner": "신영국",
    "start": "2026-11-03",
    "end": "2026-11-05",
    "status": "todo",
-   "critical": false,
-   "note": "집 PC 연결 후 진행"
+   "critical": true,
+   "note": "집 PC에만 있는 최근 작업을 먼저 모아야 시험 서버에 올릴 수 있음. 집 PC 연결 후 진행"
   },
   {
    "id": "T13",
@@ -940,13 +1000,13 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "id": "T33",
    "phase": 3,
-   "task": "고객 문의 창구·자주 묻는 질문 정리",
+   "task": "1:1 문의 응대 기준·자주 묻는 질문 정리",
    "owner": "김선용",
    "start": "2026-11-16",
    "end": "2026-11-22",
    "status": "todo",
    "critical": false,
-   "note": "문의 받을 곳과 답변 기준. 홈페이지 반영은 신영국",
+   "note": "문의에 누가 언제까지 답할지, 자주 묻는 질문과 답. 홈페이지 반영은 신영국",
    "added_on": "2026-11-03",
    "with": [
     "신영국"
@@ -980,6 +1040,192 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "added_on": "2026-11-03",
    "after": [
     "T32"
+   ]
+  },
+  {
+   "id": "T36",
+   "phase": 1,
+   "task": "통합 관리자 화면을 시험 서버에 올리기",
+   "owner": "Claude",
+   "start": "2026-11-05",
+   "end": "2026-11-08",
+   "status": "todo",
+   "critical": true,
+   "note": "고객관리·서버관리·키관리·1:1 문의를 한 관리자 화면에서 쓰도록 연결. 지금 시험 서버에는 따로 떨어진 관리자 화면만 있음",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T12"
+   ]
+  },
+  {
+   "id": "T37",
+   "phase": 2,
+   "task": "고객관리·1:1 문의 화면 써 보고 의견 정리",
+   "owner": "김선용",
+   "start": "2026-11-09",
+   "end": "2026-11-11",
+   "status": "todo",
+   "critical": false,
+   "note": "고객 응대하는 입장에서 불편한 점 정리. 반영은 신영국·Claude",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T36"
+   ]
+  },
+  {
+   "id": "T38",
+   "phase": 1,
+   "task": "시험 사이트 로그인 하나로 합치기",
+   "owner": "Claude",
+   "start": "2026-11-03",
+   "end": "2026-11-03",
+   "status": "done",
+   "critical": false,
+   "note": "같은 로그인 화면에서 manager는 관리자 화면, guest는 내 이용권으로",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "done_on": "2026-11-03"
+  },
+  {
+   "id": "T39",
+   "phase": 1,
+   "task": "내 이용권 기간 연장 화면 넓히기",
+   "owner": "Claude",
+   "start": "2026-11-03",
+   "end": "2026-11-03",
+   "status": "done",
+   "critical": false,
+   "note": "현재 이용권을 위쪽 한 줄로, 기간 연장 칸을 전체 폭으로",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "done_on": "2026-11-03"
+  },
+  {
+   "id": "T40",
+   "phase": 1,
+   "task": "공용 시험 계정 만들기",
+   "owner": "Claude",
+   "start": "2026-11-03",
+   "end": "2026-11-03",
+   "status": "done",
+   "critical": false,
+   "note": "관리자 manager, 고객 guest1~guest10",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "done_on": "2026-11-03"
+  },
+  {
+   "id": "T41",
+   "phase": 3,
+   "task": "고객관리 화면 실제 고객 데이터 연결",
+   "owner": "Claude",
+   "start": "2026-11-16",
+   "end": "2026-11-18",
+   "status": "todo",
+   "critical": false,
+   "note": "고객 목록·상세·결제와 키 이력",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T36"
+   ]
+  },
+  {
+   "id": "T42",
+   "phase": 3,
+   "task": "서버관리 화면 실제 VPN 서버 연결",
+   "owner": "Claude",
+   "start": "2026-11-17",
+   "end": "2026-11-19",
+   "status": "todo",
+   "critical": false,
+   "note": "서버 상태·접속 키 수·IP 정보",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T36"
+   ]
+  },
+  {
+   "id": "T43",
+   "phase": 2,
+   "task": "키관리 화면 실제 키 연결",
+   "owner": "Claude",
+   "start": "2026-11-12",
+   "end": "2026-11-14",
+   "status": "todo",
+   "critical": false,
+   "note": "고객별 키 상태·한도·멈춤과 재개",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T36"
+   ]
+  },
+  {
+   "id": "T44",
+   "phase": 3,
+   "task": "1:1 문의 답변 알림 연결",
+   "owner": "Claude",
+   "start": "2026-11-19",
+   "end": "2026-11-21",
+   "status": "todo",
+   "critical": false,
+   "note": "답변이 달리면 고객에게 메일로 알림",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T19"
+   ]
+  },
+  {
+   "id": "T45",
+   "phase": 4,
+   "task": "앱 설치 안내·다운로드 경로 점검",
+   "owner": "김선용",
+   "start": "2026-11-23",
+   "end": "2026-11-25",
+   "status": "todo",
+   "critical": false,
+   "note": "휴대폰·PC별 Outline 앱 설치와 연결 순서, 중국에서 받는 방법",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ]
+  },
+  {
+   "id": "T46",
+   "phase": 4,
+   "task": "다국어 화면 문구 점검",
+   "owner": "김선용",
+   "start": "2026-11-24",
+   "end": "2026-11-27",
+   "status": "todo",
+   "critical": false,
+   "note": "언어별 화면 문구가 자연스러운지 확인",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
    ]
   }
  ],
@@ -1030,7 +1276,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "date": "2026-11-03",
    "health": "on_track",
    "title": "오픈 일정을 세우고 두 사람의 담당을 나눴습니다",
-   "body": "12월 1일 오픈에서 거꾸로 작업을 나누고, 신영국(개발)과 김선용(기획·홍보·고객관리) 역할에 맞춰 담당을 정했습니다. 이번 주는 정책 결정, 신고, PG 가입 신청이 가장 중요합니다. 가장 큰 변수는 PG 심사 기간이 아직 확인되지 않은 것입니다."
+   "body": "12월 1일 오픈에서 거꾸로 작업을 나누고, 신영국(개발)과 김선용(기획·홍보·고객관리) 역할에 맞춰 담당을 정했습니다. 시험 사이트는 로그인을 하나로 합치고, 기간 연장 화면을 넓히고, 공용 시험 계정을 만들었습니다. 이번 주는 정책 결정, 신고, PG 가입 신청이 가장 중요합니다."
   },
   {
    "date": "2026-11-02",
@@ -1055,6 +1301,301 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "id": "kim",
    "name": "김선용",
    "role": "기획·홍보·고객관리"
+  }
+ ],
+ "testing": {
+  "sites": [
+   {
+    "group": "시험 사이트",
+    "note": "실제 결제·메일 없음. 결제하면 실제 VPN 키 발급(최대 10개)",
+    "links": [
+     {
+      "name": "홈페이지",
+      "url": "https://test.ieumvpn.link/"
+     },
+     {
+      "name": "로그인 (고객·관리자 같은 화면)",
+      "url": "https://test.ieumvpn.link/account",
+      "note": "고객은 내 이용권, 관리자는 관리자 화면으로 이동"
+     },
+     {
+      "name": "관리자 · 키 작업",
+      "url": "https://test.ieumvpn.link/admin/key-jobs",
+      "note": "관리자 화면 위쪽 메뉴에서 다른 관리자 화면으로 이동"
+     },
+     {
+      "name": "관리자 · 결제 처리 확인",
+      "url": "https://test.ieumvpn.link/admin/payment-status"
+     },
+     {
+      "name": "관리자 · 1:1 문의",
+      "url": "https://test.ieumvpn.link/admin/support"
+     },
+     {
+      "name": "관리자 · 장애 보상",
+      "url": "https://test.ieumvpn.link/admin/outages"
+     },
+     {
+      "name": "관리자 · 중국 접속 점검",
+      "url": "https://test.ieumvpn.link/admin/connectivity"
+     }
+    ]
+   },
+   {
+    "group": "예시 사이트",
+    "note": "누구나 볼 수 있는 화면 미리보기. 예시 데이터만 사용",
+    "links": [
+     {
+      "name": "홈페이지",
+      "url": "https://ykshin92.github.io/vpn-website/"
+     },
+     {
+      "name": "통합 관리자 (고객·서버·키 관리)",
+      "url": "https://ykshin92.github.io/vpn-website/admin.html",
+      "note": "시험 서버에는 아직 없음"
+     }
+    ]
+   }
+  ],
+  "accounts": [
+   {
+    "name": "사이트 잠금",
+    "id": "ieum",
+    "secret": "1234",
+    "note": "시험 사이트를 열 때 처음 한 번"
+   },
+   {
+    "name": "관리자",
+    "id": "manager",
+    "secret": "12341234"
+   },
+   {
+    "name": "고객",
+    "id": "guest1 ~ guest10",
+    "secret": "12341234",
+    "note": "메일은 guest1@ieum.test 형식"
+   }
+  ],
+  "steps": [
+   "시험 사이트를 열고 잠금 화면에 ieum / 1234 입력",
+   "로그인 화면에서 계정 아이디·비밀번호 입력. manager는 관리자 화면, guest는 내 이용권으로 이동",
+   "이용권 결제는 모의 결제라 실제 돈이 나가지 않습니다",
+   "결제하면 실제 VPN 키가 나옵니다. Outline 앱에 붙여 넣어 접속을 확인합니다",
+   "실제 키는 최대 10개라 꼭 필요할 때만 결제합니다"
+  ],
+  "naming": "고객 계정은 신영국 guest1~guest5, 김선용 guest6~guest10으로 나눠 쓰면 서로 겹치지 않습니다. 새 계정이 필요하면 끝이 .test인 메일로 가입합니다"
+ },
+ "features": [
+  {
+   "area": "고객 화면",
+   "name": "회원가입·이메일 인증",
+   "test": "ok",
+   "test_note": "확인 코드가 화면에 나옴",
+   "tasks": [
+    "T11",
+    "T19"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "로그인",
+   "test": "ok",
+   "test_note": "고객·관리자 같은 화면",
+   "tasks": [
+    "T38"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "비밀번호 찾기·회원정보",
+   "test": "ok",
+   "test_note": "확인 코드가 화면에 나옴",
+   "tasks": [
+    "T19"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "무료 체험",
+   "test": "mock",
+   "test_note": "예시 키로 동작",
+   "tasks": [
+    "T05",
+    "T15"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "이용권 결제",
+   "test": "mock",
+   "test_note": "모의 결제 · 실제 VPN 키 발급",
+   "tasks": [
+    "T10",
+    "T13",
+    "T20",
+    "T26"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "기간 연장",
+   "test": "ok",
+   "test_note": "같은 키로 연장",
+   "tasks": [
+    "T39",
+    "T14"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "데이터 추가",
+   "test": "mock",
+   "test_note": "가짜 사용량 기준",
+   "tasks": [
+    "T05",
+    "T16"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "접속 키 확인·복사",
+   "test": "ok",
+   "test_note": "실제 키",
+   "tasks": [
+    "T25"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "앱 설치·연결 안내",
+   "test": "ok",
+   "test_note": "",
+   "tasks": [
+    "T45"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "결제·이용 내역",
+   "test": "mock",
+   "test_note": "모의 결제 기준",
+   "tasks": [
+    "T20"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "1:1 문의",
+   "test": "ok",
+   "test_note": "",
+   "tasks": [
+    "T33",
+    "T44"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "약관·개인정보 동의",
+   "test": "part",
+   "test_note": "시험용 문구",
+   "tasks": [
+    "T06",
+    "T07",
+    "T18"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "환불",
+   "test": "none",
+   "test_note": "",
+   "tasks": [
+    "T17"
+   ]
+  },
+  {
+   "area": "고객 화면",
+   "name": "다국어",
+   "test": "ok",
+   "test_note": "",
+   "tasks": [
+    "T46"
+   ]
+  },
+  {
+   "area": "관리자 화면",
+   "name": "관리자 로그인·보안",
+   "test": "ok",
+   "test_note": "고객과 같은 로그인 화면",
+   "tasks": [
+    "T38",
+    "T23"
+   ]
+  },
+  {
+   "area": "관리자 화면",
+   "name": "고객관리",
+   "test": "none",
+   "test_note": "예시 사이트에만 있음",
+   "tasks": [
+    "T36",
+    "T41"
+   ]
+  },
+  {
+   "area": "관리자 화면",
+   "name": "서버관리",
+   "test": "none",
+   "test_note": "예시 사이트에만 있음",
+   "tasks": [
+    "T36",
+    "T42"
+   ]
+  },
+  {
+   "area": "관리자 화면",
+   "name": "키관리",
+   "test": "part",
+   "test_note": "키 작업 화면만",
+   "tasks": [
+    "T36",
+    "T43"
+   ]
+  },
+  {
+   "area": "관리자 화면",
+   "name": "결제 처리 확인",
+   "test": "mock",
+   "test_note": "모의 결제 기준",
+   "tasks": [
+    "T20"
+   ]
+  },
+  {
+   "area": "관리자 화면",
+   "name": "1:1 문의 관리",
+   "test": "ok",
+   "test_note": "",
+   "tasks": [
+    "T44"
+   ]
+  },
+  {
+   "area": "관리자 화면",
+   "name": "장애 보상",
+   "test": "ok",
+   "test_note": "",
+   "tasks": [
+    "T25"
+   ]
+  },
+  {
+   "area": "관리자 화면",
+   "name": "중국 접속 점검",
+   "test": "mock",
+   "test_note": "모의 기록",
+   "tasks": [],
+   "later": "정식 오픈 후 진행"
   }
  ]
 }
@@ -1171,7 +1712,9 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     tabs.append(a);
   };
   tabFor('all', '전체', null, null, null);
-  for (const p of people) tabFor(p.id, p.name, p.role, tasks.filter((t) => isOwn(t, p.name) && thisWeek(t)).length, p.name);
+  for (const p of people) tabFor(p.id, p.name, null, tasks.filter((t) => isOwn(t, p.name) && thisWeek(t)).length, p.name);
+  if (S.features) tabFor('features', '기능', null, null, null);
+  if (S.testing) tabFor('info', '참고 정보', null, null, null);
 
   // Header and status
   const stampTime = S.updated.length > 10 ? ` ${S.updated.slice(11, 16)}` : '';
@@ -1180,14 +1723,13 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   const [hLabel, hCls] = HEALTH[latest?.health] || HEALTH.on_track;
   $('health').textContent = hLabel;
   $('health').classList.add(hCls);
-  $('note-date').textContent = latest ? `${longDate(latest.date)} 기록` : '';
-  $('note-title').textContent = latest ? latest.title : '';
-  $('note-body').textContent = latest ? latest.body : '';
+  $('latest-date').textContent = latest ? `${mdw(latest.date)} ` : '';
+  $('latest-title').textContent = latest ? latest.title : '';
   const todayKst = iso(Date.now() + 9 * 3600e3);
   const dd = Math.round((P(S.launch) - P(todayKst)) / DAY);
   $('dday').textContent = dd > 0 ? `${dd}일` : dd === 0 ? '오늘' : `${-dd}일 지남`;
   if (dd <= 0) $('hero-title').firstChild.textContent = dd === 0 ? '정식 오픈 ' : '정식 오픈 후 ';
-  $('launch').textContent = `${P(S.launch).getUTCFullYear()}년 ${longDate(S.launch)} 정식 오픈 목표`;
+  $('launch').textContent = longDate(S.launch);
 
   const total = tasks.length;
   const done = tasks.filter((t) => t.status === 'done').length;
@@ -1195,18 +1737,16 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   const late = tasks.filter((t) => t.status !== 'done' && t.end < asOf).length;
   const pct = total ? Math.round((done / total) * 100) : 0;
   $('pct').textContent = pct;
-  $('pct-bar').style.width = `${pct}%`;
-  $('pct-sub').textContent = `${total}개 중 ${done}개 완료`;
+  $('pct-sub').textContent = `${done}/${total}`;
   const pace = $('pace');
   if (done > planned) { pace.textContent = `${done - planned}개 앞섬`; pace.classList.add('ok'); }
   else if (done < planned) { pace.textContent = `${planned - done}개 늦음`; pace.classList.add('bad'); }
   else pace.textContent = '계획대로';
-  $('pace-sub').textContent = `계획 ${planned}개 · 실제 ${done}개${late ? ` · 기한 넘김 ${late}개` : ''}`;
+  $('pace-sub').textContent = late ? `기한 넘김 ${late}` : '';
   const weekAll = tasks.filter(thisWeek);
   const byOwner = {};
   for (const t of weekAll) byOwner[t.owner] = (byOwner[t.owner] || 0) + 1;
   $('week-n').textContent = weekAll.length;
-  $('week-sub').textContent = Object.entries(byOwner).map(([o, n]) => `${o} ${n}`).join(' · ') || '남은 일 없음';
 
   // Phase route
   const route = $('route');
@@ -1265,7 +1805,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     card.setAttribute('aria-label', `${p.name} 이번 주`);
     const head = h('div', 'card-head');
     const txt = h('div');
-    txt.append(h('h2', '', p.name), h('span', 'role', p.role));
+    txt.append(h('h2', '', p.name));
     const open = h('a', 'open', '내 화면 보기 →');
     open.href = `#${p.id}`;
     head.append(avatar(p.name, 'md'), txt, open);
@@ -1492,7 +2032,6 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     av.textContent = p.name.slice(0, 1);
     av.style.setProperty('--c', colorOf(p.name));
     $('p-name').textContent = p.name;
-    $('p-role').textContent = p.role;
     $('p-week').textContent = open.filter(thisWeek).length;
     const lateN = open.filter((t) => bucket(t) === 'late').length;
     $('p-late').textContent = lateN;
@@ -1522,21 +2061,108 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     setTimeout(() => { b.textContent = '내 화면 주소 복사'; }, 2500);
   });
 
+  // Test environment
+  if (S.testing) {
+    const sites = $('t-sites');
+    for (const g of S.testing.sites || []) {
+      const box = h('div', 'site-group');
+      const hd = h('h3', '', g.group);
+      if (g.note) hd.append(h('span', '', g.note));
+      const ul = h('ul', 'links');
+      for (const l of g.links) {
+        const li = h('li');
+        const a = h('a', '', l.url.replace(/^https:\/\//, ''));
+        a.href = l.url; a.target = '_blank'; a.rel = 'noopener';
+        li.append(h('span', 'nm', l.name), a);
+        if (l.note) li.append(h('span', 'nt', l.note));
+        ul.append(li);
+      }
+      box.append(hd, ul);
+      sites.append(box);
+    }
+    const accs = $('t-accounts');
+    for (const a of S.testing.accounts || []) {
+      const li = h('li');
+      const v = h('span', 'v');
+      v.append('아이디 ', h('code', '', a.id), ` · 비밀번호 ${a.secret}`);
+      if (a.note) v.append(` · ${a.note}`);
+      li.append(h('span', 'nm', a.name), v);
+      accs.append(li);
+    }
+    $('t-naming').textContent = S.testing.naming || '';
+    for (const step of S.testing.steps || []) $('t-steps').append(h('li', '', step));
+  }
+
+  // Features
+  if (S.features) {
+    const FS = {ok: '동작', mock: '모의', part: '일부', none: '없음'};
+    const fl = $('f-list');
+    let working = 0, ready = 0;
+    for (const area of [...new Set(S.features.map((f) => f.area))]) {
+      fl.append(h('h3', 'farea', area));
+      const ul = h('ul', 'rows');
+      for (const f of S.features.filter((x) => x.area === area)) {
+        const linked = f.tasks.map((id) => byTask[id]).filter(Boolean);
+        const open = linked.filter((t) => t.status !== 'done').sort(byDue);
+        if (f.test === 'ok' || f.test === 'mock') working++;
+        const isReady = !f.later && linked.length && !open.length;
+        if (isReady) ready++;
+        const li = h('li');
+        const d = h('details');
+        const sm = h('summary', 'frow');
+        const chip = h('i', `fchip ${f.test}`, FS[f.test] || f.test);
+        const next = h('span', 'fnext');
+        if (open.length) { next.append('다음 '); next.append(h('b', '', open[0].task)); next.append(` · ${open[0].owner}`); }
+        else next.textContent = f.later || (linked.length ? '남은 일 없음' : '');
+        const last = open.length ? open.reduce((a, t) => (t.end > a ? t.end : a), '') : '';
+        const due = h('span', `fdue num${isReady ? ' ok' : ''}`, isReady ? '준비 완료' : last ? `~${mdw(last)}` : f.later ? '오픈 후' : '—');
+        sm.append(h('span', 'fname', f.name), chip, next, due);
+        const info = h('div', 'finfo');
+        info.append(h('p', '', `시험 서버: ${FS[f.test] || f.test}${f.test_note ? ` · ${f.test_note}` : ''}`));
+        if (f.later) info.append(h('p', '', f.later));
+        if (linked.length) {
+          const tl2 = h('ul');
+          for (const t of linked.sort(byDue)) {
+            const st = stateOf(t);
+            const row = h('li');
+            const dot = h('span', `dot ${st}`);
+            dot.setAttribute('role', 'img');
+            dot.setAttribute('aria-label', STATE[st]);
+            row.append(dot, h('span', 't', `${t.task} · ${t.owner}`), h('span', 'num', st === 'done' ? `${md(t.done_on || t.end)} 완료` : `~${mdw(t.end)}`));
+            tl2.append(row);
+          }
+          info.append(tl2);
+        }
+        d.append(sm, info);
+        li.append(d);
+        ul.append(li);
+      }
+      fl.append(ul);
+    }
+    const sum = $('f-sum');
+    sum.append('시험 서버 동작 ', h('b', 'num', `${working}/${S.features.length}`), ' · 오픈 준비 완료 ', h('b', 'num', `${ready}/${S.features.length}`));
+  }
+
   // Views
   const drawAll = () => {
     if (!$('view-all').hidden) { layoutRoute(); drawChart(); declutter(tl); }
-    else declutter(pTl);
+    else if (!$('view-person').hidden) declutter(pTl);
   };
   let initial = true;
   const show = () => {
     const id = location.hash.slice(1);
     const p = byId[id] || null;
-    $('view-all').hidden = !!p;
+    const test = !p && id === 'info' && !!S.testing;
+    const feat = !p && id === 'features' && !!S.features;
+    $('view-all').hidden = !!p || test || feat;
     $('view-person').hidden = !p;
+    $('view-test').hidden = !test;
+    $('view-features').hidden = !feat;
+    const view = p ? p.id : test ? 'info' : feat ? 'features' : 'all';
     for (const a of tabs.children) {
-      if (a.dataset.view === (p ? p.id : 'all')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      if (a.dataset.view === view) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     }
-    document.title = p ? `${p.name} · 이음 VPN 오픈 준비 현황` : '이음 VPN 오픈 준비 현황';
+    document.title = p ? `${p.name} · 이음 VPN 오픈 준비 현황` : test ? '참고 정보 · 이음 VPN 오픈 준비 현황' : feat ? '기능 · 이음 VPN 오픈 준비 현황' : '이음 VPN 오픈 준비 현황';
     if (p) renderPerson(p);
     requestAnimationFrame(drawAll);
     if (!initial) window.scrollTo(0, 0);
