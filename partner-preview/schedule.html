@@ -9,12 +9,12 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232d49eb'/%3E%3Cpath d='M10 9v14m12-14v14M10 16h12' stroke='white' stroke-width='4'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fonts.css">
 <style>
-/* Layout: one column of status first (health, D-day, latest note), then the phase route, then detail. Brand tokens follow the 이음 VPN site. */
+/* Layout: sticky tabs (전체 / one per person). 전체 = status, phases, team cards, timeline. Person = my tasks by due week, things to review, what waits on me, my timeline. Brand tokens follow the 이음 VPN site. */
 :root {
   --bg: #f5f7fb; --panel: #ffffff; --ink: #14213b; --muted: #5f6b80; --faint: #8a94a6;
   --line: #e1e6ee; --line-strong: #c6cfdd; --blue: #2d49eb; --blue-soft: #edf1ff; --blue-ink: #2440c8;
   --ok: #0c7a52; --ok-soft: #e4f4ec; --warn: #9c5a00; --warn-soft: #fff1da; --bad: #c0302b; --bad-soft: #fdeceb;
-  --own-user: #2d49eb; --own-claude: #b9572f; --own-team: #0b8072; --own-pg: #7a8599;
+  --own-shin: #2d49eb; --own-kim: #0b8072; --own-both: #7b4bd1; --own-claude: #b9572f; --own-pg: #7a8599;
   --focus: #f39b34; --shadow: 0 1px 2px rgba(20, 33, 59, .04), 0 10px 30px rgba(20, 33, 59, .06);
   --font: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --r: 14px; --r-sm: 8px;
@@ -24,14 +24,14 @@
     --bg: #0c1322; --panel: #131c30; --ink: #e8edf7; --muted: #a0abbf; --faint: #7f8aa0;
     --line: #243050; --line-strong: #364470; --blue: #8297ff; --blue-soft: #1b2549; --blue-ink: #b0bdff;
     --ok: #52d1a0; --ok-soft: #10302a; --warn: #f3b860; --warn-soft: #33270e; --bad: #ff7f77; --bad-soft: #3a1a1d;
-    --own-user: #8297ff; --own-claude: #f09d77; --own-team: #4ccab9; --own-pg: #9ca7bc; --shadow: none; color-scheme: dark;
+    --own-shin: #8297ff; --own-kim: #4ccab9; --own-both: #b49dff; --own-claude: #f09d77; --own-pg: #9ca7bc; --shadow: none; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0c1322; --panel: #131c30; --ink: #e8edf7; --muted: #a0abbf; --faint: #7f8aa0;
   --line: #243050; --line-strong: #364470; --blue: #8297ff; --blue-soft: #1b2549; --blue-ink: #b0bdff;
   --ok: #52d1a0; --ok-soft: #10302a; --warn: #f3b860; --warn-soft: #33270e; --bad: #ff7f77; --bad-soft: #3a1a1d;
-  --own-user: #8297ff; --own-claude: #f09d77; --own-team: #4ccab9; --own-pg: #9ca7bc; --shadow: none; color-scheme: dark;
+  --own-shin: #8297ff; --own-kim: #4ccab9; --own-both: #b49dff; --own-claude: #f09d77; --own-pg: #9ca7bc; --shadow: none; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -41,21 +41,35 @@ a { color: var(--blue-ink); }
 .wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
 .num { font-variant-numeric: tabular-nums; }
 
-/* Top bar */
-.top { background: var(--panel); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
-.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; padding-block: 14px; }
+/* Header + tabs */
+.top { position: sticky; top: 0; z-index: 30; background: var(--panel); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
+.top-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 20px; padding-block: 12px 4px; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -.3px; color: var(--ink); text-decoration: none; }
 .mark { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; background: #2d49eb; color: #fff; font-size: 20px; line-height: 1; }
 .brand small { font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: 0; padding-left: 10px; border-left: 1px solid var(--line); }
 .stamp { font-size: 13px; color: var(--muted); }
+.tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin-bottom: -1px; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px 11px; font-size: 14.5px; font-weight: 600; color: var(--muted); text-decoration: none; border-bottom: 2.5px solid transparent; white-space: nowrap; }
+.tab:hover { color: var(--ink); }
+.tab[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
+.tab .role { font-weight: 400; font-size: 12.5px; color: var(--faint); }
+.badge { display: inline-block; min-width: 22px; padding: 0 7px; border-radius: 99px; background: var(--bg); color: var(--muted); font-size: 12px; font-weight: 700; text-align: center; line-height: 20px; }
+.tab[aria-current="page"] .badge { background: var(--ink); color: var(--panel); }
+.av { --c: var(--own-pg); display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; font-weight: 800; color: var(--c); background: color-mix(in srgb, var(--c) 16%, var(--panel)); }
+.av.lg { width: 52px; height: 52px; font-size: 22px; }
+.av.md { width: 36px; height: 36px; font-size: 16px; }
 
 main.wrap { display: grid; gap: 20px; padding-block: 24px 48px; }
+.view { display: grid; gap: 20px; }
 .block { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 22px 24px; box-shadow: var(--shadow); min-width: 0; display: grid; gap: 16px; align-content: start; }
 .block-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
 .block-head > div:first-child { display: grid; gap: 2px; min-width: 0; flex: 1 1 260px; }
 .block h2 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -.4px; text-wrap: balance; }
 .sub { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.55; }
 .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 20px; }
+.split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.split > .stack { display: grid; gap: 20px; min-width: 0; }
 
 /* Status hero */
 .hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; padding: 28px; }
@@ -78,8 +92,9 @@ main.wrap { display: grid; gap: 20px; padding-block: 24px 48px; }
 .stat dd { margin: 0; grid-row: span 2; align-self: center; text-align: right; font-size: 26px; font-weight: 800; letter-spacing: -.8px; line-height: 1.1; }
 .stat dd small { font-size: 15px; font-weight: 600; letter-spacing: 0; margin-left: 1px; }
 .stat p { margin: 0; font-size: 12.5px; color: var(--faint); }
-.stat .meter { grid-column: 1 / -1; height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; margin-top: 8px; }
-.stat .meter span { display: block; height: 100%; border-radius: inherit; background: var(--blue); }
+.meter { height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.meter span { display: block; height: 100%; border-radius: inherit; background: var(--blue); }
+.stat .meter { grid-column: 1 / -1; margin-top: 8px; }
 .stat dd.ok { color: var(--ok); } .stat dd.bad { color: var(--bad); }
 
 /* Phase route */
@@ -96,36 +111,64 @@ main.wrap { display: grid; gap: 20px; padding-block: 24px 48px; }
 .stop-date { font-size: 12.5px; color: var(--muted); }
 .stop-count { font-size: 12.5px; color: var(--faint); }
 .here { display: inline-block; font-size: 11px; font-weight: 700; color: #fff; background: var(--blue); border-radius: 99px; padding: 0 7px; margin-left: 4px; vertical-align: 2px; }
-@media (max-width: 720px) {
-  .route { grid-template-columns: 1fr; }
-  .stop { grid-template-columns: 26px minmax(0, 1fr) auto; justify-items: start; text-align: left; align-items: center; column-gap: 12px; padding: 7px 0; }
-  .node { grid-row: span 2; margin: 0; }
-  .stop-count { grid-row: span 2; align-self: center; }
-  .stop-date { grid-column: 2; }
-}
 
-/* Rows (this week) */
-.owners { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--muted); }
-.owners b { color: var(--ink); font-weight: 700; }
+/* Team cards */
+.team { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 20px; }
+.card-head { display: flex; align-items: center; gap: 12px; }
+.card-head > div { display: grid; min-width: 0; flex: 1; }
+.card-head h2 { font-size: 18px; }
+.card-head .role { font-size: 13px; color: var(--muted); }
+.open { flex: none; font-size: 13.5px; font-weight: 700; color: var(--blue-ink); text-decoration: none; padding: 7px 12px; border-radius: 99px; border: 1px solid var(--line-strong); white-space: nowrap; }
+.open:hover { border-color: var(--blue); }
+.card-stats { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 13px; color: var(--muted); }
+.card-stats b { color: var(--ink); font-weight: 800; font-size: 15px; margin-left: 3px; }
+.card-stats b.bad { color: var(--bad); }
+.card-foot { margin: 0; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+
+/* Task rows */
 .rows { list-style: none; margin: 0; padding: 0; }
 .rows > li { border-top: 1px solid var(--line); }
 .rows > li:first-child { border-top: 0; }
-.row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto auto; align-items: center; gap: 10px; min-height: 46px; padding-block: 8px; list-style: none; }
-summary.row { cursor: pointer; }
-summary.row::-webkit-details-marker { display: none; }
+.row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto auto; align-items: center; gap: 10px; min-height: 44px; padding-block: 7px; list-style: none; cursor: pointer; }
+.row::-webkit-details-marker { display: none; }
 .row-task { min-width: 0; font-size: 15px; }
-.mine .row-task { font-weight: 700; }
 .key { font-size: 11.5px; font-weight: 700; color: var(--warn); margin-left: 6px; white-space: nowrap; }
+.tag { font-size: 11.5px; font-weight: 700; color: var(--own-both); margin-left: 6px; white-space: nowrap; }
+.wait { font-size: 11.5px; font-weight: 700; color: var(--muted); background: var(--bg); border: 1px solid var(--line-strong); border-radius: 5px; padding: 0 5px; margin-left: 6px; white-space: nowrap; }
 .due { font-size: 13px; color: var(--muted); white-space: nowrap; text-align: right; min-width: 4.6em; }
-.due.late { color: var(--bad); font-weight: 600; }
+.due.late { color: var(--bad); font-weight: 700; }
+.due.done { color: var(--ok); }
 .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line-strong); }
 .dot.done { background: var(--ok); } .dot.doing, .dot.now { background: var(--blue); } .dot.late { background: var(--bad); }
 .dot.todo { background: transparent; border: 2px solid var(--line-strong); }
-.row-note { margin: -2px 0 10px 20px; font-size: 13px; color: var(--muted); }
-details[open] summary .row-task { color: var(--blue-ink); }
-.owner { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap; }
-.owner::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--c, var(--faint)); }
-.empty { padding: 14px 0; color: var(--muted); font-size: 14px; }
+details[open] > .row .row-task { color: var(--blue-ink); font-weight: 700; }
+.info { margin: -2px 0 12px 20px; padding: 10px 12px; border-radius: var(--r-sm); background: var(--bg); display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+.info p { margin: 0; }
+.info b { color: var(--ink); font-weight: 600; margin-right: 6px; }
+.owner { --c: var(--own-pg); display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.owner::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: var(--c); }
+.grp { display: flex; align-items: center; gap: 8px; margin: 6px 0 2px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.grp:first-child { margin-top: 0; }
+.grp .badge { font-size: 11.5px; line-height: 18px; }
+.grp.late { color: var(--bad); }
+.empty { padding: 12px 0; color: var(--muted); font-size: 14px; margin: 0; }
+.legend-note { margin: 0; font-size: 12.5px; color: var(--faint); }
+
+/* Person hero */
+.person { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px 28px; align-items: center; padding: 26px 28px; }
+.who { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.who h1 { margin: 0; font-size: clamp(26px, 3.6vw, 34px); line-height: 1.2; font-weight: 800; letter-spacing: -1px; }
+.who p { margin: 2px 0 0; font-size: 14px; color: var(--muted); }
+.copy { font: inherit; font-size: 13px; font-weight: 600; min-height: 36px; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink); cursor: pointer; white-space: nowrap; }
+.copy:hover { border-color: var(--blue); }
+.pstats { grid-column: 1 / -1; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.pstats > div { background: var(--bg); border-radius: 10px; padding: 12px 14px; display: grid; gap: 2px; align-content: start; min-width: 0; }
+.pstats dt { font-size: 12.5px; color: var(--muted); }
+.pstats dd { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -.6px; line-height: 1.2; }
+.pstats dd small { font-size: 14px; font-weight: 600; letter-spacing: 0; }
+.pstats dd.bad { color: var(--bad); }
+.pstats dd.txt { font-size: 15px; font-weight: 700; letter-spacing: -.2px; line-height: 1.45; }
+.pstats .when { font-size: 12.5px; color: var(--faint); }
 
 /* Chart */
 .chart { position: relative; min-height: 210px; }
@@ -199,9 +242,9 @@ details[open] summary .row-task { color: var(--blue-ink); }
 .entry h3 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: -.2px; }
 .entry p { margin: 0; font-size: 14px; color: var(--muted); }
 .entry .health { font-size: 11.5px; padding: 1px 9px 1px 7px; justify-self: start; }
-.done-list { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 2px 0 0; padding: 0; }
-.done-list li { font-size: 12.5px; padding: 2px 9px; border-radius: 99px; background: var(--ok-soft); color: var(--ok); }
-.done-list.added li { background: var(--blue-soft); color: var(--blue-ink); }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 2px 0 0; padding: 0; }
+.pills li { font-size: 12.5px; padding: 2px 9px; border-radius: 99px; background: var(--ok-soft); color: var(--ok); }
+.pills.added li { background: var(--blue-soft); color: var(--blue-ink); }
 
 /* Unknowns */
 .risk { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; padding-block: 13px; border-top: 1px solid var(--line); }
@@ -214,117 +257,161 @@ details[open] summary .row-task { color: var(--blue-ink); }
 
 footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; }
 
+@media (max-width: 860px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
+}
 @media (max-width: 720px) {
   body { font-size: 14.5px; }
-  .top .wrap { padding-block: 12px; }
+  .top-row { padding-block: 10px 2px; }
   .brand small { display: none; }
+  .stamp { font-size: 12px; }
+  .tab { padding: 9px 11px 10px; }
+  .tab .role { display: none; }
   main.wrap { gap: 14px; padding-block: 14px 36px; }
+  .view { gap: 14px; }
   .block { padding: 18px 16px; border-radius: 12px; }
   .hero { grid-template-columns: 1fr; gap: 20px; padding: 20px 16px; }
+  .person { grid-template-columns: minmax(0, 1fr); padding: 20px 16px; gap: 14px; }
+  .copy { justify-self: start; grid-row: 3; }
+  .who { gap: 12px; }
+  .av.lg { width: 44px; height: 44px; font-size: 19px; }
+  .pstats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .entry { grid-template-columns: 1fr; }
   .row { gap: 8px; }
   .row-task { font-size: 14.5px; }
-  .row .owner { font-size: 0; gap: 0; }
-  .row .owner::before { width: 9px; height: 9px; }
+  .route { grid-template-columns: 1fr; }
+  .stop { grid-template-columns: 26px minmax(0, 1fr) auto; justify-items: start; text-align: left; align-items: center; column-gap: 12px; padding: 7px 0; }
+  .node { grid-row: span 2; margin: 0; }
+  .stop-count { grid-row: span 2; align-self: center; }
+  .stop-date { grid-column: 2; }
 }
 </style>
 </head>
 <body>
 <header class="top">
-  <div class="wrap">
-    <a class="brand" href="./index.html"><span class="mark" aria-hidden="true">↔</span>이음 VPN<small>오픈 준비 현황</small></a>
+  <div class="wrap top-row">
+    <a class="brand" href="#all"><span class="mark" aria-hidden="true">↔</span>이음 VPN<small>오픈 준비 현황</small></a>
     <span class="stamp num" id="stamp">—</span>
   </div>
+  <nav class="wrap tabs" id="tabs" aria-label="보기 선택"></nav>
 </header>
 
 <main class="wrap">
-  <section class="block hero" aria-labelledby="hero-title">
-    <div class="hero-main">
-      <div class="hero-top"><span class="health" id="health">—</span><span id="note-date" class="num"></span></div>
-      <h1 id="hero-title">정식 오픈까지 <em class="num" id="dday">—</em></h1>
-      <p class="launch num" id="launch">—</p>
-      <div class="note">
-        <h3 id="note-title">—</h3>
-        <p id="note-body"></p>
+  <div class="view" id="view-all">
+    <section class="block hero" aria-labelledby="hero-title">
+      <div class="hero-main">
+        <div class="hero-top"><span class="health" id="health">—</span><span id="note-date" class="num"></span></div>
+        <h1 id="hero-title">정식 오픈까지 <em class="num" id="dday">—</em></h1>
+        <p class="launch num" id="launch">—</p>
+        <div class="note">
+          <h3 id="note-title">—</h3>
+          <p id="note-body"></p>
+        </div>
       </div>
-    </div>
-    <dl class="stats">
-      <div class="stat">
-        <dt>전체 진척</dt>
-        <dd class="num"><span id="pct">—</span><small>%</small></dd>
-        <p class="num" id="pct-sub">—</p>
-        <div class="meter" aria-hidden="true"><span id="pct-bar" style="width:0"></span></div>
-      </div>
-      <div class="stat">
-        <dt>계획 대비</dt>
-        <dd id="pace">—</dd>
-        <p class="num" id="pace-sub">—</p>
-      </div>
-      <div class="stat">
-        <dt>이번 주 할 일</dt>
-        <dd class="num"><span id="week-n">—</span><small>개</small></dd>
-        <p class="num" id="week-sub">—</p>
-      </div>
-    </dl>
-  </section>
-
-  <section class="block" aria-labelledby="route-h">
-    <div class="block-head">
-      <div><h2 id="route-h">단계</h2><p class="sub">정식 오픈 날짜에서 거꾸로 나눈 여섯 단계입니다. 파란 선이 지금까지 온 곳입니다.</p></div>
-    </div>
-    <ol class="route" id="route"></ol>
-  </section>
-
-  <div class="grid-2">
-    <section class="block" id="week" aria-labelledby="week-h">
-      <div class="block-head">
-        <div><h2 id="week-h">이번 주 할 일</h2><p class="sub num" id="week-range">—</p></div>
-        <div class="owners" id="owners"></div>
-      </div>
-      <ul class="rows" id="week-list"></ul>
-      <p class="sub">굵은 글씨는 사용자가 직접 할 일입니다. 줄을 누르면 메모가 보입니다.</p>
+      <dl class="stats">
+        <div class="stat">
+          <dt>전체 진척</dt>
+          <dd class="num"><span id="pct">—</span><small>%</small></dd>
+          <p class="num" id="pct-sub">—</p>
+          <div class="meter" aria-hidden="true"><span id="pct-bar" style="width:0"></span></div>
+        </div>
+        <div class="stat">
+          <dt>계획 대비</dt>
+          <dd id="pace">—</dd>
+          <p class="num" id="pace-sub">—</p>
+        </div>
+        <div class="stat">
+          <dt>이번 주 할 일</dt>
+          <dd class="num"><span id="week-n">—</span><small>개</small></dd>
+          <p class="num" id="week-sub">—</p>
+        </div>
+      </dl>
     </section>
-    <section class="block" id="trend" aria-labelledby="trend-h">
+
+    <section class="block" aria-labelledby="route-h">
       <div class="block-head">
-        <div><h2 id="trend-h">계획 대비 진척</h2><p class="sub">날짜마다 끝냈어야 할 작업 비율과 실제로 끝낸 비율입니다.</p></div>
+        <div><h2 id="route-h">단계</h2><p class="sub">정식 오픈 날짜에서 거꾸로 나눈 여섯 단계입니다. 파란 선이 지금까지 온 곳입니다.</p></div>
       </div>
-      <div class="chart" id="chart"></div>
-      <div class="legend"><span><i class="sw sw-line"></i>실제</span><span><i class="sw sw-dash"></i>계획</span></div>
+      <ol class="route" id="route"></ol>
     </section>
-  </div>
 
-  <section class="block" id="schedule" aria-labelledby="schedule-h">
-    <div class="block-head">
-      <div><h2 id="schedule-h">전체 일정</h2><p class="sub">작업에 마우스를 올리거나 누르면 기간과 메모가 보입니다.</p></div>
-      <div class="chips" role="group" aria-label="담당으로 보기">
-        <button type="button" class="chip" data-owner="" aria-pressed="true">전체</button>
-        <button type="button" class="chip" data-owner="사용자" aria-pressed="false">사용자</button>
-        <button type="button" class="chip" data-owner="Claude" aria-pressed="false">Claude</button>
-        <button type="button" class="chip" data-owner="함께" aria-pressed="false">함께</button>
-        <button type="button" class="chip" data-owner="PG사" aria-pressed="false">PG사</button>
-      </div>
-    </div>
-    <div class="tl" id="timeline"></div>
-    <div class="tl-foot">
-      <div class="legend">
-        <span><i class="sw" style="background:var(--blue)"></i>완료</span>
-        <span><i class="sw" style="background:var(--blue-soft);box-shadow:inset 0 0 0 1.5px var(--blue)"></i>진행 중</span>
-        <span><i class="sw" style="background:var(--line-strong)"></i>예정</span>
-        <span><i class="sw" style="background:var(--bad)"></i>지연</span>
-        <span><i class="sw" style="width:2px;height:12px;background:var(--ink);opacity:.45"></i>업데이트 날짜</span>
-      </div>
-      <ol class="ms-list" id="ms-list"></ol>
-    </div>
-  </section>
+    <div class="team" id="team"></div>
 
-  <div class="grid-2">
-    <section class="block" id="updates" aria-labelledby="updates-h">
+    <section class="block" aria-labelledby="schedule-h">
+      <div class="block-head">
+        <div><h2 id="schedule-h">전체 일정</h2><p class="sub">작업에 마우스를 올리거나 누르면 기간과 메모가 보입니다.</p></div>
+        <div class="chips" id="chips" role="group" aria-label="담당으로 보기"></div>
+      </div>
+      <div class="tl" id="timeline"></div>
+      <div class="tl-foot">
+        <div class="legend">
+          <span><i class="sw" style="background:var(--blue)"></i>완료</span>
+          <span><i class="sw" style="background:var(--blue-soft);box-shadow:inset 0 0 0 1.5px var(--blue)"></i>진행 중</span>
+          <span><i class="sw" style="background:var(--line-strong)"></i>예정</span>
+          <span><i class="sw" style="background:var(--bad)"></i>지연</span>
+          <span><i class="sw" style="width:2px;height:12px;background:var(--ink);opacity:.45"></i>업데이트 날짜</span>
+        </div>
+        <ol class="ms-list" id="ms-list"></ol>
+      </div>
+    </section>
+
+    <div class="grid-2">
+      <section class="block" aria-labelledby="trend-h">
+        <div class="block-head">
+          <div><h2 id="trend-h">계획 대비 진척</h2><p class="sub">날짜마다 끝냈어야 할 작업 비율과 실제로 끝낸 비율입니다.</p></div>
+        </div>
+        <div class="chart" id="chart"></div>
+        <div class="legend"><span><i class="sw sw-line"></i>실제</span><span><i class="sw sw-dash"></i>계획</span></div>
+      </section>
+      <section class="block" aria-labelledby="unknowns-h">
+        <div class="block-head"><div><h2 id="unknowns-h">아직 확인되지 않은 것</h2><p class="sub">오픈 날짜를 흔들 수 있는 일과 미리 정해 둔 대응입니다.</p></div></div>
+        <div id="risk-list"></div>
+      </section>
+    </div>
+
+    <section class="block" aria-labelledby="updates-h">
       <div class="block-head"><div><h2 id="updates-h">업데이트 기록</h2><p class="sub">작업한 날마다 무엇이 끝났고 무엇이 바뀌었는지 남깁니다.</p></div></div>
       <ol class="feed" id="feed"></ol>
     </section>
-    <section class="block" id="unknowns" aria-labelledby="unknowns-h">
-      <div class="block-head"><div><h2 id="unknowns-h">아직 확인되지 않은 것</h2><p class="sub">오픈 날짜를 흔들 수 있는 일과 미리 정해 둔 대응입니다.</p></div></div>
-      <div id="risk-list"></div>
+  </div>
+
+  <div class="view" id="view-person" hidden>
+    <section class="block person">
+      <div class="who"><span class="av lg" id="p-av"></span><div><h1 id="p-name">—</h1><p id="p-role"></p></div></div>
+      <button type="button" class="copy" id="p-copy">내 화면 주소 복사</button>
+      <dl class="pstats">
+        <div><dt>이번 주 할 일</dt><dd class="num"><span id="p-week">—</span><small>개</small></dd></div>
+        <div><dt>기한 넘김</dt><dd class="num" id="p-late-dd"><span id="p-late">—</span><small>개</small></dd></div>
+        <div><dt>내 작업 완료</dt><dd class="num"><span id="p-done">—</span><small id="p-total"></small></dd></div>
+        <div><dt>다음 마감</dt><dd class="txt" id="p-next">—</dd><span class="when num" id="p-next-when"></span></div>
+      </dl>
+    </section>
+
+    <div class="split">
+      <section class="block" aria-labelledby="p-own-h">
+        <div class="block-head"><div><h2 id="p-own-h">내가 할 일</h2><p class="sub">마감이 가까운 순서입니다. 줄을 누르면 메모와 먼저 끝나야 할 일이 보입니다.</p></div></div>
+        <div id="p-own"></div>
+      </section>
+      <div class="stack">
+        <section class="block" aria-labelledby="p-review-h">
+          <div class="block-head"><div><h2 id="p-review-h">확인·검토할 일</h2><p class="sub">다른 담당(Claude, PG사 등)이 하고 내가 확인하거나 돕는 일입니다.</p></div></div>
+          <div id="p-review"></div>
+        </section>
+        <section class="block" aria-labelledby="p-next-h">
+          <div class="block-head"><div><h2 id="p-next-h">내 작업을 기다리는 일</h2><p class="sub">내 작업이 끝나야 시작할 수 있는 다른 사람의 일입니다.</p></div></div>
+          <ul class="rows" id="p-blocking"></ul>
+        </section>
+      </div>
+    </div>
+
+    <section class="block" aria-labelledby="p-tl-h">
+      <div class="block-head"><div><h2 id="p-tl-h">내 일정</h2><p class="sub">내가 하거나 확인할 작업만 모았습니다.</p></div></div>
+      <div class="tl" id="p-timeline"></div>
+    </section>
+
+    <section class="block" aria-labelledby="p-done-h">
+      <div class="block-head"><div><h2 id="p-done-h">끝낸 일</h2></div></div>
+      <ul class="rows" id="p-donelist"></ul>
     </section>
   </div>
 </main>
@@ -336,7 +423,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-03T08:50:00+09:00",
+ "updated": "2026-11-03T10:10:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -405,7 +492,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "id": "T01",
    "phase": 0,
    "task": "VPN 서버 교체",
-   "owner": "함께",
+   "owner": "신영국",
    "start": "2026-11-01",
    "end": "2026-11-02",
    "status": "done",
@@ -423,13 +510,16 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "status": "done",
    "done_on": "2026-11-02",
    "critical": false,
-   "note": "어느 PC에서든 같은 방법으로 배포"
+   "note": "어느 PC에서든 같은 방법으로 배포",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T03",
    "phase": 0,
    "task": "비용 알림·서버 경보 설정",
-   "owner": "사용자",
+   "owner": "신영국",
    "start": "2026-11-02",
    "end": "2026-11-02",
    "status": "done",
@@ -441,7 +531,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "id": "T04",
    "phase": 0,
    "task": "시험 사이트에서 실제 VPN 키 확인",
-   "owner": "함께",
+   "owner": "신영국",
    "start": "2026-11-02",
    "end": "2026-11-02",
    "status": "done",
@@ -453,12 +543,15 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "id": "T05",
    "phase": 1,
    "task": "무료 체험·데이터 한도 정책 결정",
-   "owner": "사용자",
+   "owner": "김선용",
    "start": "2026-11-03",
    "end": "2026-11-05",
    "status": "doing",
    "critical": true,
-   "note": "요금은 홈페이지 기준 유지, 환불은 회사 사정일 때만으로 이미 결정. 남은 것은 무료 체험 조건과 데이터 한도"
+   "note": "요금은 홈페이지 기준 유지, 환불은 회사 사정일 때만으로 이미 결정. 남은 것은 무료 체험 조건과 데이터 한도. 신영국은 시스템으로 가능한 방식인지 확인",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T06",
@@ -469,7 +562,13 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-06",
    "status": "todo",
    "critical": true,
-   "note": "정해진 요금·환불 기준으로 작성"
+   "note": "정해진 요금·환불 기준으로 Claude가 초안 작성, 김선용이 고객 입장에서 검토",
+   "with": [
+    "김선용"
+   ],
+   "after": [
+    "T05"
+   ]
   },
   {
    "id": "T07",
@@ -480,24 +579,30 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-07",
    "status": "todo",
    "critical": true,
-   "note": "PG 심사 전에 사이트에 있어야 함"
+   "note": "PG 심사 전에 사이트에 있어야 함",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T06"
+   ]
   },
   {
    "id": "T08",
    "phase": 1,
    "task": "통신판매업 신고",
-   "owner": "사용자",
+   "owner": "김선용",
    "start": "2026-11-03",
    "end": "2026-11-07",
    "status": "todo",
    "critical": true,
-   "note": "필요 서류와 처리 기간 확인. PG 신청과 서로 필요한 서류가 있는지 함께 확인"
+   "note": "필요 서류와 처리 기간 확인. 사업자 명의 서류는 대표자 이름으로 제출"
   },
   {
    "id": "T09",
    "phase": 1,
    "task": "부가통신사업 신고 필요 여부 확인",
-   "owner": "사용자",
+   "owner": "김선용",
    "start": "2026-11-03",
    "end": "2026-11-06",
    "status": "todo",
@@ -508,18 +613,21 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "id": "T10",
    "phase": 1,
    "task": "PG사 선택·가입 신청",
-   "owner": "사용자",
+   "owner": "김선용",
    "start": "2026-11-03",
    "end": "2026-11-08",
    "status": "todo",
    "critical": true,
-   "note": "VPN 업종 가입이 가능한지 여러 곳에 함께 문의"
+   "note": "VPN 업종 가입이 가능한지 여러 곳에 함께 문의. 사이트 주소·결제 화면 같은 기술 정보는 신영국이 준비",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T11",
    "phase": 1,
    "task": "메일 발송 서비스 운영 전환 신청",
-   "owner": "사용자",
+   "owner": "신영국",
    "start": "2026-11-04",
    "end": "2026-11-06",
    "status": "todo",
@@ -530,7 +638,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "id": "T12",
    "phase": 1,
    "task": "집 PC 작업 폴더 정리",
-   "owner": "함께",
+   "owner": "신영국",
    "start": "2026-11-03",
    "end": "2026-11-05",
    "status": "todo",
@@ -546,7 +654,14 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-22",
    "status": "todo",
    "critical": true,
-   "note": "11월 27일까지 승인되지 않으면 대안 결정"
+   "note": "김선용이 PG사 연락 창구. 11월 27일까지 승인되지 않으면 대안 결정",
+   "with": [
+    "김선용"
+   ],
+   "after": [
+    "T10",
+    "T07"
+   ]
   },
   {
    "id": "T14",
@@ -557,7 +672,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-11",
    "status": "todo",
    "critical": true,
-   "note": "만료 때 키를 멈추고, 연장하면 같은 키를 다시 엶"
+   "note": "만료 때 키를 멈추고, 연장하면 같은 키를 다시 엶",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T15",
@@ -568,7 +686,13 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-12",
    "status": "todo",
    "critical": false,
-   "note": "체험 신청 시 실제 키 자동 발급"
+   "note": "체험 신청 시 실제 키 자동 발급",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T05"
+   ]
   },
   {
    "id": "T16",
@@ -579,7 +703,13 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-13",
    "status": "todo",
    "critical": false,
-   "note": "결정된 데이터 정책을 키와 화면에 반영"
+   "note": "결정된 데이터 정책을 키와 화면에 반영",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T05"
+   ]
   },
   {
    "id": "T17",
@@ -590,7 +720,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-14",
    "status": "todo",
    "critical": true,
-   "note": "단순 변심은 환불 없음, 회사 사정일 때 환불"
+   "note": "단순 변심은 환불 없음, 회사 사정일 때 환불",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T18",
@@ -601,7 +734,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-14",
    "status": "todo",
    "critical": false,
-   "note": "가입할 때 동의 기록 저장"
+   "note": "가입할 때 동의 기록 저장",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T19",
@@ -612,7 +748,13 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-15",
    "status": "todo",
    "critical": false,
-   "note": "메일 발송 서비스 승인 후"
+   "note": "메일 발송 서비스 승인 후",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T11"
+   ]
   },
   {
    "id": "T20",
@@ -623,7 +765,13 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-20",
    "status": "todo",
    "critical": true,
-   "note": "테스트 결제로 먼저 개발"
+   "note": "테스트 결제로 먼저 개발",
+   "with": [
+    "신영국"
+   ],
+   "after": [
+    "T10"
+   ]
   },
   {
    "id": "T21",
@@ -634,7 +782,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-18",
    "status": "todo",
    "critical": true,
-   "note": "시험 서버와 분리. 비용 확인 후 생성"
+   "note": "시험 서버와 분리. 비용을 확인하고 신영국 승인 후 생성",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T22",
@@ -645,7 +796,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-19",
    "status": "todo",
    "critical": false,
-   "note": "복구 시험 포함"
+   "note": "복구 시험 포함",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T23",
@@ -656,13 +810,16 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-21",
    "status": "todo",
    "critical": false,
-   "note": "관리자 로그인과 권한 보호"
+   "note": "관리자 로그인과 권한 보호",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T24",
    "phase": 3,
    "task": "운영 계정 권한 정리",
-   "owner": "사용자",
+   "owner": "신영국",
    "start": "2026-11-20",
    "end": "2026-11-21",
    "status": "todo",
@@ -673,12 +830,15 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "id": "T25",
    "phase": 3,
    "task": "운영 배포·점검",
-   "owner": "함께",
+   "owner": "신영국",
    "start": "2026-11-21",
    "end": "2026-11-22",
    "status": "todo",
    "critical": true,
-   "note": ""
+   "note": "",
+   "after": [
+    "T21"
+   ]
   },
   {
    "id": "T26",
@@ -689,18 +849,25 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-24",
    "status": "todo",
    "critical": true,
-   "note": "PG 승인 후 진행"
+   "note": "PG 승인 후 진행",
+   "after": [
+    "T13",
+    "T25"
+   ]
   },
   {
    "id": "T27",
    "phase": 4,
    "task": "지인 베타 테스트",
-   "owner": "함께",
+   "owner": "김선용",
    "start": "2026-11-23",
    "end": "2026-11-27",
    "status": "todo",
    "critical": false,
-   "note": "결제부터 키 발급, 앱 연결까지 실제로 사용"
+   "note": "김선용이 테스터 모집과 의견 정리, 신영국이 문제 확인",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T28",
@@ -711,7 +878,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-26",
    "status": "todo",
    "critical": false,
-   "note": ""
+   "note": "",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T29",
@@ -722,7 +892,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-29",
    "status": "todo",
    "critical": false,
-   "note": ""
+   "note": "",
+   "with": [
+    "신영국"
+   ]
   },
   {
    "id": "T30",
@@ -733,7 +906,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-30",
    "status": "todo",
    "critical": true,
-   "note": "결제·키 발급·환불·메일·백업 확인"
+   "note": "결제·키 발급·환불·메일·백업 확인",
+   "after": [
+    "T26"
+   ]
   },
   {
    "id": "T31",
@@ -744,7 +920,67 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-12-01",
    "status": "todo",
    "critical": true,
-   "note": ""
+   "note": "",
+   "after": [
+    "T30"
+   ]
+  },
+  {
+   "id": "T32",
+   "phase": 3,
+   "task": "오픈 홍보 계획·채널 준비",
+   "owner": "김선용",
+   "start": "2026-11-16",
+   "end": "2026-11-22",
+   "status": "todo",
+   "critical": false,
+   "note": "어디에 어떻게 알릴지, 오픈 첫 주 안내 문구",
+   "added_on": "2026-11-03"
+  },
+  {
+   "id": "T33",
+   "phase": 3,
+   "task": "고객 문의 창구·자주 묻는 질문 정리",
+   "owner": "김선용",
+   "start": "2026-11-16",
+   "end": "2026-11-22",
+   "status": "todo",
+   "critical": false,
+   "note": "문의 받을 곳과 답변 기준. 홈페이지 반영은 신영국",
+   "added_on": "2026-11-03",
+   "with": [
+    "신영국"
+   ]
+  },
+  {
+   "id": "T34",
+   "phase": 4,
+   "task": "고객 응대 기준 정리",
+   "owner": "김선용",
+   "start": "2026-11-23",
+   "end": "2026-11-27",
+   "status": "todo",
+   "critical": true,
+   "note": "단순 변심은 환불 없음, 장애로 못 쓴 시간은 이용 기간 연장으로 보상",
+   "added_on": "2026-11-03",
+   "after": [
+    "T06"
+   ]
+  },
+  {
+   "id": "T35",
+   "phase": 5,
+   "task": "오픈 안내·홍보 시작",
+   "owner": "김선용",
+   "start": "2026-11-30",
+   "end": "2026-12-01",
+   "status": "todo",
+   "critical": true,
+   "note": "정식 오픈에 맞춰 안내 시작",
+   "added_on": "2026-11-03",
+   "after": [
+    "T32"
+   ]
   }
  ],
  "unknowns": [
@@ -753,8 +989,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "title": "VPN 업종으로 PG 가입이 되는지, 심사가 얼마나 걸리는지",
    "level": "높음",
    "due": "2026-11-08",
-   "response": "여러 PG사에 함께 문의. 11월 27일까지 승인이 없으면 무료 체험만 먼저 열거나 오픈을 미룸",
-   "owner": "사용자"
+   "response": "김선용이 여러 PG사에 함께 문의. 11월 27일까지 승인이 없으면 무료 체험만 먼저 열거나 오픈을 미룸",
+   "owner": "김선용"
   },
   {
    "id": "R2",
@@ -762,7 +998,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "level": "높음",
    "due": "2026-11-05",
    "response": "남은 두 가지를 먼저 정하고 세부 내용은 오픈 후 보완",
-   "owner": "사용자"
+   "owner": "김선용"
   },
   {
    "id": "R3",
@@ -770,7 +1006,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "level": "중간",
    "due": "2026-11-07",
    "response": "이번 주에 필요 서류와 처리 기간 확인",
-   "owner": "사용자"
+   "owner": "김선용"
   },
   {
    "id": "R4",
@@ -778,23 +1014,23 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "level": "중간",
    "due": "2026-11-06",
    "response": "사유를 보완해 다시 신청. 그동안 시험 메일로 개발",
-   "owner": "사용자"
+   "owner": "신영국"
   },
   {
    "id": "R5",
    "title": "운영 서버 비용",
    "level": "낮음",
    "due": "2026-11-16",
-   "response": "만들기 전에 예상 비용을 확인하고 승인 후 진행",
-   "owner": "Claude"
+   "response": "만들기 전에 예상 비용을 확인하고 신영국 승인 후 진행",
+   "owner": "신영국"
   }
  ],
  "updates": [
   {
    "date": "2026-11-03",
    "health": "on_track",
-   "title": "오픈 일정을 세우고 진행 현황 페이지를 열었습니다",
-   "body": "12월 1일 오픈에서 거꾸로 31개 작업을 나눴습니다. 이번 주는 신청 주간이라 정책 결정, 신고, PG 가입 신청이 가장 중요합니다. 가장 큰 변수는 PG 심사 기간이 아직 확인되지 않은 것입니다."
+   "title": "오픈 일정을 세우고 두 사람의 담당을 나눴습니다",
+   "body": "12월 1일 오픈에서 거꾸로 작업을 나누고, 신영국(개발)과 김선용(기획·홍보·고객관리) 역할에 맞춰 담당을 정했습니다. 이번 주는 정책 결정, 신고, PG 가입 신청이 가장 중요합니다. 가장 큰 변수는 PG 심사 기간이 아직 확인되지 않은 것입니다."
   },
   {
    "date": "2026-11-02",
@@ -807,6 +1043,18 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "health": "on_track",
    "title": "개발 코드를 한곳으로 모았습니다",
    "body": "개발 코드를 GitHub 비공개 저장소로 옮기고 VPN 서버 교체 도구를 만들었습니다."
+  }
+ ],
+ "people": [
+  {
+   "id": "shin",
+   "name": "신영국",
+   "role": "홈페이지·시스템 개발"
+  },
+  {
+   "id": "kim",
+   "name": "김선용",
+   "role": "기획·홍보·고객관리"
   }
  ]
 }
@@ -829,26 +1077,101 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   const sv = (tag, attrs = {}) => { const n = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v); return n; };
 
   const HEALTH = {on_track: ['순조로움', 'ok'], at_risk: ['주의', 'warn'], off_track: ['지연', 'bad']};
-  const OWNER_VAR = {'사용자': '--own-user', 'Claude': '--own-claude', '함께': '--own-team', 'PG사': '--own-pg'};
   const STATE = {done: '완료', doing: '진행 중', now: '할 차례', todo: '예정', late: '지연'};
   const LV = {'높음': 'high', '중간': 'mid', '낮음': 'low'};
+  const people = S.people;
+  const byId = Object.fromEntries(people.map((p) => [p.id, p]));
+  const COLOR = {'함께': '--own-both', 'Claude': '--own-claude', 'PG사': '--own-pg'};
+  people.forEach((p, i) => { COLOR[p.name] = ['--own-shin', '--own-kim'][i] || '--own-pg'; });
+  const colorOf = (name) => `var(${COLOR[name] || '--own-pg'})`;
 
   const tasks = S.tasks;
+  const byTask = Object.fromEntries(tasks.map((t) => [t.id, t]));
   const phases = [...S.phases].sort((a, b) => a.phase - b.phase);
   const milestones = [...S.milestones].sort((a, b) => a.day.localeCompare(b.day));
   const updates = [...S.updates].sort((a, b) => b.date.localeCompare(a.date));
   const asOf = S.updated.slice(0, 10);
   const weekEnd = plus(asOf, (7 - P(asOf).getUTCDay()) % 7);
+  const nextWeekEnd = plus(weekEnd, 7);
   const stateOf = (t) => (t.status === 'done' ? 'done' : t.end < asOf ? 'late' : t.status === 'doing' ? 'doing' : t.start <= asOf ? 'now' : 'todo');
-  const ownerTag = (o) => { const s = h('span', 'owner', o); s.title = o; s.style.setProperty('--c', `var(${OWNER_VAR[o] || '--own-pg'})`); return s; };
-  const declutter = (box, sel) => {
-    let right = -Infinity;
-    for (const n of box.querySelectorAll(sel)) {
-      n.style.visibility = '';
-      const r = n.getBoundingClientRect();
-      if (r.left < right + 6) n.style.visibility = 'hidden'; else right = r.right;
-    }
+  const isOwn = (t, name) => t.owner === name || t.owner === '함께';
+  const isReview = (t, name) => (t.with || []).includes(name) && !isOwn(t, name);
+  const involves = (t, name) => isOwn(t, name) || isReview(t, name);
+  const blockers = (t) => (t.after || []).map((id) => byTask[id]).filter((x) => x && x.status !== 'done');
+  const followers = (t) => tasks.filter((x) => (x.after || []).includes(t.id) && x.status !== 'done');
+  const bucket = (t) => (t.status === 'done' ? 'done' : t.end < asOf ? 'late' : t.start <= weekEnd ? 'week' : t.start <= nextWeekEnd ? 'next' : 'later');
+  const BUCKETS = [['late', '기한 넘김'], ['week', '이번 주'], ['next', '다음 주'], ['later', '그 이후']];
+  const byDue = (a, b) => a.end.localeCompare(b.end) || a.start.localeCompare(b.start);
+  const thisWeek = (t) => t.status !== 'done' && (bucket(t) === 'late' || bucket(t) === 'week');
+
+  const ownerTag = (name) => { const s = h('span', 'owner', name); s.style.setProperty('--c', colorOf(name)); return s; };
+  const avatar = (name, size) => { const a = h('span', `av${size ? ' ' + size : ''}`, name.slice(0, 1)); a.style.setProperty('--c', colorOf(name)); a.setAttribute('aria-hidden', 'true'); return a; };
+  const dateRange = (t) => (t.start === t.end ? mdw(t.start) : `${mdw(t.start)} ~ ${mdw(t.end)}`);
+  const whoText = (t) => {
+    const main = t.owner === '함께' ? people.map((p) => p.name).join('·') : t.owner;
+    return (t.with || []).length ? `${main} (확인·도움: ${t.with.join('·')})` : main;
   };
+
+  // One task as a one-line row; tapping opens the details.
+  const taskRow = (t, opt = {}) => {
+    const st = stateOf(t);
+    const li = h('li');
+    const d = h('details');
+    const sm = h('summary', 'row');
+    const dot = h('span', `dot ${st}`);
+    dot.setAttribute('role', 'img');
+    dot.setAttribute('aria-label', STATE[st]);
+    const name = h('span', 'row-task', t.task);
+    if (t.critical) name.append(h('span', 'key', '핵심'));
+    if (opt.together && t.owner === '함께') name.append(h('span', 'tag', '함께'));
+    if (st !== 'done' && blockers(t).length) name.append(h('span', 'wait', '대기'));
+    sm.append(dot, name);
+    if (opt.owner) sm.append(ownerTag(t.owner)); else sm.append(h('span'));
+    sm.append(h('span', `due num${st === 'late' ? ' late' : st === 'done' ? ' done' : ''}`, st === 'done' ? `${md(t.done_on || t.end)} 완료` : `~${mdw(t.end)}`));
+    const info = h('div', 'info');
+    const line = (k, v) => { const p = h('p'); p.append(h('b', '', k), v); info.append(p); };
+    line('기간', dateRange(t));
+    line('담당', whoText(t));
+    line('상태', STATE[st]);
+    if (t.note) line('메모', t.note);
+    const bl = blockers(t);
+    if (bl.length) line('먼저 끝나야 할 일', bl.map((x) => `${x.task} (${x.owner === '함께' ? '함께' : x.owner})`).join(', '));
+    const fo = followers(t);
+    if (fo.length) line('이어지는 일', fo.map((x) => `${x.task} (${x.owner})`).join(', '));
+    d.append(sm, info);
+    li.append(d);
+    return li;
+  };
+  const groupedList = (box, list, opt) => {
+    box.replaceChildren();
+    let any = false;
+    for (const [key, label] of BUCKETS) {
+      const items = list.filter((t) => bucket(t) === key).sort(byDue);
+      if (!items.length) continue;
+      any = true;
+      const head = h('h3', `grp${key === 'late' ? ' late' : ''}`, label);
+      head.append(h('span', 'badge num', String(items.length)));
+      const ul = h('ul', 'rows');
+      for (const t of items) ul.append(taskRow(t, opt));
+      box.append(head, ul);
+    }
+    if (!any) box.append(h('p', 'empty', '남은 일이 없습니다.'));
+  };
+
+  // Tabs
+  const tabs = $('tabs');
+  const tabFor = (id, label, role, count, name) => {
+    const a = h('a', 'tab');
+    a.href = `#${id}`;
+    a.dataset.view = id;
+    if (name) a.append(avatar(name));
+    a.append(label);
+    if (role) a.append(h('span', 'role', role));
+    if (count != null) a.append(h('span', 'badge num', String(count)));
+    tabs.append(a);
+  };
+  tabFor('all', '전체', null, null, null);
+  for (const p of people) tabFor(p.id, p.name, p.role, tasks.filter((t) => isOwn(t, p.name) && thisWeek(t)).length, p.name);
 
   // Header and status
   const stampTime = S.updated.length > 10 ? ` ${S.updated.slice(11, 16)}` : '';
@@ -879,10 +1202,10 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   else if (done < planned) { pace.textContent = `${planned - done}개 늦음`; pace.classList.add('bad'); }
   else pace.textContent = '계획대로';
   $('pace-sub').textContent = `계획 ${planned}개 · 실제 ${done}개${late ? ` · 기한 넘김 ${late}개` : ''}`;
-  const week = tasks.filter((t) => t.status !== 'done' && t.start <= weekEnd).sort((a, b) => a.end.localeCompare(b.end) || a.start.localeCompare(b.start));
+  const weekAll = tasks.filter(thisWeek);
   const byOwner = {};
-  for (const t of week) byOwner[t.owner] = (byOwner[t.owner] || 0) + 1;
-  $('week-n').textContent = week.length;
+  for (const t of weekAll) byOwner[t.owner] = (byOwner[t.owner] || 0) + 1;
+  $('week-n').textContent = weekAll.length;
   $('week-sub').textContent = Object.entries(byOwner).map(([o, n]) => `${o} ${n}`).join(' · ') || '남은 일 없음';
 
   // Phase route
@@ -902,11 +1225,11 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     li.title = p.goal;
     route.append(li);
   }
-  const line = h('span', 'route-line'), fill = h('span', 'route-fill');
-  route.prepend(line, fill);
+  const rLine = h('span', 'route-line'), rFill = h('span', 'route-fill');
+  route.prepend(rLine, rFill);
   const layoutRoute = () => {
     const nodes = [...route.querySelectorAll('.node')];
-    if (nodes.length < 2) return;
+    if (nodes.length < 2 || !route.offsetParent) return;
     const box = route.getBoundingClientRect();
     const c = nodes.map((n) => { const r = n.getBoundingClientRect(); return {x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top}; });
     const vertical = Math.abs(c[1].y - c[0].y) > Math.abs(c[1].x - c[0].x);
@@ -920,39 +1243,151 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     }
     const lo = Math.floor(at), hi = Math.min(nodes.length - 1, lo + 1), f = at - lo;
     const end = {x: c[lo].x + (c[hi].x - c[lo].x) * f, y: c[lo].y + (c[hi].y - c[lo].y) * f};
-    const T = 4;
-    const first = c[0], last = c.at(-1);
+    const T = 4, first = c[0], last = c.at(-1);
     if (vertical) {
-      Object.assign(line.style, {left: `${first.x - T / 2}px`, top: `${first.y}px`, width: `${T}px`, height: `${last.y - first.y}px`});
-      Object.assign(fill.style, {left: `${first.x - T / 2}px`, top: `${first.y}px`, width: `${T}px`, height: `${Math.max(0, end.y - first.y)}px`});
+      Object.assign(rLine.style, {left: `${first.x - T / 2}px`, top: `${first.y}px`, width: `${T}px`, height: `${last.y - first.y}px`});
+      Object.assign(rFill.style, {left: `${first.x - T / 2}px`, top: `${first.y}px`, width: `${T}px`, height: `${Math.max(0, end.y - first.y)}px`});
     } else {
-      Object.assign(line.style, {top: `${first.y - T / 2}px`, left: `${first.x}px`, height: `${T}px`, width: `${last.x - first.x}px`});
-      Object.assign(fill.style, {top: `${first.y - T / 2}px`, left: `${first.x}px`, height: `${T}px`, width: `${Math.max(0, end.x - first.x)}px`});
+      Object.assign(rLine.style, {top: `${first.y - T / 2}px`, left: `${first.x}px`, height: `${T}px`, width: `${last.x - first.x}px`});
+      Object.assign(rFill.style, {top: `${first.y - T / 2}px`, left: `${first.x}px`, height: `${T}px`, width: `${Math.max(0, end.x - first.x)}px`});
     }
   };
 
-  // This week
-  $('week-range').textContent = `${mdw(asOf)} ~ ${mdw(weekEnd)}`;
-  const owners = $('owners');
-  for (const [o, n] of Object.entries(byOwner)) { const s = ownerTag(o); s.append(' ', h('b', 'num', String(n))); owners.append(s); }
-  const wl = $('week-list');
-  for (const t of week) {
-    const st = stateOf(t);
-    const li = h('li', t.owner === '사용자' ? 'mine' : '');
-    const row = h(t.note ? 'summary' : 'div', 'row');
-    const dot = h('span', `dot ${st}`);
-    dot.setAttribute('role', 'img');
-    dot.setAttribute('aria-label', STATE[st]);
-    const task = h('span', 'row-task', t.task);
-    if (t.critical) task.append(h('span', 'key', '핵심'));
-    row.append(dot, task, ownerTag(t.owner), h('span', `due num${st === 'late' ? ' late' : ''}`, `~${mdw(t.end)}`));
-    if (t.note) { const d = h('details'); d.append(row, h('p', 'row-note', t.note)); li.append(d); } else li.append(row);
-    wl.append(li);
+  // Team cards (전체)
+  const team = $('team');
+  for (const p of people) {
+    const own = tasks.filter((t) => isOwn(t, p.name));
+    const ownDone = own.filter((t) => t.status === 'done').length;
+    const week = own.filter(thisWeek).sort(byDue);
+    const lateN = own.filter((t) => bucket(t) === 'late').length;
+    const review = tasks.filter((t) => isReview(t, p.name) && t.status !== 'done');
+    const card = h('section', 'block');
+    card.setAttribute('aria-label', `${p.name} 이번 주`);
+    const head = h('div', 'card-head');
+    const txt = h('div');
+    txt.append(h('h2', '', p.name), h('span', 'role', p.role));
+    const open = h('a', 'open', '내 화면 보기 →');
+    open.href = `#${p.id}`;
+    head.append(avatar(p.name, 'md'), txt, open);
+    const stats = h('div', 'card-stats num');
+    const st = (label, n, bad) => { const s = h('span', '', label); s.append(h('b', bad && n ? 'bad' : '', String(n))); stats.append(s); };
+    st('이번 주', week.length);
+    st('기한 넘김', lateN, true);
+    const s3 = h('span', '', '완료'); s3.append(h('b', '', `${ownDone}/${own.length}`)); stats.append(s3);
+    const meter = h('div', 'meter');
+    const mf = h('span');
+    mf.style.width = `${own.length ? (ownDone / own.length) * 100 : 0}%`;
+    mf.style.background = colorOf(p.name);
+    meter.append(mf);
+    const ul = h('ul', 'rows');
+    for (const t of week) ul.append(taskRow(t, {together: true}));
+    if (!week.length) ul.append(h('li', 'empty', '이번 주에 남은 일이 없습니다.'));
+    const rw = review.filter(thisWeek).length;
+    const foot = h('p', 'card-foot num', `확인·검토할 일 ${review.length}개${rw ? ` (이번 주 ${rw}개)` : ''}`);
+    card.append(head, stats, meter, ul, foot);
+    team.append(card);
   }
-  if (!week.length) wl.append(h('li', 'empty', '이번 주에 남은 작업이 없습니다.'));
+
+  // Timeline
+  const first = phases[0].start, lastDay = phases.at(-1).end;
+  const stop = plus(lastDay, 1);
+  const span = P(stop) - P(first);
+  const pos = (s, half = 0) => ((P(s) - P(first) + half * DAY) / span) * 100;
+  const mondays = [];
+  for (let d = first; d < stop; d = plus(d, 1)) if (P(d).getUTCDay() === 1) mondays.push(d);
+  const declutter = (box) => {
+    let right = -Infinity;
+    for (const n of box.querySelectorAll('.tl-axis .tick')) {
+      n.style.visibility = '';
+      const r = n.getBoundingClientRect();
+      if (r.left < right + 6) n.style.visibility = 'hidden'; else right = r.right;
+    }
+  };
+  const drawTimeline = (tl, keep) => {
+    const tip = h('div', 'tip'); tip.hidden = true;
+    const guides = (track) => {
+      for (const d of mondays) { const g = h('span', 'wk'); g.style.left = `${pos(d)}%`; track.append(g); }
+      for (const m of milestones) { const g = h('span', 'ms'); g.style.left = `${pos(m.day, 0.5)}%`; track.append(g); }
+    };
+    const asOfLine = (track) => { const a = h('span', 'asof'); a.style.left = `${pos(asOf, 0.5)}%`; track.append(a); };
+    const nodes = [];
+    const axis = h('div', 'tl-row tl-axis');
+    const at = h('div', 'tl-track');
+    for (const d of mondays) { const p = pos(d); const t = h('span', 'tick num' + (p > 86 ? ' end' : ''), md(d)); t.style.left = `${p}%`; at.append(t); }
+    milestones.forEach((m, i) => { const p = pos(m.day, 0.5); const b = h('span', 'msnum' + (p > 96 ? ' end' : ''), String(i + 1)); b.style.left = `${p}%`; b.title = `${mdw(m.day)} ${m.label}`; at.append(b); });
+    axis.append(h('div', 'tl-name', '작업'), at);
+    nodes.push(axis);
+    for (const p of phases) {
+      const mine = tasks.filter((t) => t.phase === p.phase && keep(t)).sort((a, b) => a.start.localeCompare(b.start) || a.end.localeCompare(b.end));
+      if (!mine.length) continue;
+      const head = h('div', 'tl-row tl-phase');
+      const hn = h('div', 'tl-name');
+      hn.append(h('span', '', `${p.phase}. ${p.name}`), h('span', 'num', `${md(p.start)}–${md(p.end)}`));
+      const ht = h('div', 'tl-track');
+      const band = h('span', 'band'); band.style.left = `${pos(p.start)}%`; band.style.width = `${pos(plus(p.end, 1)) - pos(p.start)}%`;
+      ht.append(band); guides(ht); asOfLine(ht);
+      head.append(hn, ht); nodes.push(head);
+      for (const t of mine) {
+        const st = stateOf(t);
+        const row = h('div', 'tl-row tl-task-row');
+        row.tabIndex = 0;
+        row.setAttribute('aria-label', `${t.task}, ${whoText(t)}, ${md(t.start)}부터 ${md(t.end)}까지, ${STATE[st]}${t.note ? `. ${t.note}` : ''}`);
+        const nm = h('div', 'tl-name');
+        const tk = h('span', 'tl-task', t.task);
+        if (t.critical) tk.append(h('span', 'key', '핵심'));
+        nm.append(tk, ownerTag(t.owner), h('span', 'tl-dates num', t.start === t.end ? mdw(t.start) : `${md(t.start)}–${md(t.end)}`));
+        const tr = h('div', 'tl-track');
+        guides(tr);
+        const bar = h('span', `bar ${st}${t.critical ? ' crit' : ''}`);
+        bar.style.left = `${pos(t.start)}%`;
+        bar.style.width = `${pos(plus(t.end, 1)) - pos(t.start)}%`;
+        tr.append(bar); asOfLine(tr);
+        row.append(nm, tr);
+        const show = () => {
+          tip.replaceChildren(h('div', 'k num', dateRange(t)), h('div', 't', t.task), h('div', '', `${whoText(t)} · ${STATE[st]}${t.done_on ? ` (${md(t.done_on)})` : ''}`));
+          if (t.note) tip.append(h('div', 'k', t.note));
+          const bl = blockers(t);
+          if (bl.length) tip.append(h('div', 'k', `먼저: ${bl.map((x) => x.task).join(', ')}`));
+          tip.hidden = false;
+          const box = tl.getBoundingClientRect(), b = bar.getBoundingClientRect(), r = row.getBoundingClientRect();
+          const left = Math.max(0, Math.min(b.left - box.left, box.width - tip.offsetWidth));
+          let top = r.bottom - box.top + 4;
+          if (top + tip.offsetHeight > box.height) top = r.top - box.top - tip.offsetHeight - 4;
+          tip.style.left = `${left}px`;
+          tip.style.top = `${top}px`;
+        };
+        const hideTip = () => { tip.hidden = true; };
+        row.addEventListener('pointerenter', show);
+        row.addEventListener('focus', show);
+        row.addEventListener('pointerleave', hideTip);
+        row.addEventListener('blur', hideTip);
+        nodes.push(row);
+      }
+    }
+    nodes.push(tip);
+    tl.replaceChildren(...nodes);
+    declutter(tl);
+  };
+  const tl = $('timeline');
+  let filter = '';
+  const chips = $('chips');
+  const filters = [['', '전체'], ...people.map((p) => [p.name, p.name]), ['Claude', 'Claude'], ['PG사', 'PG사']];
+  const keepAll = (t) => !filter || (people.some((p) => p.name === filter) ? involves(t, filter) : t.owner === filter);
+  for (const [value, label] of filters) {
+    const b = h('button', 'chip', label);
+    b.type = 'button';
+    b.setAttribute('aria-pressed', String(value === ''));
+    b.addEventListener('click', () => {
+      filter = value;
+      for (const o of chips.children) o.setAttribute('aria-pressed', String(o === b));
+      drawTimeline(tl, keepAll);
+    });
+    chips.append(b);
+  }
+  const msl = $('ms-list');
+  milestones.forEach((m, i) => { const li = h('li'); li.append(h('span', 'msnum inline', String(i + 1)), h('span', 'k num', mdw(m.day)), h('span', '', m.label)); msl.append(li); });
 
   // Plan vs actual chart
-  const first = phases[0].start, lastDay = phases.at(-1).end;
   const series = [];
   for (let d = first; d <= lastDay; d = plus(d, 1)) {
     series.push({
@@ -963,6 +1398,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   }
   const chart = $('chart');
   const drawChart = () => {
+    if (!chart.offsetParent) return;
     const W = Math.max(280, chart.clientWidth || 560), H = 210;
     const svg = sv('svg', {width: '100%', viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': '계획 대비 진척 그래프'});
     const tip = h('div', 'tip'); tip.hidden = true;
@@ -1019,87 +1455,6 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     hit.addEventListener('pointerleave', hide);
   };
 
-  // Timeline
-  let ownerFilter = '';
-  const tl = $('timeline');
-  const stop = plus(lastDay, 1);
-  const span = P(stop) - P(first);
-  const pos = (s, half = 0) => ((P(s) - P(first) + half * DAY) / span) * 100;
-  const mondays = [];
-  for (let d = first; d < stop; d = plus(d, 1)) if (P(d).getUTCDay() === 1) mondays.push(d);
-  const drawTimeline = () => {
-    const tip = h('div', 'tip'); tip.hidden = true;
-    const guides = (track) => {
-      for (const d of mondays) { const g = h('span', 'wk'); g.style.left = `${pos(d)}%`; track.append(g); }
-      for (const m of milestones) { const g = h('span', 'ms'); g.style.left = `${pos(m.day, 0.5)}%`; track.append(g); }
-    };
-    const asOfLine = (track) => { const a = h('span', 'asof'); a.style.left = `${pos(asOf, 0.5)}%`; track.append(a); };
-    const nodes = [];
-    const axis = h('div', 'tl-row tl-axis');
-    const at = h('div', 'tl-track');
-    for (const d of mondays) { const p = pos(d); const t = h('span', 'tick num' + (p > 86 ? ' end' : ''), md(d)); t.style.left = `${p}%`; at.append(t); }
-    milestones.forEach((m, i) => { const p = pos(m.day, 0.5); const b = h('span', 'msnum' + (p > 96 ? ' end' : ''), String(i + 1)); b.style.left = `${p}%`; b.title = `${mdw(m.day)} ${m.label}`; at.append(b); });
-    axis.append(h('div', 'tl-name', '작업'), at);
-    nodes.push(axis);
-    for (const p of phases) {
-      const mine = tasks.filter((t) => t.phase === p.phase && (!ownerFilter || t.owner === ownerFilter)).sort((a, b) => a.start.localeCompare(b.start) || a.end.localeCompare(b.end));
-      if (!mine.length) continue;
-      const head = h('div', 'tl-row tl-phase');
-      const hn = h('div', 'tl-name');
-      hn.append(h('span', '', `${p.phase}. ${p.name}`), h('span', 'num', `${md(p.start)}–${md(p.end)}`));
-      const ht = h('div', 'tl-track');
-      const band = h('span', 'band'); band.style.left = `${pos(p.start)}%`; band.style.width = `${pos(plus(p.end, 1)) - pos(p.start)}%`;
-      ht.append(band); guides(ht); asOfLine(ht);
-      head.append(hn, ht); nodes.push(head);
-      for (const t of mine) {
-        const st = stateOf(t);
-        const row = h('div', 'tl-row tl-task-row');
-        row.tabIndex = 0;
-        row.setAttribute('aria-label', `${t.task}, ${t.owner}, ${md(t.start)}부터 ${md(t.end)}까지, ${STATE[st]}${t.note ? `. ${t.note}` : ''}`);
-        const nm = h('div', 'tl-name');
-        const tk = h('span', 'tl-task', t.task);
-        if (t.critical) tk.append(h('span', 'key', '핵심'));
-        nm.append(tk, ownerTag(t.owner), h('span', 'tl-dates num', t.start === t.end ? mdw(t.start) : `${md(t.start)}–${md(t.end)}`));
-        const tr = h('div', 'tl-track');
-        guides(tr);
-        const bar = h('span', `bar ${st}${t.critical ? ' crit' : ''}`);
-        bar.style.left = `${pos(t.start)}%`;
-        bar.style.width = `${pos(plus(t.end, 1)) - pos(t.start)}%`;
-        tr.append(bar); asOfLine(tr);
-        row.append(nm, tr);
-        const show = () => {
-          tip.replaceChildren(h('div', 'k num', t.start === t.end ? mdw(t.start) : `${mdw(t.start)} ~ ${mdw(t.end)}`), h('div', 't', t.task), h('div', '', `${t.owner} · ${STATE[st]}${t.done_on ? ` (${md(t.done_on)})` : ''}`));
-          if (t.note) tip.append(h('div', 'k', t.note));
-          tip.hidden = false;
-          const box = tl.getBoundingClientRect(), b = bar.getBoundingClientRect(), r = row.getBoundingClientRect();
-          const left = Math.max(0, Math.min(b.left - box.left, box.width - tip.offsetWidth));
-          let top = r.bottom - box.top + 4;
-          if (top + tip.offsetHeight > box.height) top = r.top - box.top - tip.offsetHeight - 4;
-          tip.style.left = `${left}px`;
-          tip.style.top = `${top}px`;
-        };
-        const hideTip = () => { tip.hidden = true; };
-        row.addEventListener('pointerenter', show);
-        row.addEventListener('focus', show);
-        row.addEventListener('pointerleave', hideTip);
-        row.addEventListener('blur', hideTip);
-        nodes.push(row);
-      }
-    }
-    nodes.push(tip);
-    tl.replaceChildren(...nodes);
-    declutter(tl, '.tl-axis .tick');
-  };
-  for (const b of document.querySelectorAll('.chip')) {
-    b.addEventListener('click', () => {
-      ownerFilter = b.dataset.owner || '';
-      for (const o of document.querySelectorAll('.chip')) o.setAttribute('aria-pressed', String(o === b));
-      drawTimeline();
-    });
-  }
-  const msl = $('ms-list');
-  milestones.forEach((m, i) => { const li = h('li'); li.append(h('span', 'msnum inline', String(i + 1)), h('span', 'k num', mdw(m.day)), h('span', '', m.label)); msl.append(li); });
-
   // Updates feed
   const feed = $('feed');
   for (const u of updates) {
@@ -1109,9 +1464,9 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     const [lab, cls] = HEALTH[u.health] || HEALTH.on_track;
     body.append(h('span', `health ${cls}`, lab), h('h3', '', u.title), h('p', '', u.body));
     const fin = tasks.filter((t) => t.done_on === u.date);
-    if (fin.length) { const ul = h('ul', 'done-list'); ul.setAttribute('aria-label', '끝낸 일'); for (const t of fin) ul.append(h('li', '', `완료 · ${t.task}`)); body.append(ul); }
+    if (fin.length) { const ul = h('ul', 'pills'); ul.setAttribute('aria-label', '끝낸 일'); for (const t of fin) ul.append(h('li', '', `완료 · ${t.task}`)); body.append(ul); }
     const add = tasks.filter((t) => t.added_on === u.date);
-    if (add.length) { const ul = h('ul', 'done-list added'); ul.setAttribute('aria-label', '추가된 일'); for (const t of add) ul.append(h('li', '', `추가 · ${t.task}`)); body.append(ul); }
+    if (add.length) { const ul = h('ul', 'pills added'); ul.setAttribute('aria-label', '추가된 일'); for (const t of add) ul.append(h('li', '', `추가 · ${t.task} (${t.owner})`)); body.append(ul); }
     li.append(body);
     feed.append(li);
   }
@@ -1125,14 +1480,74 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
     rl.append(d);
   }
 
-  const drawAll = () => { layoutRoute(); drawChart(); declutter(tl, '.tl-axis .tick'); };
-  drawTimeline();
-  drawAll();
+  // Person view
+  const pTl = $('p-timeline');
+  let current = null;
+  const renderPerson = (p) => {
+    current = p;
+    const own = tasks.filter((t) => isOwn(t, p.name));
+    const open = own.filter((t) => t.status !== 'done');
+    const ownDone = own.filter((t) => t.status === 'done').sort((a, b) => (b.done_on || '').localeCompare(a.done_on || ''));
+    const av = $('p-av');
+    av.textContent = p.name.slice(0, 1);
+    av.style.setProperty('--c', colorOf(p.name));
+    $('p-name').textContent = p.name;
+    $('p-role').textContent = p.role;
+    $('p-week').textContent = open.filter(thisWeek).length;
+    const lateN = open.filter((t) => bucket(t) === 'late').length;
+    $('p-late').textContent = lateN;
+    $('p-late-dd').classList.toggle('bad', lateN > 0);
+    $('p-done').textContent = ownDone.length;
+    $('p-total').textContent = ` / ${own.length}`;
+    const next = [...open].sort(byDue)[0];
+    $('p-next').textContent = next ? next.task : '없음';
+    $('p-next-when').textContent = next ? `~${mdw(next.end)}` : '';
+    groupedList($('p-own'), open, {together: true});
+    groupedList($('p-review'), tasks.filter((t) => isReview(t, p.name) && t.status !== 'done'), {owner: true});
+    const blocking = $('p-blocking');
+    blocking.replaceChildren();
+    const waits = [];
+    for (const t of [...open].sort(byDue)) for (const f of followers(t)) if (!isOwn(f, p.name) && !waits.includes(f)) waits.push(f);
+    for (const f of waits) blocking.append(taskRow(f, {owner: true}));
+    if (!waits.length) blocking.append(h('li', 'empty', '지금 내 작업을 기다리는 다른 일은 없습니다.'));
+    const dl = $('p-donelist');
+    dl.replaceChildren(...ownDone.map((t) => taskRow(t, {together: true})));
+    if (!ownDone.length) dl.append(h('li', 'empty', '아직 끝낸 일이 없습니다.'));
+    drawTimeline(pTl, (t) => involves(t, p.name));
+  };
+  $('p-copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText(location.href); b.textContent = '주소를 복사했습니다'; }
+    catch { b.textContent = '주소창의 주소를 복사해 주세요'; }
+    setTimeout(() => { b.textContent = '내 화면 주소 복사'; }, 2500);
+  });
+
+  // Views
+  const drawAll = () => {
+    if (!$('view-all').hidden) { layoutRoute(); drawChart(); declutter(tl); }
+    else declutter(pTl);
+  };
+  let initial = true;
+  const show = () => {
+    const id = location.hash.slice(1);
+    const p = byId[id] || null;
+    $('view-all').hidden = !!p;
+    $('view-person').hidden = !p;
+    for (const a of tabs.children) {
+      if (a.dataset.view === (p ? p.id : 'all')) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    }
+    document.title = p ? `${p.name} · 이음 VPN 오픈 준비 현황` : '이음 VPN 오픈 준비 현황';
+    if (p) renderPerson(p);
+    requestAnimationFrame(drawAll);
+    if (!initial) window.scrollTo(0, 0);
+    initial = false;
+  };
+  drawTimeline(tl, keepAll);
+  window.addEventListener('hashchange', show);
+  show();
   let queued = 0;
   const ro = new ResizeObserver(() => { cancelAnimationFrame(queued); queued = requestAnimationFrame(drawAll); });
-  ro.observe(chart);
-  ro.observe(route);
-  ro.observe(tl);
+  ro.observe(chart); ro.observe(route); ro.observe(tl); ro.observe(pTl);
   if (document.fonts) document.fonts.ready.then(drawAll);
 })();
 </script>
