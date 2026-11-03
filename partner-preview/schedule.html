@@ -483,7 +483,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-04T00:15:00+09:00",
+ "updated": "2026-11-04T08:55:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -622,7 +622,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-06",
    "status": "todo",
    "critical": true,
-   "note": "정해진 요금·환불 기준으로 신영국이 작성, 김선용이 고객 입장에서 검토",
+   "note": "정해진 요금·환불 기준으로 신영국이 작성, 김선용이 고객 입장에서 검토. 초안 파일(개발 저장소 policies 폴더)에 정해진 사항을 미리 넣어 둠 · 고치면 다음 배포 때 가입 화면에 반영",
    "with": [
     "김선용"
    ],
@@ -639,7 +639,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-07",
    "status": "todo",
    "critical": true,
-   "note": "PG 심사 전에 사이트에 있어야 함",
+   "note": "PG 심사 전에 사이트에 있어야 함. 가입 화면과 같은 약관 문서를 공개 페이지로 게시",
    "with": [
     "신영국"
    ],
@@ -793,14 +793,15 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 2,
    "task": "약관·개인정보 동의 화면",
    "owner": "Claude",
-   "start": "2026-11-13",
-   "end": "2026-11-14",
-   "status": "todo",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": false,
-   "note": "가입할 때 동의 기록 저장",
+   "note": "가입 화면이 서버의 현재 약관 문서를 그대로 보여 주고, 동의를 그 문서 버전과 함께 저장. 만 14세 이상 확인(필수) 추가. 내 정보에 동의 내역",
    "with": [
     "신영국"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T19",
@@ -1280,8 +1281,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "date": "2026-11-04",
    "health": "on_track",
-   "title": "환불 처리와 키관리 화면을 시험 서버에 올렸습니다",
-   "body": "회사 사정일 때만 환불하는 처리(단순 변심은 환불 없음)와 관리자 키 멈춤·다시 열기를 만들었습니다. 키관리 화면은 실제 VPN 서버 키를 읽기 전용으로 보여 줍니다. 시험용으로 이용권을 바로 끝내는 버튼이 있어, 끝난 뒤 같은 키로 연장되는지 바로 확인할 수 있습니다."
+   "title": "환불 처리·키관리 화면·약관 동의 화면을 시험 서버에 올렸습니다",
+   "body": "회사 사정일 때만 환불하는 처리(단순 변심은 환불 없음)와 관리자 키 멈춤·다시 열기를 만들었습니다. 키관리 화면은 실제 VPN 서버 키를 읽기 전용으로 보여 줍니다. 시험용으로 이용권을 바로 끝내는 버튼이 있어, 끝난 뒤 같은 키로 연장되는지 바로 확인할 수 있습니다. 오전에는 가입 화면이 실제 약관 문서를 그대로 보여 주고 만 14세 이상 확인과 동의 버전 저장을 하도록 바꿨습니다."
   },
   {
    "date": "2026-11-03",
@@ -1514,7 +1515,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "area": "고객 화면",
    "name": "약관·개인정보 동의",
    "test": "part",
-   "test_note": "시험용 문구",
+   "test_note": "화면·동의 저장 동작 · 문구는 초안",
    "tasks": [
     "T06",
     "T07",
