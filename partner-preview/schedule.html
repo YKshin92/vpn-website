@@ -483,7 +483,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-04T00:15:00+09:00",
+ "updated": "2026-11-04T01:30:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -778,14 +778,15 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 2,
    "task": "환불 처리",
    "owner": "Claude",
-   "start": "2026-11-12",
-   "end": "2026-11-14",
-   "status": "todo",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": true,
-   "note": "단순 변심은 환불 없음, 회사 사정일 때 환불",
+   "note": "회사 사정만 환불(단순 변심 거부), 결제 1건 남은 금액까지. 환불하면 이용권이 바로 끝나고 같은 키는 멈춤. 실제 돈 환불은 PG 연동(T20) 때",
    "with": [
     "신영국"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T18",
@@ -827,7 +828,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-20",
    "status": "todo",
    "critical": true,
-   "note": "테스트 결제로 먼저 개발",
+   "note": "테스트 결제로 먼저 개발. 환불도 PG로 실제 처리되게 연결",
    "with": [
     "신영국"
    ],
@@ -1170,18 +1171,19 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 2,
    "task": "키관리 화면 실제 키 연결",
    "owner": "Claude",
-   "start": "2026-11-12",
-   "end": "2026-11-14",
-   "status": "todo",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": false,
-   "note": "고객별 키 상태·한도·멈춤과 재개",
+   "note": "키관리 화면이 실제 VPN 서버 키를 읽기 전용으로 표시. 결제 처리 확인에서 고객 키 멈춤·다시 열기",
    "added_on": "2026-11-03",
    "with": [
     "신영국"
    ],
    "after": [
     "T36"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T44",
@@ -1275,6 +1277,12 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   }
  ],
  "updates": [
+  {
+   "date": "2026-11-04",
+   "health": "on_track",
+   "title": "환불 처리와 키관리 화면을 시험 서버에 올렸습니다",
+   "body": "회사 사정일 때만 환불하는 처리(단순 변심은 환불 없음)와 관리자 키 멈춤·다시 열기를 만들었습니다. 키관리 화면은 실제 VPN 서버 키를 읽기 전용으로 보여 줍니다. 시험용으로 이용권을 바로 끝내는 버튼이 있어, 끝난 뒤 같은 키로 연장되는지 바로 확인할 수 있습니다."
+  },
   {
    "date": "2026-11-03",
    "health": "on_track",
@@ -1388,6 +1396,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "로그인 화면에서 계정 아이디·비밀번호 입력. manager는 관리자 화면, guest는 내 이용권으로 이동",
    "이용권 결제는 모의 결제라 실제 돈이 나가지 않습니다",
    "결제하면 실제 VPN 키가 나옵니다. Outline 앱에 붙여 넣어 접속을 확인합니다",
+   "끝난 뒤 연장을 시험하려면: 관리자 “결제 처리 확인” → 고객 선택 → “기간 즉시 종료 (시험)” → 고객 화면에서 기간 연장 (같은 키로 다시 연결)",
    "실제 키는 최대 10개라 꼭 필요할 때만 결제합니다"
   ],
   "naming": "고객 계정은 신영국 guest1~guest5, 김선용 guest6~guest10으로 나눠 쓰면 서로 겹치지 않습니다. 새 계정이 필요하면 끝이 .test인 메일로 가입합니다"
@@ -1515,10 +1524,11 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "area": "고객 화면",
    "name": "환불",
-   "test": "none",
-   "test_note": "",
+   "test": "mock",
+   "test_note": "모의 결제 · 회사 사정만 환불",
    "tasks": [
-    "T17"
+    "T17",
+    "T20"
    ]
   },
   {
@@ -1563,8 +1573,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "area": "관리자 화면",
    "name": "키관리",
-   "test": "mock",
-   "test_note": "키 작업·키 관리 화면, 모의 실행",
+   "test": "ok",
+   "test_note": "실제 VPN 서버 읽기 · 고객 키 멈춤/열기",
    "tasks": [
     "T36",
     "T43"
