@@ -483,7 +483,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-03T23:00:00+09:00",
+ "updated": "2026-11-03T23:30:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -729,14 +729,15 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 2,
    "task": "만료 후 연장하면 같은 키로 재개",
    "owner": "Claude",
-   "start": "2026-11-09",
-   "end": "2026-11-11",
-   "status": "todo",
+   "start": "2026-11-03",
+   "end": "2026-11-03",
+   "status": "done",
    "critical": true,
-   "note": "만료 때 키를 멈추고, 연장하면 같은 키를 다시 엶",
+   "note": "기간이 끝난 이용권도 연장 가능. 결제하면 같은 키가 다시 열리고 결제한 날부터 새 기간 시작",
    "with": [
     "신영국"
-   ]
+   ],
+   "done_on": "2026-11-03"
   },
   {
    "id": "T15",
@@ -764,7 +765,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-13",
    "status": "todo",
    "critical": false,
-   "note": "결정된 데이터 정책을 키와 화면에 반영",
+   "note": "결정된 데이터 정책을 키와 화면에 반영. Outline 한도는 최근 30일 합계 기준이라 계산 방식도 함께 맞춤",
    "with": [
     "신영국"
    ],
@@ -1278,7 +1279,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "date": "2026-11-03",
    "health": "on_track",
    "title": "오픈 일정을 세우고 두 사람의 담당을 나눴습니다",
-   "body": "12월 1일 오픈에서 거꾸로 작업을 나누고, 신영국(개발)과 김선용(기획·홍보·고객관리) 역할에 맞춰 담당을 정했습니다. 시험 사이트는 로그인을 하나로 합치고, 기간 연장 화면을 넓히고, 공용 시험 계정을 만들었습니다. 저녁에는 고객관리·서버관리·키관리를 한 관리자 화면으로 시험 서버에 올렸습니다. 이번 주는 정책 결정, 신고, PG 가입 신청이 가장 중요합니다."
+   "body": "12월 1일 오픈에서 거꾸로 작업을 나누고, 신영국(개발)과 김선용(기획·홍보·고객관리) 역할에 맞춰 담당을 정했습니다. 시험 사이트는 로그인을 하나로 합치고, 기간 연장 화면을 넓히고, 공용 시험 계정을 만들었습니다. 저녁에는 고객관리·서버관리·키관리를 한 관리자 화면으로 시험 서버에 올리고, 기간이 끝난 뒤 연장해도 같은 키로 다시 연결되게 했습니다. 이번 주는 정책 결정, 신고, PG 가입 신청이 가장 중요합니다."
   },
   {
    "date": "2026-11-02",
@@ -1446,10 +1447,11 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "area": "고객 화면",
    "name": "기간 연장",
    "test": "ok",
-   "test_note": "같은 키로 연장",
+   "test_note": "끝난 이용권도 같은 키로 연장",
    "tasks": [
     "T39",
-    "T14"
+    "T14",
+    "T20"
    ]
   },
   {
