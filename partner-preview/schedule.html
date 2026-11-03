@@ -483,7 +483,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-04T08:55:00+09:00",
+ "updated": "2026-11-04T08:52:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -856,14 +856,15 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 3,
    "task": "자동 백업·복구 절차",
    "owner": "Claude",
-   "start": "2026-11-18",
-   "end": "2026-11-19",
-   "status": "todo",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": false,
-   "note": "복구 시험 포함",
+   "note": "시험 서버: 매일 04:30 서버 안 백업(7개 보관), 매주 일요일·배포 때 복구 연습 통과. 운영 서버는 T21 때 같은 방식으로 시작, 서버 밖 사본은 비용 승인 후",
    "with": [
     "신영국"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T23",
@@ -1136,36 +1137,38 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 3,
    "task": "고객관리 화면 실제 고객 데이터 연결",
    "owner": "Claude",
-   "start": "2026-11-16",
-   "end": "2026-11-18",
-   "status": "todo",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": false,
-   "note": "고객 목록·상세·결제와 키 이력",
+   "note": "관리자 고객관리 맨 위에 시험 사이트 가입 고객 목록·상세(이용권·결제·환불·키·이번 달 사용량·동의 기록). 읽기 전용, 처리는 결제 처리 확인에서",
    "added_on": "2026-11-03",
    "with": [
     "신영국"
    ],
    "after": [
     "T36"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T42",
    "phase": 3,
    "task": "서버관리 화면 실제 VPN 서버 연결",
    "owner": "Claude",
-   "start": "2026-11-17",
-   "end": "2026-11-19",
-   "status": "todo",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": false,
-   "note": "서버 상태·접속 키 수·IP 정보",
+   "note": "서버관리 맨 위에 실제 VPN 서버 상태(정상 여부·Outline 버전·접속 포트·키 수·최근 24시간/30일 사용량). 읽기만, 키 이름·접속 주소는 표시 안 함",
    "added_on": "2026-11-03",
    "with": [
     "신영국"
    ],
    "after": [
     "T36"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T43",
@@ -1281,6 +1284,12 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "date": "2026-11-04",
    "health": "on_track",
+   "title": "관리자 화면에 실제 고객·실제 서버를 연결하고 DB 백업을 시작했습니다",
+   "body": "통합 관리자의 고객관리에서 시험 사이트에 가입한 고객과 결제·키·사용량을, 서버관리에서 실제 VPN 서버 상태를 읽기 전용으로 볼 수 있습니다. 시험 서버 DB는 매일 새벽 4시 30분에 서버 안에 백업하고(최근 7개), 백업을 임시 DB에 되살려 보는 복구 연습도 통과했습니다."
+  },
+  {
+   "date": "2026-11-04",
+   "health": "on_track",
    "title": "환불 처리·키관리 화면·약관 동의 화면을 시험 서버에 올렸습니다",
    "body": "회사 사정일 때만 환불하는 처리(단순 변심은 환불 없음)와 관리자 키 멈춤·다시 열기를 만들었습니다. 키관리 화면은 실제 VPN 서버 키를 읽기 전용으로 보여 줍니다. 시험용으로 이용권을 바로 끝내는 버튼이 있어, 끝난 뒤 같은 키로 연장되는지 바로 확인할 수 있습니다. 오전에는 가입 화면이 실제 약관 문서를 그대로 보여 주고 만 14세 이상 확인과 동의 버전 저장을 하도록 바꿨습니다."
   },
@@ -1333,7 +1342,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
      {
       "name": "관리자 · 통합 관리자",
       "url": "https://test.ieumvpn.link/admin",
-      "note": "고객·서버·키 관리. 관리자 로그인 후 처음 화면이고, 위쪽 메뉴에서 다른 관리자 화면으로 이동. 모의 실행이라 서버 목록은 예시"
+      "note": "고객·서버·키 관리. 관리자 로그인 후 처음 화면. 고객관리·서버관리 맨 위는 시험 사이트 실제 고객과 실제 VPN 서버(읽기 전용), 그 아래 화면은 예시"
      },
      {
       "name": "관리자 · 키 작업",
@@ -1554,8 +1563,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "area": "관리자 화면",
    "name": "고객관리",
-   "test": "mock",
-   "test_note": "시험 서버 통합 관리자, 모의 실행",
+   "test": "ok",
+   "test_note": "시험 사이트 실제 고객 읽기 · 아래 예시 장부는 모의",
    "tasks": [
     "T36",
     "T41"
@@ -1564,8 +1573,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "area": "관리자 화면",
    "name": "서버관리",
-   "test": "mock",
-   "test_note": "예시 서버 목록으로 모의 실행",
+   "test": "ok",
+   "test_note": "실제 VPN 서버 상태 읽기 · IP 교체는 예시 서버 모의",
    "tasks": [
     "T36",
     "T42"
