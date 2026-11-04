@@ -483,7 +483,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-04T08:52:00+09:00",
+ "updated": "2026-11-04T09:33:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -605,13 +605,14 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "task": "무료 체험·데이터 한도 정책 결정",
    "owner": "김선용",
    "start": "2026-11-03",
-   "end": "2026-11-05",
-   "status": "doing",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": true,
-   "note": "요금은 홈페이지 기준 유지, 환불은 회사 사정일 때만, 월 데이터 100GB(11/3 결정). 남은 것은 무료 체험 조건. 신영국은 시스템으로 가능한 방식인지 확인",
+   "note": "요금은 홈페이지 기준 유지, 환불은 회사 사정일 때만, 월 데이터 100GB(11/3). 무료 체험(11/4 신영국 결정): 24시간·5GB, 계정·이메일당 1번, 같은 곳 하루 3번, 하루 최대 100번, 끝나면 같은 키 멈춤 → 결제 시 같은 키로 이어서",
    "with": [
     "신영국"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T06",
@@ -635,11 +636,11 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 1,
    "task": "사업자 정보·정책 페이지 게시",
    "owner": "Claude",
-   "start": "2026-11-06",
+   "start": "2026-11-04",
    "end": "2026-11-07",
-   "status": "todo",
+   "status": "doing",
    "critical": true,
-   "note": "PG 심사 전에 사이트에 있어야 함. 가입 화면과 같은 약관 문서를 공개 페이지로 게시",
+   "note": "시험 사이트에 이용약관·개인정보 처리방침·환불 규정 페이지와 사업자 정보 칸 준비(11/4). 남은 것: 사업자 정보 입력(신영국), T06 문구 확정 후 공개 게시(승인 필요)",
    "with": [
     "신영국"
    ],
@@ -744,17 +745,18 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 2,
    "task": "무료 체험에 실제 키 발급",
    "owner": "Claude",
-   "start": "2026-11-10",
-   "end": "2026-11-12",
-   "status": "todo",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": false,
-   "note": "체험 신청 시 실제 키 자동 발급",
+   "note": "시험 서버: 체험 신청 시 실제 키(5GB, 24시간) 발급, 끝나면 멈춤, 결제하면 같은 키로 이어서(체험 사용량은 월 100GB에서 빼지 않음). 키를 만들 수 없을 때는 체험을 쓰지 않고 안내",
    "with": [
     "신영국"
    ],
    "after": [
     "T05"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T16",
@@ -871,14 +873,15 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "phase": 3,
    "task": "관리자 화면 보안",
    "owner": "Claude",
-   "start": "2026-11-19",
-   "end": "2026-11-21",
-   "status": "todo",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "done",
    "critical": false,
-   "note": "관리자 로그인과 권한 보호",
+   "note": "로그인 시도 제한(같은 아이디·같은 곳 5번 등 → 15분), 60분 미사용 자동 로그아웃, 관리자 작업 기록, 관리자 보안 화면(기기 로그아웃·비밀번호 변경)",
    "with": [
     "신영국"
-   ]
+   ],
+   "done_on": "2026-11-04"
   },
   {
    "id": "T24",
@@ -1284,6 +1287,12 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "date": "2026-11-04",
    "health": "on_track",
+   "title": "무료 체험 조건을 정하고 체험에 실제 키를 붙였습니다",
+   "body": "무료 체험은 24시간·데이터 5GB로 정했습니다. 계정과 이메일마다 한 번이고, 같은 곳에서는 하루 3번, 전체는 하루 100번까지 받습니다. 시험 사이트에서 체험을 신청하면 실제 VPN 키가 나오고, 끝나면 멈췄다가 결제하면 같은 키로 이어서 씁니다. 관리자 로그인 보호(시도 제한·자동 로그아웃·작업 기록)와 약관·환불 규정 공개 페이지도 시험 사이트에 올렸습니다. 남은 건 사업자 정보 입력과 약관 문구 확정입니다."
+  },
+  {
+   "date": "2026-11-04",
+   "health": "on_track",
    "title": "관리자 화면에 실제 고객·실제 서버를 연결하고 DB 백업을 시작했습니다",
    "body": "통합 관리자의 고객관리에서 시험 사이트에 가입한 고객과 결제·키·사용량을, 서버관리에서 실제 VPN 서버 상태를 읽기 전용으로 볼 수 있습니다. 시험 서버 DB는 매일 새벽 4시 30분에 서버 안에 백업하고(최근 7개), 백업을 임시 DB에 되살려 보는 복구 연습도 통과했습니다."
   },
@@ -1363,6 +1372,16 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
      {
       "name": "관리자 · 중국 접속 점검",
       "url": "https://test.ieumvpn.link/admin/connectivity"
+     },
+     {
+      "name": "관리자 · 관리자 보안",
+      "url": "https://test.ieumvpn.link/admin/security",
+      "note": "로그인 보호 기준·로그인된 기기·비밀번호 변경·작업 기록"
+     },
+     {
+      "name": "약관 · 이용약관 / 개인정보 처리방침 / 환불 규정",
+      "url": "https://test.ieumvpn.link/terms",
+      "note": "/privacy, /refund도 같은 화면 · 아래 사업자 정보는 등록 전"
      }
     ]
    },
@@ -1443,8 +1462,8 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "area": "고객 화면",
    "name": "무료 체험",
-   "test": "mock",
-   "test_note": "예시 키로 동작",
+   "test": "ok",
+   "test_note": "실제 키 · 24시간·5GB · 끝나면 멈춤",
    "tasks": [
     "T05",
     "T15"
@@ -1524,7 +1543,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "area": "고객 화면",
    "name": "약관·개인정보 동의",
    "test": "part",
-   "test_note": "화면·동의 저장 동작 · 문구는 초안",
+   "test_note": "화면·동의 저장 동작 · 공개 약관 페이지 시험 사이트 · 문구는 초안",
    "tasks": [
     "T06",
     "T07",
@@ -1554,7 +1573,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "area": "관리자 화면",
    "name": "관리자 로그인·보안",
    "test": "ok",
-   "test_note": "고객과 같은 로그인 화면",
+   "test_note": "시도 제한 · 60분 자동 로그아웃 · 작업 기록 · /admin/security",
    "tasks": [
     "T38",
     "T23"
