@@ -1,0 +1,12 @@
+:root{--pp-ink:#16233d;--pp-dim:#5f6b80;--pp-line:#dde3ee;--pp-bg:#f6f8fb;--pp-blue:#2357d6}
+*{box-sizing:border-box}body{margin:0;background:var(--pp-bg);color:var(--pp-ink);font:16px/1.7 "Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
+.pp-bar{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;padding:12px max(16px,calc((100vw - 860px)/2));background:#fff;border-bottom:1px solid var(--pp-line)}
+.pp-brand{font-weight:800;font-size:18px;color:var(--pp-ink);text-decoration:none}.pp-brand span{color:var(--pp-blue)}.pp-brand small{font-weight:600;color:var(--pp-dim)}
+.pp-tabs{display:flex;flex-wrap:wrap;gap:4px}.pp-tabs a{padding:5px 12px;border-radius:999px;color:var(--pp-ink);text-decoration:none;font-size:14.5px}.pp-tabs a[aria-current=page]{background:#e8eefc;color:var(--pp-blue);font-weight:700}
+.pp-main{max-width:860px;margin:0 auto;padding:28px 16px 40px}h1{margin:0 0 4px;font-size:28px}.pp-meta{margin:0 0 20px;color:var(--pp-dim);font-size:14px}
+.pp-doc{background:#fff;border:1px solid var(--pp-line);border-radius:14px;padding:8px 22px 18px}.pp-doc h2{font-size:18px;margin:20px 0 6px}.pp-doc p{margin:6px 0}.pp-doc ul{margin:6px 0;padding-left:20px}.pp-doc a{color:var(--pp-blue)}
+.pp-business{margin-top:20px;background:#fff;border:1px solid var(--pp-line);border-radius:14px;padding:14px 22px}.pp-business h2{font-size:17px;margin:0 0 8px}.pp-temp{margin:0 0 10px;padding:8px 12px;border-radius:9px;background:#fff4e0;color:#8a4b00;font-size:14px}
+.pp-business dl{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:4px 24px}.pp-business dl div{display:flex;gap:10px;font-size:14.5px;padding:3px 0;border-bottom:1px dashed var(--pp-line)}
+.pp-business dt{color:var(--pp-dim);min-width:136px;flex:none}.pp-business dd{margin:0}.pp-pending{color:var(--pp-dim)}
+.pp-foot{text-align:center;color:var(--pp-dim);font-size:13.5px;padding:8px 16px 32px}.pp-foot a{color:var(--pp-dim)}
+@media (max-width:560px){h1{font-size:24px}.pp-doc{padding:4px 16px 14px}.pp-business{padding:12px 16px}}
