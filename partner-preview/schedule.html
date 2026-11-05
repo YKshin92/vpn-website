@@ -483,7 +483,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
 
 <script type="application/json" id="schedule-data">
 {
- "updated": "2026-11-05T22:39:00+09:00",
+ "updated": "2026-11-05T23:10:00+09:00",
  "launch": "2026-12-01",
  "phases": [
   {
@@ -1080,7 +1080,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
    "end": "2026-11-03",
    "status": "done",
    "critical": true,
-   "note": "고객관리·서버관리·키관리 화면을 시험 서버에 모의 실행으로 올림. 로그인은 시험 사이트와 같음. 실제 데이터 연결은 T41~T43",
+   "note": "고객관리·서버관리·키관리 화면을 시험 서버에 모의 실행으로 올림. 로그인은 시험 사이트와 같음. 실제 데이터 연결은 T41~T43 · 11/5 개편: 모든 관리자 화면에 같은 메뉴(고객·결제·이용권·1:1 문의·서버·설정), 예시 데이터는 개발 도구로 분리, 이름 통일",
    "added_on": "2026-11-03",
    "with": [
     "신영국"
@@ -1308,6 +1308,12 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
   {
    "date": "2026-11-05",
    "health": "on_track",
+   "title": "관리자 화면 메뉴를 하나로 정리하고 고객 화면 겹침을 고쳤습니다",
+   "body": "관리자 화면마다 다르던 메뉴를 하나로 통일했습니다. 고객 · 결제·이용권 · 1:1 문의 · 서버 · 설정 다섯 묶음이고, 예시 데이터와 모의 실행은 개발 도구 메뉴로 따로 모았습니다(운영에서는 없음). 고객 화면의 이용권·VPN 키 카드에서 글자가 겹치고 날짜가 두 줄로 꺾이던 문제도 고쳤습니다. 결제 수단은 위챗페이·알리페이가 먼저 나옵니다."
+  },
+  {
+   "date": "2026-11-05",
+   "health": "on_track",
    "title": "메일 서비스 전환 신청서와 운영 배포 준비, 결제 수단 순서를 정했습니다",
    "body": "위챗페이·알리페이를 메인 결제 수단으로 두고 카카오페이·카드는 그다음으로 바꿨습니다(주 고객이 중국 체류 한인). 메일 서비스(SES) 운영 전환 신청서 초안과 반송·불만 처리 장치를 준비했고, 운영 서버 배포에서 시험 전용 기능을 어떻게 뺄지 정리했습니다. 이제 신영국의 SES 신청 제출, 운영 서버 승인, 사업자 정보와 김선용의 PG 문의를 기다립니다."
   },
@@ -1394,16 +1400,21 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
       "note": "고객은 내 이용권, 관리자는 관리자 화면으로 이동"
      },
      {
-      "name": "관리자 · 통합 관리자",
+      "name": "관리자 · 고객",
       "url": "https://test.ieumvpn.link/admin",
-      "note": "고객·서버·키 관리. 관리자 로그인 후 처음 화면. 고객관리·서버관리 맨 위는 시험 사이트 실제 고객과 실제 VPN 서버(읽기 전용), 그 아래 화면은 예시"
+      "note": "관리자 로그인 후 첫 화면. 위 메뉴: 고객 · 결제·이용권 · 1:1 문의 · 서버 · 설정 · 개발 도구(예시 데이터)"
      },
      {
-      "name": "관리자 · 키 작업",
+      "name": "관리자 · 서버",
+      "url": "https://test.ieumvpn.link/admin/servers",
+      "note": "실제 VPN 서버 상태 · 접속 키 목록"
+     },
+     {
+      "name": "관리자 · 모의 키 작업 (개발 도구)",
       "url": "https://test.ieumvpn.link/admin/key-jobs"
      },
      {
-      "name": "관리자 · 결제 처리 확인",
+      "name": "관리자 · 결제·이용권",
       "url": "https://test.ieumvpn.link/admin/payment-status"
      },
      {
@@ -1415,11 +1426,7 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
       "url": "https://test.ieumvpn.link/admin/outages"
      },
      {
-      "name": "관리자 · 중국 접속 점검",
-      "url": "https://test.ieumvpn.link/admin/connectivity"
-     },
-     {
-      "name": "관리자 · 관리자 보안",
+      "name": "관리자 · 설정(관리자 보안)",
       "url": "https://test.ieumvpn.link/admin/security",
       "note": "로그인 보호 기준·로그인된 기기·비밀번호 변경·작업 기록"
      },
