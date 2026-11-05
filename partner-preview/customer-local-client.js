@@ -1,6 +1,10 @@
 import {mountSupportNotice} from './customer-support-notice.mjs';
+import {renderPolicy} from './policy-text.mjs';
 import {mountPaymentHistory} from './customer-payment-history.mjs';
-import {mountSupportInbox} from './customer-support-client.mjs';
+import {mountVerifiedWallet} from './customer-verified-wallet.mjs';
+import {mountCustomerMockKey} from './customer-mock-key.mjs';
+import {mountVerifiedOrder} from './customer-verified-order.mjs';
+import {mountSupportWidget} from './customer-support-widget.mjs';
 import {mountCustomerSettings} from './customer-settings.mjs';
 import {mountUsernameCheck} from './customer-username-check.mjs';
 import {mountHomeSession} from './customer-home-session.mjs';
@@ -12,10 +16,12 @@ import {addAccountLanguagePreview} from './customer-language-preview.mjs';
 let tabStorage;try{tabStorage=window.sessionStorage;}catch{}
 const pendingMemory=requestMemory(tabStorage);
 const $=id=>document.getElementById(id);let csrf='';
+// One login form: a customer ID signs in here; if it is not a customer, the same ID/password is tried as an administrator.
+async function adminLogin(username,password){if(!/^[a-zA-Z0-9_-]{3,40}$/.test(username)||password.length<8)return false;try{const r=await fetch('/api/auth/login',{method:'POST',credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(15000),headers:{'Content-Type':'application/json'},body:JSON.stringify({username,password})});if(!r.ok)return false;const next=new URLSearchParams(location.search).get('next');const home=await fetch('./admin.html',{method:'HEAD',credentials:'same-origin',cache:'no-store'}).then(x=>x.ok?'./admin.html':'./admin.html',()=>'./admin.html');location.assign(next&&/^\/admin(\/[a-z-]+)?$/.test(next)?next:home);return true;}catch{return false;}}
 async function api(path,body){const r=await fetch('/api/local-customer/'+path,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(15000),headers:body?{'Content-Type':'application/json','X-Local-CSRF':csrf}:{},...(body?{body:JSON.stringify(body)}:{})});const data=await r.json();if(!r.ok){const error=Error(data.reason??'요청 실패');error.reason=data.reason;error.status=r.status;throw error;}return data;}
 const text=(id,value)=>{if($(id))$(id).textContent=value;};
 const notice=value=>text($('signup-status')?'signup-status':'status',value);
-let supportInbox,supportNotice,paymentHistory;let state;try{state=await api('session');csrf=state.csrf;}catch{notice('격리 체험 서버에 연결하지 못했습니다');}
+let supportInbox,supportNotice,paymentHistory,verifiedWallet,verifiedOrder,customerKey;let state;try{state=await api('session');csrf=state.csrf;}catch{notice('격리 체험 서버에 연결하지 못했습니다');}
 const realMail=state?.mode==='private-email-test';
 const chosen=new URLSearchParams(location.search).get('plan');const plan=['trial','30','90','180'].includes(chosen)?chosen:null;
 if($('account')){
@@ -35,18 +41,27 @@ if($('signup-form')){
  const label=document.createElement('label');label.className='field-label';label.textContent=realMail?'이메일로 받은 6자리 인증 코드':'6자리 인증 코드 · 격리 체험';const input=document.createElement('input');input.type='text';input.inputMode='numeric';input.maxLength=6;input.pattern='[0-9]{6}';input.autocomplete='one-time-code';label.append(input);
  const codeNote=document.createElement('p'),verify=document.createElement('button');codeNote.className='help';codeNote.style.fontSize='16px';codeNote.style.fontWeight='600';verify.type='button';verify.className='primary';verify.textContent='인증하고 계정 만들기';const checkStatus=document.createElement('button');checkStatus.type='button';checkStatus.className='view';checkStatus.textContent='요청 상태 다시 확인';panel.append(codeNote,label,verify,checkStatus);$('signup-form').after(panel);
  checkStatus.onclick=async()=>{if(!signupId||signupBusy)return;signupBusy=true;checkStatus.disabled=true;try{const value=await api('signup-status/'+encodeURIComponent(signupId));codeNote.textContent=(request?.simulationCode?'시험 코드: '+request.simulationCode+' · 실제 메일 발송 없음 · ':'')+requestStatusMessage(value);if(realMail&&value.state==='pending'&&value.delivery==='accepted'){request=value;expires=Date.parse(value.expiresAt);label.hidden=false;verify.hidden=false;verify.disabled=false;}if(value.state==='consumed'){pendingMemory.clear();request=null;verify.hidden=true;const link=document.createElement('a');link.href='./account.html'+(plan?'?plan='+encodeURIComponent(plan):'');link.textContent='로그인으로 이동';if(!panel.querySelector('a'))panel.append(link);notice('이미 계정 생성이 완료됐습니다 로그인 화면에서 확인해 주세요');}else if(['expired','locked','conflict'].includes(value.state)){request=null;signupId=null;pendingMemory.clear();thaw();restoreSignupInformation();notice('이 요청은 종료됐습니다 비밀번호를 다시 입력하고 새로 요청해 주세요');}else if(!realMail&&value.delivery==='accepted'&&!request?.simulationCode){request=null;expires=Date.parse(value.expiresAt);verify.disabled=true;thaw();codeNote.textContent='새로고침으로 시험 코드 표시가 초기화되었습니다 동일한 가입 정보와 비밀번호를 다시 입력하고 화면에서 시험 코드 확인을 눌러 주세요 기존 요청으로 다시 확인합니다';notice(codeNote.textContent);}else notice('기존 요청 상태만 확인했습니다 코드를 자동 재발송하지 않습니다');}catch(e){notice(authMessage(e));}finally{signupBusy=false;checkStatus.disabled=false;}};
+ // The signup screen shows the server's active documents: exactly the version a consent will point to.
+ function showPolicies(value){
+  const docs=value?.documents;if(!docs)return;
+  for(const key of ['terms','privacy','profile','notice']){const tpl=$('policy-'+key),doc=docs[key];if(!tpl||typeof doc?.content!=='string')continue;const {title,section}=renderPolicy(document,doc.content);tpl.content.replaceChildren(section);if(title)tpl.dataset.title=title;}
+  const at=Date.parse(value.effectiveAt);if($('policy-version'))$('policy-version').textContent='시험 서버 초안 · '+(Number.isFinite(at)?new Date(at+9*3600000).toISOString().slice(0,10).replace(/-/g,'.'):'')+' 기준';
+  const draft=document.querySelector?.('.policy-draft');if(draft)draft.textContent='검토용 초안입니다 · 동의하면 이 문서 버전이 가입 기록에 함께 저장돼요';
+  const banner=document.querySelector?.('.draft-banner');if(banner)banner.textContent='시험 서버 가입 · 실제 결제·메일은 없고 입력한 정보는 시험 DB에 저장돼요';
+  const foot=document.querySelector?.('.footnote');if(foot)foot.textContent='약관·보유 기간·사업자 정보는 운영 전에 확정돼요 · 동의한 문서 버전과 시각은 가입 기록에 저장돼요';
+ }
  // Remembering an opaque request ID must not open verification on the consent step.
  // The backend safely restores a pending request after the user submits the form.
  function restoreSignupInformation(){panel.hidden=true;if($('join-information'))$('join-information').hidden=false;$('signup-preview').hidden=false;for(let i=1;i<=3;i++){const step=$('join-step-'+i);if(step){if(i===2)step.setAttribute('aria-current','step');else step.removeAttribute('aria-current');}}}
  const remembered=pendingMemory.read();if(remembered?.kind==='signup'){signupId=remembered.id;verify.disabled=true;}
- const policies=await api('policies');$('signup-preview').textContent=realMail?'인증 이메일 받기':'화면에서 시험 코드 확인';text('signup-connection',realMail?'비공개 이메일 인증 시험 · 코드 5분 유효 · 재발송 시 이전 코드 무효':'시험 가입 · 이메일 발송 없음 · .test 주소로 신청하면 화면에 인증 코드가 표시됩니다');
+ const policies=await api('policies');showPolicies(policies);$('signup-preview').textContent=realMail?'인증 이메일 받기':'화면에서 시험 코드 확인';text('signup-connection',realMail?'비공개 이메일 인증 시험 · 코드 5분 유효 · 재발송 시 이전 코드 무효':'시험 가입 · 이메일 발송 없음 · .test 주소로 신청하면 화면에 인증 코드가 표시됩니다');
  $('signup-form').addEventListener('submit',async event=>{
   event.preventDefault();event.stopImmediatePropagation();if(signupBusy||request)return;if(usernameCheck&&!usernameCheck.ensure())return;if(!$('signup-form').reportValidity())return;errorBox.hidden=true;signupBusy=true;
   const password=$('signup-password').value;
   try{
    $('signup-preview').disabled=true;
    signupId??=crypto.randomUUID();pendingMemory.save(signupId,'signup');
-   request=await api('signup',{requestId:signupId,username:$('signup-username').value,password,confirmation:$('signup-password-confirm').value,email:$('signup-email').value,nickname:$('signup-nickname').value,messenger:$('signup-messenger').value,messengerId:$('signup-messenger-id').value,consent:{releaseId:policies.releaseId,terms:$('agree-terms').checked,collection:$('agree-privacy').checked,profile:$('agree-profile').checked}});
+   request=await api('signup',{requestId:signupId,username:$('signup-username').value,password,confirmation:$('signup-password-confirm').value,email:$('signup-email').value,nickname:$('signup-nickname').value,messenger:$('signup-messenger').value,messengerId:$('signup-messenger-id').value,consent:{releaseId:policies.releaseId,terms:$('agree-terms').checked,collection:$('agree-privacy').checked,profile:$('agree-profile').checked,age:$('agree-age')?.checked===true}});
    signupId=request.id;pendingMemory.save(signupId,'signup');expires=Date.parse(request.expiresAt);$('signup-password').value='';$('signup-password-confirm').value='';codeNote.textContent=request.simulationCode?'시험 코드: '+request.simulationCode+' · 5분 유효 · 오입력 5회 제한 · 실제 메일 발송 없음':'기존 요청의 시험 발송 상태: '+(request.delivery??'미확정')+' · 자동 재발송하지 않습니다';const mayVerify=!!request.simulationCode||(realMail&&request.delivery==='accepted'&&request.state==='pending');if(realMail)codeNote.textContent=mayVerify?'이메일 발송 요청이 접수됐습니다 받은메일함과 스팸함을 확인해 주세요':'이메일 발송 상태: '+request.delivery+' · 요청 상태를 다시 확인해 주세요';verify.disabled=!mayVerify;label.hidden=!mayVerify;verify.hidden=!mayVerify;panel.hidden=false;if(mayVerify){if($('join-information'))$('join-information').hidden=true;$('signup-preview').hidden=true;for(let i=1;i<=3;i++){const step=$('join-step-'+i);if(step){if(i===3)step.setAttribute('aria-current','step');else step.removeAttribute('aria-current');}}document.querySelectorAll?.('.steps li')?.forEach((el,index)=>{if(index===2)el.setAttribute('aria-current','step');else el.removeAttribute('aria-current');});}freeze();panel.scrollIntoView({behavior:'smooth',block:'center'});input.focus({preventScroll:true});notice(realMail?'이메일로 받은 6자리 인증 코드를 입력해 주세요':'메일함이 아니라 아래 화면의 시험 코드를 입력해 주세요 실제 이메일은 발송되지 않습니다');
   }catch(e){panel.hidden=true;label.hidden=true;verify.hidden=true;request=null;errorMessage.textContent=authMessage(e);errorLogin.hidden=e.reason!=='enrollment-unavailable';errorBox.hidden=false;errorBox.scrollIntoView({behavior:'smooth',block:'center'});if(['simulation-email-required','invalid-password','enrollment-unavailable','policy-version-changed'].includes(e.reason)){signupId=null;pendingMemory.clear();}notice('');}finally{signupBusy=false;$('signup-preview').disabled=!!request;}
  },true);
@@ -63,13 +78,28 @@ if($('credential-form')){
  document.querySelector('.legacy-login').hidden=true;
  if(plan)$('account-signup').href='./signup.html?plan='+encodeURIComponent(plan);
  let loginBusy=false;
- $('credential-form').onsubmit=async event=>{event.preventDefault();if(loginBusy)return;loginBusy=true;const loginButton=$('credential-form').querySelector('button');loginButton.disabled=true;$('credential-status').classList?.remove('auth-error');try{await api('login',{username:$('login-id').value,password:$('login-password').value});location.reload();}catch(e){text('credential-status',authMessage(e));$('credential-status').classList?.add('auth-error');$('credential-status').setAttribute('role','alert');}finally{$('login-password').value='';loginBusy=false;loginButton.disabled=false;}};
+ $('credential-form').onsubmit=async event=>{event.preventDefault();if(loginBusy)return;loginBusy=true;const loginButton=$('credential-form').querySelector('button');loginButton.disabled=true;$('credential-status').classList?.remove('auth-error');try{await api('login',{username:$('login-id').value,password:$('login-password').value});location.reload();}catch(e){if(e.status===401&&await adminLogin($('login-id').value,$('login-password').value))return;text('credential-status',authMessage(e));$('credential-status').classList?.add('auth-error');$('credential-status').setAttribute('role','alert');}finally{$('login-password').value='';loginBusy=false;loginButton.disabled=false;}};
  text('credential-status','격리 DB의 시험 계정으로 로그인합니다 실제 계정이 아닙니다');
  mountLocalRecovery({api,memory:pendingMemory});
  $('login').hidden=!!state?.authenticated;$('logout').hidden=!state?.authenticated;
- let logoutBusy=false;$('logout').onclick=async()=>{if(logoutBusy)return;logoutBusy=true;$('logout').disabled=true;try{await api('logout',{});supportInbox?.dispose();supportNotice?.dispose();paymentHistory?.dispose();location.reload();}catch(e){notice(authMessage(e));}finally{logoutBusy=false;$('logout').disabled=false;}};
+ let logoutBusy=false;$('logout').onclick=async()=>{if(logoutBusy)return;logoutBusy=true;$('logout').disabled=true;try{await api('logout',{});supportInbox?.dispose();supportNotice?.dispose();paymentHistory?.dispose();verifiedWallet?.dispose();customerKey?.dispose();verifiedOrder?.dispose();location.reload();}catch(e){notice(authMessage(e));}finally{logoutBusy=false;$('logout').disabled=false;}};
  if(state?.authenticated){
-  await mountLocalPass({api,state,selectedPlan:plan,notice});
+  // Sent here from an administrator screen while signed in as a customer: say so, instead of a silent bounce (2026-11-05).
+  {const wanted=new URLSearchParams(location.search).get('next')??'';if(/^\/admin(\/[a-z-]+)?$/.test(wanted))notice('고객 계정으로 로그인돼 있어요 · 관리자 화면은 관리자 계정(manager)으로 로그아웃 후 다시 로그인해 주세요');}
+  if(state.verifiedWalletEnabled){
+   $('workspace').hidden=false;text('customer-email',state.email??'');const legacy=document.querySelector('#workspace > .account-grid');if(legacy)legacy.hidden=true;
+   const grid=document.createElement('div');grid.className='verified-grid';$('workspace').append(grid);const root=document.createElement('section');root.className='panel';root.id='verified-wallet';grid.append(root);let language='ko';try{language=localStorage.getItem('ieum-language')??'ko';}catch{}
+   verifiedWallet=mountVerifiedWallet({root,enabled:true,language,ordering:!!state.verifiedOrderEnabled,realKeys:!!state.realKeysEnabled,load:async()=>{const r=await fetch('/api/customer/payment-pass',{credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(15000)});const v=await r.json();if(!r.ok){const e=Error('wallet-unavailable');e.status=r.status;throw e;}return v;},onAuthLoss:()=>location.reload()});notice('');window.addEventListener('pagehide',()=>verifiedWallet?.dispose(),{once:true});
+   // Own simulated key (example access key on the test server); hidden automatically where the route does not exist.
+   const keyRoot=document.createElement('section');keyRoot.className='panel';keyRoot.id='verified-key';grid.append(keyRoot);
+   customerKey=mountCustomerMockKey({root:keyRoot,enabled:true,language,load:async()=>{const r=await fetch('/api/customer/mock-key',{credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(15000)});let v={};try{v=await r.json();}catch{}if(!r.ok){const e=Error('key-unavailable');e.status=r.status;throw e;}return v;},onAuthLoss:()=>location.reload()});window.addEventListener('pagehide',()=>customerKey?.dispose(),{once:true});
+   if(state.verifiedOrderEnabled){
+    // Isolated simulation: orders and test receipts go through the server; the browser sends only a product, method and request id.
+    const call=async(path,body)=>{const r=await fetch('/api/customer/'+path,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(20000),headers:body?{'Content-Type':'application/json','X-Local-CSRF':csrf}:{},...(body?{body:JSON.stringify(body)}:{})});let v={};try{v=await r.json();}catch{}if(!r.ok){const e=Error(v.reason??'payment-order-unavailable');e.reason=v.reason;e.status=r.status;throw e;}return v;};
+    const orderRoot=document.createElement('section');orderRoot.className='panel';orderRoot.id='verified-order';orderRoot.setAttribute('aria-label','이용권 신청');grid.append(orderRoot);
+    verifiedOrder=mountVerifiedOrder({root:orderRoot,language,initialProduct:plan==='trial'?'trial':plan?'pass-'+plan:null,loadProducts:()=>call('payment-products'),createOrder:input=>call('payment-orders',input),claimTrial:input=>call('payment-trial',input),pay:id=>call('payment-orders/'+encodeURIComponent(id)+'/mock-pay',{}),onChanged:()=>{void verifiedWallet?.refresh();void customerKey?.refresh();void paymentHistory?.refresh();},onAuthLoss:()=>location.reload()});window.addEventListener('pagehide',()=>verifiedOrder?.dispose(),{once:true});
+   }
+  }else await mountLocalPass({api,state,selectedPlan:plan,notice});
   await mountCustomerSettings({api,onSessionEnded:()=>location.assign('./account.html')});
  }else notice('격리 시험 계정으로 로그인하거나 회원가입하세요');
 }
@@ -82,8 +112,10 @@ if(state?.authenticated&&state.paymentStatusEnabled&&$('payment-history')){
 }
 
 if(state?.authenticated&&state.supportEnabled&&$('customer-support')){
- $('support-section').hidden=false;
+ $('support-section').hidden=false;$('support-section').classList.add('support-widget-host');
  const supportCall=async(path,body)=>{const response=await fetch('/api/customer/support'+path,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',signal:AbortSignal.timeout(15000),...(body?{headers:{'Content-Type':'application/json','X-Local-CSRF':csrf},body:JSON.stringify(body)}:{})});const result=await response.json();if(!response.ok){const error=Error(result.reason??'support-unavailable');error.status=response.status;throw error;}return result;};
- if($('support-notice'))supportNotice=mountSupportNotice({node:$('support-notice'),api:supportCall,intervalMs:30000,onAuthLoss:()=>{supportInbox?.dispose();location.reload();}});
- supportInbox=mountSupportInbox({root:$('customer-support'),api:supportCall,readOnly:state.mode==='partner-preview',onChange:()=>supportNotice?.refresh()});if($('support-notice'))$('support-notice').onclick=()=>{void supportInbox?.refresh();};
+ if($('support-notice'))supportNotice=mountSupportNotice({node:$('support-notice'),api:supportCall,intervalMs:30000,onSummary:summary=>supportInbox?.setUnread?.(summary?.unreadThreads??0),onAuthLoss:()=>{supportInbox?.dispose();location.reload();}});
+ supportInbox=mountSupportWidget({root:$('customer-support'),api:supportCall,readOnly:state.mode==='partner-preview',onChange:()=>supportNotice?.refresh()});if($('support-notice'))$('support-notice').onclick=event=>{event.preventDefault();supportInbox?.open($('support-notice').hasAttribute('data-unread')?'inbox':'guide');};
+ window.addEventListener('pagehide',()=>{supportInbox?.dispose();supportNotice?.dispose();},{once:true});
 }
+

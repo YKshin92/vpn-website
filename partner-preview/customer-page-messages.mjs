@@ -869,6 +869,16 @@ export const pageMessages={
     "必填",
     "必須"
   ],
+  "만 14세 이상입니다": [
+    "I am 14 or older",
+    "我已年满 14 周岁",
+    "14歳以上です"
+  ],
+  "만 14세 미만은 가입할 수 없어요 · 모든 필수 내용을 확인한 후 동의해 주세요": [
+    "You must be 14 or older to sign up · Review all required details before agreeing",
+    "未满 14 周岁不能注册 · 请确认所有必需内容后再同意",
+    "14歳未満は登録できません · 必須の内容をすべて確認して同意してください"
+  ],
   "서비스 이용약관 동의": [
     "Agree to the terms of service",
     "同意服务使用条款",
@@ -2024,6 +2034,11 @@ export const pageMessages={
     "登录独立数据库中的测试账号，并非实际账号",
     "分離DBの試験アカウントでログインします。実際のアカウントではありません"
   ],
+  "고객 계정으로 로그인돼 있어요 · 관리자 화면은 관리자 계정(manager)으로 로그아웃 후 다시 로그인해 주세요": [
+    "You are signed in as a customer. For the administrator screens, sign out and sign in with the administrator account (manager).",
+    "当前以顾客账号登录。要进入管理员页面，请退出后用管理员账号（manager）重新登录。",
+    "お客様アカウントでログイン中です。管理者画面は、ログアウト後に管理者アカウント（manager）でログインしてください。"
+  ],
   "격리 시험 계정으로 로그인하거나 회원가입하세요": [
     "Log in or sign up for a test account",
     "请登录或注册测试账号",
@@ -2309,10 +2324,10 @@ export const pageMessages={
     "180 天套餐",
     "180日利用券"
   ],
-  "추가 데이터 10GiB": [
-    "Additional 10 GiB",
-    "额外 10 GiB 流量",
-    "追加データ10GiB"
+  "추가 데이터 10GB": [
+    "Additional 10 GB",
+    "额外 10 GB 流量",
+    "追加データ10GB"
   ],
   "무료 체험은 계정당 한 번만 신청할 수 있습니다 현재 이용권을 확인해 주세요": [
     "One free trial per account. Check your current pass.",
@@ -2424,20 +2439,20 @@ export const pageMessages={
     "· 此非实际 VPN 连接测试",
     "・実際のVPN接続試験ではありません"
   ],
-  "현재 이용권에 10GiB를 추가합니다 기존 가상 키와 만료일은 유지됩니다": [
-    "Add 10 GiB to the current pass. The virtual key and expiry stay the same.",
-    "为当前套餐增加 10 GiB，虚拟密钥及到期日保持不变",
-    "現在の利用券に10GiBを追加します。仮想キーと期限は変わりません"
+  "현재 이용권에 10GB를 추가합니다 기존 가상 키와 만료일은 유지됩니다": [
+    "Add 10 GB to the current pass. The virtual key and expiry stay the same.",
+    "为当前套餐增加 10 GB，虚拟密钥及到期日保持不变",
+    "現在の利用券に10GBを追加します。仮想キーと期限は変わりません"
   ],
   "· 데이터 한도": [
     "· Data limit",
     "· 流量上限",
     "・データ上限"
   ],
-  "체험은 계정당 한 번입니다 24시간 · 1GiB 시험 이용권이며 실제 VPN 연결은 제공하지 않습니다": [
-    "One trial per account: 24 hours and 1 GiB of test data. No real VPN connection is provided.",
-    "每个账号可体验一次，为 24 小时、1 GiB 测试套餐，不提供实际 VPN 连接",
-    "体験は1アカウント1回、24時間・1GiBの試験利用券です。実際のVPN接続はありません"
+  "체험은 계정당 한 번입니다 24시간 · 1GB 시험 이용권이며 실제 VPN 연결은 제공하지 않습니다": [
+    "One trial per account: 24 hours and 1 GB of test data. No real VPN connection is provided.",
+    "每个账号可体验一次，为 24 小时、1 GB 测试套餐，不提供实际 VPN 连接",
+    "体験は1アカウント1回、24時間・1GBの試験利用券です。実際のVPN接続はありません"
   ],
   "가상 키는 유지됩니다 · 예상 만료일": [
     "Virtual key retained · Estimated expiry",
@@ -2449,10 +2464,10 @@ export const pageMessages={
     "· 流量",
     "・データ"
   ],
-  "GiB 추가 · 최종 만료일은 테스트 결제 반영 시 확정됩니다": [
-    "GiB added · Final expiry is set when test payment is applied",
-    "GiB 追加 · 最终到期日在测试付款生效时确定",
-    "GiB追加・最終期限は試験決済反映時に確定します"
+  "GB 추가 · 최종 만료일은 테스트 결제 반영 시 확정됩니다": [
+    "GB added · Final expiry is set when test payment is applied",
+    "GB 追加 · 最终到期日在测试付款生效时确定",
+    "GB追加・最終期限は試験決済反映時に確定します"
   ],
   "테스트 결제 확인 후": [
     "After test payment verification:",
@@ -2464,10 +2479,10 @@ export const pageMessages={
     "天 ·",
     "日・"
   ],
-  "GiB 시험 이용권과 가상 키가 준비됩니다": [
-    "GiB test pass and a virtual key will be prepared",
-    "GiB 测试套餐及虚拟密钥将准备完成",
-    "GiBの試験利用券と仮想キーを用意します"
+  "GB 시험 이용권과 가상 키가 준비됩니다": [
+    "GB test pass and a virtual key will be prepared",
+    "GB 测试套餐及虚拟密钥将准备完成",
+    "GBの試験利用券と仮想キーを用意します"
   ],
   "주문 번호:": [
     "Order number:",
@@ -2714,10 +2729,10 @@ export const pageMessages={
     "增加流量 · 测试",
     "データ追加・試験"
   ],
-  "10GiB · 3,000원은 시험값입니다 실제 청구는 없습니다": [
-    "10 GiB · KRW 3,000 is a test value. No actual charge.",
-    "10 GiB · 3,000 韩元为测试值，不实际扣费",
-    "10GiB・3,000ウォンは試験値です。実際の請求はありません"
+  "10GB · 3,000원은 시험값입니다 실제 청구는 없습니다": [
+    "10 GB · KRW 3,000 is a test value. No actual charge.",
+    "10 GB · 3,000 韩元为测试值，不实际扣费",
+    "10GB・3,000ウォンは試験値です。実際の請求はありません"
   ],
   "시험 계정": [
     "Test account",
@@ -2977,4 +2992,94 @@ Object.assign(pageMessages,{
  '예시 대화 · 읽기 전용입니다. 실제 문의나 답변은 전송하지 않습니다':['Example conversation · read only. No real messages are sent.','示例对话 · 只读，不发送实际咨询或回复。','サンプル会話 · 読み取り専用です。実際のメッセージは送信しません。'],
  '중국 접속 시험':['China connection tests','中国连接测试','中国接続テスト'],
  '결제 내역':['Payment updates','付款记录','決済履歴']
+});
+// 1:1 상담창·FAQ·고객 대화 문구 (2026-10-29 다국어 점검)
+Object.assign(pageMessages,{
+ "이음 고객 상담":["Ieum Support","以音客服","イウム サポート"],
+ "무엇을 도와드릴까요?":["How can we help?","有什么可以帮您？","どのようなご用件ですか？"],
+ "상담창 닫기":["Close support window","关闭客服窗口","サポート画面を閉じる"],
+ "상담 메뉴":["Support menu","客服菜单","サポートメニュー"],
+ "자주 묻는 질문":["FAQ","常见问题","よくある質問"],
+ "관리자에게 문의하기":["Contact an administrator","联系管理员","管理者に問い合わせる"],
+ "빠른 안내를 먼저 확인해 보세요":["Check the quick answers first","请先查看快速指南","まずはクイックガイドをご確認ください"],
+ "자동 안내는 기본 정보만 제공합니다. 해결이 어렵다면 관리자에게 직접 문의를 남겨 주세요.":["Automatic answers cover the basics only. If they don't solve it, leave a message for an administrator.","自动指南仅提供基本信息。如无法解决，请直接给管理员留言。","自動案内は基本情報のみです。解決しない場合は管理者に直接お問い合わせください。"],
+ "자동 안내 · FAQ":["Automatic answer · FAQ","自动指南 · 常见问题","自動案内 · FAQ"],
+ "이 질문은 관리자 확인이 필요합니다. 아래 버튼으로 문의를 남겨 주세요.":["This question needs an administrator. Use the button below to leave a message.","此问题需要管理员确认，请通过下方按钮留言。","この質問は管理者の確認が必要です。下のボタンからお問い合わせください。"],
+ "안내 확인":["Get answer","查看指南","案内を見る"],
+ "궁금한 점을 입력해 보세요":["Type your question","请输入您的问题","質問を入力してください"],
+ "자동 안내에 질문하기":["Ask the automatic guide","向自动指南提问","自動案内に質問する"],
+ "화면 공유용 예시입니다. 실제 문의 전송은 비활성화되어 있습니다":["This is a shared preview. Sending real messages is disabled.","这是用于共享的示例画面，实际咨询发送已停用。","画面共有用のサンプルです。実際の問い合わせ送信は無効です。"],
+ "로그인하고 문의 남기기":["Log in to send a message","登录后留言","ログインして問い合わせる"],
+ "내 문의와 답변은 로그인 후 확인할 수 있어요":["Log in to see your messages and replies","登录后可查看您的咨询和回复","ログインするとお問い合わせと返信を確認できます"],
+ "앱은 어떻게 설치하나요?":["How do I install the app?","如何安装应用？","アプリはどうやってインストールしますか？"],
+ "Outline Client를 설치한 뒤 내 이용권에서 확인한 접속 키를 앱에 추가해 주세요. 홈페이지의 기기별 설치 안내에서 순서를 볼 수 있습니다. 현재 예시 키로는 실제 VPN에 연결할 수 없습니다.":["Install Outline Client, then add the access key shown in My pass to the app. The device setup guide on the homepage shows each step. The current example key cannot connect to a real VPN.","请安装 Outline Client，然后将“我的套餐”中的访问密钥添加到应用中。首页的设备安装指南列出了具体步骤。当前的示例密钥无法连接实际 VPN。","Outline Client をインストールし、マイ利用権で確認したアクセスキーをアプリに追加してください。手順はホームページの端末別インストール案内で確認できます。現在のサンプルキーでは実際のVPNに接続できません。"],
+ "VPN이 연결되지 않아요":["The VPN won't connect","VPN 无法连接","VPNに接続できません"],
+ "기기 인터넷 연결과 Outline 연결 상태, 이용권 만료 여부를 먼저 확인해 주세요. 문제가 계속되면 사용 기기·지역·통신망·오류 문구를 관리자에게 남겨 주세요. 중국의 접속 가능 여부는 현지 회선 확인이 필요하며 자동 안내로 확정할 수 없습니다.":["First check your device's internet connection, the Outline connection status and whether your pass has expired. If the problem continues, send an administrator your device, location, network and the error message. Whether a connection works in China depends on local networks and can't be confirmed by the automatic guide.","请先检查设备网络、Outline 连接状态以及套餐是否到期。如问题仍然存在，请将使用设备、所在地区、网络运营商和错误信息留言给管理员。能否在中国连接需要核实当地线路，自动指南无法确定。","まず端末のインターネット接続、Outlineの接続状態、利用権の期限をご確認ください。問題が続く場合は、端末・地域・通信回線・エラー文言を管理者にお知らせください。中国での接続可否は現地回線の確認が必要で、自動案内では確定できません。"],
+ "추가 데이터는 언제까지 쓸 수 있나요?":["How long can I use extra data?","追加流量可以用到什么时候？","追加データはいつまで使えますか？"],
+ "추가 데이터는 현재 월간 주기에 사용하는 방식으로 준비 중입니다. 다음 주기에는 추가량이 이월되지 않고 기본 제공량으로 돌아갑니다. 실제 적용량과 초기화 시점은 관리자에게 확인해 주세요.":["Extra data is being prepared to apply to the current monthly cycle. It does not carry over; the next cycle returns to the base allowance. Ask an administrator for the actual amount and reset time.","追加流量计划仅适用于当前月度周期，不会结转到下一周期，下一周期将恢复为基本流量。实际流量和重置时间请向管理员确认。","追加データは現在の月間サイクル内で使う方式で準備中です。次のサイクルには繰り越されず、基本容量に戻ります。実際の容量とリセット時期は管理者にご確認ください。"],
+ "결제·연장·환불을 문의하고 싶어요":["I have a question about payment, extension or refunds","我想咨询付款、延期或退款","決済・延長・返金について問い合わせたい"],
+ "결제 확인, 기간 연장, 환불 여부는 관리자 확인이 필요합니다. 문의에 상황을 남겨 주세요. 비밀번호·카드 정보·VPN 접속 키 전체는 보내지 마세요.":["Payment checks, extensions and refunds need an administrator. Describe your situation in a message. Do not send passwords, card details or a full VPN access key.","付款确认、延期和退款需要管理员确认。请在咨询中说明情况。请勿发送密码、银行卡信息或完整的 VPN 访问密钥。","決済の確認、期間延長、返金は管理者の確認が必要です。状況をお問い合わせに書いてください。パスワード・カード情報・VPNアクセスキー全体は送らないでください。"],
+ "월–금 09:00–18:00 · 한국시간":["Mon–Fri 09:00–18:00 · Korea time","周一至周五 09:00–18:00 · 韩国时间","月〜金 09:00–18:00 · 韓国時間"],
+ "문의 내용을 남겨 주시면 확인 후 순서대로 답변드립니다.":["Leave a message and we will reply in order after checking it.","请留言，我们确认后将依次回复。","お問い合わせを残していただければ、確認後に順番に返信します。"],
+ "지금은 상담 운영시간 외입니다. 문의를 남겨 주시면 관리자가 확인 후 답변드립니다.":["Support is currently outside business hours. Leave a message and an administrator will reply after checking it.","现在是客服非工作时间。请留言，管理员确认后会回复您。","現在はサポート時間外です。お問い合わせを残していただければ、管理者が確認後に返信します。"],
+ "상담 대화":["Conversations","咨询对话","相談チャット"],
+ "상담 종료":["Closed","咨询已结束","相談終了"],
+ "로그인 상태를 다시 확인해 주세요":["Please check that you are still logged in","请重新确认登录状态","ログイン状態をもう一度ご確認ください"],
+ "대화 상태가 바뀌었습니다. 새로 확인한 뒤 다시 시도해 주세요":["The conversation changed. Refresh and try again.","对话状态已变更，请刷新后重试。","会話の状態が変わりました。更新してからもう一度お試しください。"],
+ "전송하지 못했습니다. 입력한 내용은 유지됩니다. 다시 보내 주세요":["Could not send. Your text is kept. Please send it again.","发送失败。已保留您输入的内容，请重新发送。","送信できませんでした。入力内容は保持されています。もう一度送信してください。"],
+ "예: 중국에서 연결이 되지 않아요":["e.g. I can't connect from China","例如：在中国无法连接","例：中国で接続できません"],
+ "메시지를 입력하세요. 예: 아이폰에서 VPN 연결이 안 돼요":["Type your message. e.g. The VPN won't connect on my iPhone","请输入消息。例如：iPhone 上无法连接 VPN","メッセージを入力してください。例：iPhoneでVPNに接続できません"],
+ "대화 목록으로":["Back to conversations","返回对话列表","会話一覧へ"],
+ "이음 상담팀":["Ieum support team","以音客服团队","イウム サポートチーム"],
+ "궁금한 점을 메시지로 남겨 주세요. 관리자가 확인 후 이 대화에 답변드립니다.":["Leave your question as a message. An administrator will reply in this conversation after checking it.","请以消息形式留下您的问题，管理员确认后会在此对话中回复。","ご質問をメッセージで残してください。管理者が確認後、この会話で返信します。"],
+ "비밀번호나 VPN 접속 키 전체는 보내지 마세요":["Do not send passwords or a full VPN access key","请勿发送密码或完整的 VPN 访问密钥","パスワードやVPNアクセスキー全体は送らないでください"],
+ "문의를 접수하고 있습니다":["Sending your message","正在提交咨询","問い合わせを送信しています"],
+ "← 목록":["← List","← 列表","← 一覧"],
+ "대화 새로 확인":["Refresh conversation","刷新对话","会話を更新"],
+ "상담 메시지":["Support messages","咨询消息","相談メッセージ"],
+ "관리자 답변 · 월–금 09:00–18:00 (한국시간)":["Administrator replies · Mon–Fri 09:00–18:00 (Korea time)","管理员回复 · 周一至周五 09:00–18:00（韩国时间）","管理者の返信 · 月〜金 09:00–18:00（韓国時間）"],
+ "고객":["Customer","客户","お客様"],
+ "메시지 더 보기":["Load more messages","查看更多消息","メッセージをもっと見る"],
+ "종료된 상담입니다. 추가 문의는 다시 열어 남겨 주세요":["This conversation is closed. Reopen it to send another message.","此咨询已结束。如需继续咨询，请重新打开。","この相談は終了しています。追加のお問い合わせは再開してから送ってください。"],
+ "문의는 언제든 남길 수 있으며 관리자가 확인 후 답변드립니다":["You can leave a message any time. An administrator will reply after checking it.","您可以随时留言，管理员确认后会回复。","お問い合わせはいつでも残せます。管理者が確認後に返信します。"],
+ "추가로 궁금한 점을 남겨 주세요":["Add anything else you want to ask","如有其他问题请留言","ほかにご質問があれば入力してください"],
+ "보내는 중":["Sending","发送中","送信中"],
+ "다시 보내기":["Send again","重新发送","再送信"],
+ "+ 새 문의 남기기":["+ New message","+ 新建咨询","+ 新しい問い合わせ"],
+ "아직 대화가 없습니다. 궁금한 점을 남겨 주세요":["No conversations yet. Leave a question any time.","暂无对话，欢迎随时留言。","まだ会話はありません。ご質問をお寄せください。"]
+});
+Object.assign(pageMessages,{
+ "대화를 불러오지 못했습니다. 잠시 후 다시 확인해 주세요":["Could not load the conversation. Please check again shortly.","无法加载对话，请稍后再试。","会話を読み込めませんでした。しばらくしてからもう一度ご確認ください。"],
+ "목록을 불러오지 못했습니다":["Could not load the list","无法加载列表","一覧を読み込めませんでした"],
+ "다시 확인":["Check again","重新查看","もう一度確認"]
+});
+Object.assign(pageMessages,{
+ "결제정보 없이 24시간 · 데이터 5GB · 고객당 1회, 자동 유료 전환은 없습니다":["No payment details · 24 hours · 5 GB data · once per customer, no automatic paid conversion","无需付款信息 · 24 小时 · 5 GB 流量 · 每位顾客 1 次，不会自动转为付费","決済情報不要 · 24時間 · データ5GB · お一人様1回、自動で有料に切り替わりません"],
+ "데이터 추가":["Add data","追加流量","データ追加"],
+ "이용 중 이번 사용 주기의 데이터가 부족하면 10 GB씩 추가할 수 있습니다":["If you run short during the current usage cycle, you can add data in 10 GB steps","使用期间本周期流量不足时，可按 10 GB 追加","利用中に今期のデータが足りなくなったら、10 GBずつ追加できます"],
+ "신규는 결제 확인·키 발급 완료 후 시작하고, 연장은 남은 기간에 더해집니다":["New passes start after payment confirmation and key issuance; extensions are added to your remaining time","新购套餐在付款确认并发放密钥后开始，延期会累加到剩余期限","新規は決済確認とキー発行の完了後に開始し、延長は残り期間に加算されます"],
+ "무료 체험은 어떻게 이용하나요?":["How does the free trial work?","如何使用免费体验？","無料体験はどう使いますか？"],
+ "회원가입 후 내 이용권에서 결제정보 없이 바로 시작할 수 있습니다 24시간 동안 데이터 5GB를 이용할 수 있고 고객당 한 번만 신청할 수 있습니다 체험이 끝나도 자동으로 결제되지 않습니다":["After signing up, start it right away from My pass without payment details. You get 5 GB of data for 24 hours, once per customer. Nothing is charged when the trial ends.","注册后可在“我的套餐”中无需付款信息直接开始。24 小时内可使用 5 GB 流量，每位顾客仅限一次。体验结束后不会自动扣款。","会員登録後、利用券ページから決済情報なしですぐに始められます。24時間、データ5GBを利用でき、お一人様1回までです。体験終了後に自動で課金されることはありません。"],
+ "기간 연장은 어떻게 하나요?":["How do I extend my pass?","如何延长期限？","期間の延長はどうしますか？"],
+ "내 이용권에서 30일·90일·180일 중 하나를 골라 결제하면 같은 접속 키를 유지한 채 남은 기간에 더해집니다":["Choose 30, 90 or 180 days in My pass and pay; the time is added to your remaining period and your access key stays the same.","在“我的套餐”中选择 30、90 或 180 天并付款，将在保留同一访问密钥的情况下累加到剩余期限。","利用券ページで30日・90日・180日のいずれかを選んで決済すると、同じ接続キーのまま残り期間に加算されます。"],
+ "데이터가 부족하면 어떻게 하나요?":["What if I run out of data?","流量不够怎么办？","データが足りないときは？"],
+ "이용 중이라면 내 이용권에서 데이터 10 GB를 3,000원에 추가할 수 있습니다 추가한 데이터는 이번 사용 주기가 끝날 때까지 쓸 수 있고 내 이용권의 이번 달 제공량에 바로 반영됩니다":["While your pass is active, you can add 10 GB for ₩3,000 in My pass. Added data lasts until the current usage cycle ends and shows up right away in this cycle’s allowance.","套餐使用期间，可在“我的套餐”中以 3,000 韩元追加 10 GB。追加的流量可使用到本使用周期结束，并会立即反映到本周期流量中。","利用中であれば、利用券ページでデータ10 GBを3,000ウォンで追加できます。追加したデータは今期の利用周期が終わるまで使え、今期のデータ量にすぐ反映されます。"],
+ "어떤 결제 수단을 쓸 수 있나요?":["Which payment methods can I use?","可以使用哪些付款方式？","どの決済方法が使えますか？"],
+ "카카오페이·계좌이체·위챗페이·알리페이를 준비하고 있습니다 실제 결제 연결은 출시 전에 확정됩니다":["We are preparing KakaoPay, bank transfer, WeChat Pay and Alipay. The actual payment connection will be confirmed before launch.","我们正在准备 KakaoPay、银行转账、微信支付和支付宝。实际付款对接将在上线前确定。","KakaoPay・銀行振込・WeChat Pay・Alipayを準備しています。実際の決済連携はリリース前に確定します。"],
+ "결제하면 언제 반영되나요?":["When does my payment take effect?","付款后何时生效？","決済はいつ反映されますか？"],
+ "결제가 확인되면 바로 내 이용권에 반영됩니다 처리 상태는 내 이용권의 결제 처리 내역에서 확인할 수 있습니다":["As soon as the payment is confirmed, it is applied to My pass. You can follow the status under Payment updates in My pass.","付款确认后会立即反映到“我的套餐”。处理状态可在“我的套餐”的付款处理记录中查看。","決済が確認されるとすぐに利用券ページへ反映されます。処理状況は利用券ページの決済処理履歴で確認できます。"]
+});
+// 환불·장애 보상 정책 (2026-10-30)
+Object.assign(pageMessages,{
+ "중국의 지역·통신망에 따라 접속이 제한될 수 있습니다 가격·기기 수·고객 지원 정책은 출시 전 확정됩니다":["Access may be restricted by region or network in China. Prices, device limits and support policies will be finalized before launch.", "中国不同地区和网络可能限制连接。价格、设备数量及客服政策将在上线前确定", "中国の地域・回線によって接続が制限される場合があります。価格・端末数・サポート方針は公開前に確定します"],
+ "환불":["Refunds", "退款", "返金"],
+ "단순 변심으로는 환불되지 않습니다 중복·오결제는 전액, 서비스 종료 시 남은 기간을 환불합니다":["No refunds for a change of mind. Duplicate or mistaken payments are refunded in full, and the remaining period is refunded if the service closes.", "不支持因个人原因退款。重复或错误付款全额退款，服务终止时退还剩余期限", "お客様都合による返金はできません。二重・誤決済は全額、サービス終了時は残り期間分を返金します"],
+ "장애 보상":["Outage compensation", "故障补偿", "障害補償"],
+ "고객 기기·통신망 문제를 제외하고 하루 4시간 넘게 이용하지 못하면 이용기간을 1일 연장합니다":["Except for problems with your own device or network, we add 1 day to your pass for each day you cannot use it for more than 4 hours.", "除顾客设备或网络问题外，当天无法使用超过 4 小时的，使用期限延长 1 天", "お客様の端末・回線の問題を除き、1日に4時間を超えて利用できなかった場合は利用期間を1日延長します"],
+ "지역과 통신사에 따라 접속이 제한될 수 있어 모든 환경에서의 접속을 보장하지는 않습니다 고객 기기·통신망 문제가 아닌 장애로 하루(한국시간) 합계 4시간 넘게 이용하지 못하면 그날마다 이용기간을 1일 연장합니다 사전에 알린 점검과 중국 현지 차단도 포함됩니다":["Access can be restricted depending on region and carrier, so we cannot guarantee it in every environment. If an outage not caused by your own device or network stops you for more than 4 hours in total on a day (Korea time), we add 1 day to your pass for each such day. This includes announced maintenance and blocking in China.", "连接可能因地区和运营商受到限制，因此无法保证所有环境均可连接。非顾客设备或网络原因的故障导致当天（韩国时间）累计超过 4 小时无法使用的，每发生一天延长 1 天。事先通知的维护和中国当地封锁也包括在内。", "地域や通信会社によって接続が制限される場合があり、すべての環境での接続は保証できません。お客様の端末・回線以外の障害で1日（韓国時間）合計4時間を超えて利用できなかった場合は、その日ごとに利用期間を1日延長します。事前告知したメンテナンスや中国現地でのブロックも含みます。"],
+ "환불받을 수 있나요?":["Can I get a refund?", "可以退款吗？", "返金は受けられますか？"],
+ "단순 변심으로는 환불되지 않고, 이용하지 못한 날은 기간 연장으로 보상합니다 같은 결제가 두 번 되었거나 잘못 결제된 경우는 전액, 서비스를 종료하는 경우는 남은 기간을 환불합니다 법령에 따라 환불해야 하는 경우에는 결제일(당일 포함)부터 지난 일수 × 400원과 결제금액의 10%를 뺀 금액을 환불합니다":["We do not refund for a change of mind, and days you could not use are compensated by extending your pass. Duplicate or mistaken payments are refunded in full, and if we close the service we refund the remaining period. Where the law requires a refund, we refund the payment minus ₩400 for each day since payment (including the payment day) and minus 10% of the payment.", "不支持因个人原因退款，无法使用的天数以延长期限补偿。重复付款或错误付款将全额退款；如服务终止，将退还剩余期限。依法需要退款时，退款金额为付款金额减去自付款日起（含当日）已过天数 × 400 韩元，再减去付款金额的 10%。", "お客様都合による返金は行わず、利用できなかった日は期間延長で補償します。二重決済や誤決済は全額、サービスを終了する場合は残り期間分を返金します。法令により返金が必要な場合は、決済額から決済日（当日を含む）からの経過日数 × 400ウォンと決済額の10%を差し引いて返金します。"],
+ "예: 30,000원 결제 후 10일째 요청 시 30,000 − 4,000 − 3,000 = 23,000원":["Example: a ₩30,000 payment refunded on day 10 → 30,000 − 4,000 − 3,000 = ₩23,000.", "例如：付款 30,000 韩元后第 10 天申请，30,000 − 4,000 − 3,000 = 23,000 韩元。", "例：30,000ウォン決済後10日目の申請 → 30,000 − 4,000 − 3,000 = 23,000ウォン。"],
+ "기간권은 직접 결제하고 연장하며 자동 갱신되지 않습니다 단순 변심으로는 환불되지 않습니다 중복·오결제는 전액, 서비스 종료 시 남은 기간을 환불하고, 법령에 따라 환불해야 하는 경우 결제일(당일 포함)부터 지난 일수 × 400원과 결제금액의 10%를 뺀 금액을 환불합니다 결제 수단과 처리 기한은 유료 서비스 공개 전에 안내합니다":["Passes are bought and extended by you and never renew automatically. There are no refunds for a change of mind. Duplicate or mistaken payments are refunded in full and the remaining period is refunded if the service closes; where the law requires a refund, we refund the payment minus ₩400 per day since payment (including the payment day) and minus 10% of the payment. Payment methods and processing times will be announced before paid service launches.", "期限套餐由您自行购买和延长，不会自动续费。不支持因个人原因退款。重复或错误付款全额退款，服务终止时退还剩余期限；依法需要退款时，退还付款金额减去自付款日起（含当日）已过天数 × 400 韩元及付款金额 10% 后的余额。付款方式和处理期限将在付费服务上线前公布", "期間券はお客様ご自身で購入・延長し、自動更新されません。お客様都合による返金はできません。二重・誤決済は全額、サービス終了時は残り期間分を返金し、法令により返金が必要な場合は決済額から決済日（当日を含む）からの経過日数 × 400ウォンと決済額の10%を差し引いて返金します。決済手段と処理期限は有料公開前にご案内します"],
+ "네트워크 환경과 외부 차단으로 연결이 제한될 수 있으며 모든 지역에서의 접속을 보장하지 않습니다 고객 기기·통신망 문제를 제외한 장애로 하루(한국시간) 합계 4시간 넘게 이용하지 못하면 그날마다 이용기간을 1일 연장합니다 장애 보상은 환불이 아닌 기간 연장으로 합니다 고객 지원 채널은 운영 전에 확정합니다":["Networks and external blocking may restrict access, and access in every region is not guaranteed. Except for problems with your own device or network, we add 1 day to your pass for each day (Korea time) on which you cannot use it for more than 4 hours in total. Outages are compensated by extending your pass, not by refunds. Support channels will be defined before operation.", "网络环境及外部封锁可能限制连接，不保证所有地区均可连接。除顾客设备或网络问题外，当天（韩国时间）累计超过 4 小时无法使用的，每发生一天延长使用期限 1 天。故障以延长期限补偿，不予退款。客服渠道将在运营前确定", "回線や外部のブロックで接続が制限される場合があり、全地域での接続は保証しません。お客様の端末・回線の問題を除き、1日（韓国時間）合計4時間を超えて利用できなかった場合は、その日ごとに利用期間を1日延長します。障害は返金ではなく期間延長で補償します。サポート窓口は運用前に定めます"]
 });

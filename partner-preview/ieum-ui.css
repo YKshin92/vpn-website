@@ -1,0 +1,614 @@
+/*
+ 이음 공통 디자인 레이어 (ieum-ui.css)
+ - 모든 화면에서 마지막으로 불러온다. 기존 화면별 CSS 위에 색·글자·간격·컴포넌트 기준을 한 번에 맞춘다.
+ - <html class="ieum ieum-customer"> 고객 화면 / <html class="ieum ieum-admin"> 관리자 화면
+ - 레퍼런스: 고객 화면은 Mullvad·Toss(여백, 큰 숫자, 짧은 문구), 상담은 채널톡, 관리자는 Linear(밀도, 목록·상세)
+ - 동작·ID·클래스는 바꾸지 않는다. 스타일만 조정한다.
+*/
+:root{
+ /* 색 */
+ --ieum-blue:#2854de;--ieum-blue-hover:#1f45c4;--ieum-blue-soft:#eef3ff;--ieum-blue-line:#c9d7fb;
+ --ieum-ink:#172338;--ieum-text:#36445c;--ieum-muted:#66738a;--ieum-faint:#8a96a9;
+ --ieum-line:#e3e8ef;--ieum-line-strong:#d0d9e5;--ieum-bg:#f5f7fa;--ieum-surface:#fff;--ieum-subtle:#f7f9fc;
+ --ieum-ok:#17704a;--ieum-ok-bg:#e8f5ee;--ieum-warn:#8d5c0f;--ieum-warn-bg:#fff3de;--ieum-danger:#b2353e;--ieum-danger-bg:#fdeeee;
+ /* 모양·폭 */
+ --ieum-r-sm:8px;--ieum-r-md:12px;--ieum-r-lg:16px;
+ --ieum-customer-width:1160px;--ieum-admin-width:1440px;
+ --ieum-focus:0 0 0 3px #2854de33;
+ /* 기존 화면 CSS가 쓰는 이름을 같은 값으로 연결 */
+ --ink:var(--ieum-ink);--blue:var(--ieum-blue);--muted:var(--ieum-muted);--line:var(--ieum-line);--paper:var(--ieum-subtle);
+}
+
+/* ───────── 기본 ───────── */
+html.ieum{-webkit-text-size-adjust:100%}
+.ieum body{font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;color:var(--ieum-text);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+.ieum-customer body{background:var(--ieum-bg)}
+.ieum-customer.ieum-home body{background:#fff}
+.ieum-admin body{background:var(--ieum-bg);font-size:14px}
+.ieum :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid #9db7ff;outline-offset:2px}
+
+/* 일본어·중국어는 띄어쓰기가 없어 keep-all(단어 단위 줄바꿈)이면 문장이 화면 밖으로 나간다 */
+html.ieum:is([lang=ja],[lang=zh-CN]) body *{word-break:normal;line-break:strict}
+
+/* 안내 띠: 홈·가입·내 이용권의 미리보기 문구를 같은 모양으로 */
+.ieum .demo,.ieum .preview-bar,.ieum .draft-banner{background:var(--ieum-blue-soft);color:#2d4b8f;font-size:12px;font-weight:700;letter-spacing:0;line-height:1.7;text-align:center;padding:9px 16px}
+.ieum .demo span,.ieum .preview-bar span{display:inline;margin-left:10px;font-size:12px;font-weight:400;color:#4b6292}
+
+/* ───────── 머리글 + 로고 ───────── */
+.ieum-customer body>header,.ieum-customer .site-header{max-width:none;margin:0;min-height:68px;height:auto;padding:12px max(24px,calc((100% - var(--ieum-customer-width))/2));display:flex;align-items:center;gap:24px;background:#fff;border-bottom:1px solid var(--ieum-line)}
+.ieum-admin body>header,.ieum .ieum-bar{max-width:none;margin:0;min-height:64px;height:auto;padding:10px max(24px,calc((100% - var(--ieum-admin-width))/2));display:flex;align-items:center;gap:20px;background:#fff;border-bottom:1px solid var(--ieum-line)}
+
+.ieum body .brand{display:inline-flex;align-items:center;gap:8px;font-size:20px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--ieum-ink);text-decoration:none;white-space:nowrap}
+.ieum body .brand strong{font-weight:800;color:var(--ieum-ink);letter-spacing:-.04em}
+.ieum body .brand .brand-mark,.ieum body .brand .mark{display:inline-grid;place-items:center;flex:none;width:30px;height:30px;margin:0;border-radius:9px;background:var(--ieum-blue);color:#fff;font-size:19px;font-weight:700;letter-spacing:0;line-height:1}
+.ieum body .brand>span:last-child:not(.brand-mark){align-self:center;margin:0 0 0 2px;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--ieum-muted)}
+
+/* 머리글 메뉴 */
+.ieum-customer body>header nav a,.ieum-customer .site-header nav a{font-size:14px;font-weight:500;color:var(--ieum-muted);text-decoration:none}
+.ieum-customer body>header nav a:hover,.ieum-customer .site-header nav a:hover{color:var(--ieum-blue)}
+.ieum-customer .site-header .text-button{font-size:14px;font-weight:600}
+.ieum-customer body>header>a:not(.brand):not(.button):not(.outline){font-size:14px;color:var(--ieum-muted)}
+.ieum .ieum-bar-links{display:flex;flex-wrap:wrap;gap:6px 20px;margin-left:auto;font-size:14px}
+.ieum .ieum-bar a:not(.brand){color:var(--ieum-muted);text-decoration:none;font-size:14px}
+.ieum .ieum-bar a:not(.brand):hover{color:var(--ieum-blue)}
+.ieum .ieum-bar-note{font-size:12px;color:var(--ieum-faint)}
+.ieum-admin body>header .local{font-size:12px;color:var(--ieum-faint)}
+.ieum-admin body>header>a:not(.brand){font-size:14px;color:var(--ieum-muted);text-decoration:none}
+.ieum-admin body>header>a:not(.brand):hover{color:var(--ieum-blue)}
+.ieum-admin #identity{font-size:14px;color:var(--ieum-muted)}
+
+/* ───────── 본문 폭 ───────── */
+.ieum-customer body main{max-width:calc(var(--ieum-customer-width) + 56px);margin-left:auto;margin-right:auto;padding-left:28px;padding-right:28px}
+.ieum-admin body main,.ieum-admin body main:has(#server-management:not([hidden])){max-width:calc(var(--ieum-admin-width) + 48px);margin:0 auto;padding:28px 24px 56px}
+.ieum-admin body .support-admin-page{max-width:calc(var(--ieum-admin-width) + 48px)!important;padding:28px 24px 56px!important}
+
+/* ───────── 제목·문단 ───────── */
+.ieum .eyebrow,.ieum .section-label,.ieum .support-eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--ieum-blue);text-transform:uppercase}
+.ieum-customer .page-heading h1{font-size:32px;line-height:1.35;letter-spacing:-.03em;margin:0 0 8px}
+.ieum-customer .page-description,.ieum-customer .muted{font-size:14px;line-height:1.75;color:var(--ieum-muted)}
+.ieum-customer .time-note{font-size:12px;color:var(--ieum-faint)}
+.ieum-admin main h1,.ieum-admin #workspace>h1{font-size:26px;line-height:1.4;letter-spacing:-.03em;margin:6px 0 6px}
+.ieum-admin .intro,.ieum-admin .subtitle,.ieum-admin .support-admin-intro,.ieum-admin .ieum-page-intro{font-size:14px;line-height:1.7;color:var(--ieum-muted);margin:0 0 4px}
+.ieum-admin .fine{font-size:12px;line-height:1.75;color:var(--ieum-faint)}
+.ieum-admin .section-title h2,.ieum-admin .server-console h2,.ieum-admin .section-heading h2{font-size:20px;letter-spacing:-.02em}
+.ieum-admin [role=status]:not(:empty):is(#page-status,#support-admin-status,#payment-admin-status,#probe-auth-status){font-size:13px;color:#46628f;margin:12px 0 16px}
+
+/* ───────── 카드 ───────── */
+.ieum .panel,.ieum .login-card,.ieum main .card,.ieum .inventory,.ieum .server-strip,.ieum .tool-fold,.ieum .auth-readiness,.ieum .server-drawer,.ieum .quick-plan,.ieum .plan,.ieum .trial-offer{border-color:var(--ieum-line);border-radius:14px}
+.ieum .plan.featured{border-color:var(--ieum-blue)}
+.ieum-customer .panel{padding:28px}
+.ieum-customer .panel h2{font-size:18px;letter-spacing:-.02em}
+.ieum-customer main>.panel,.ieum-customer main>details.panel{margin-top:20px}
+.ieum-customer #customer-settings{margin:0 0 20px}
+.ieum-customer #customer-settings>summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--ieum-ink)}
+.ieum-customer .notice{font-size:13px;border-radius:var(--ieum-r-sm);background:#eef2f8}
+.ieum .table-wrap,.ieum .table-scroll{border-color:var(--ieum-line);border-radius:var(--ieum-r-md)}
+
+/* ───────── 버튼 ───────── */
+.ieum :where(button,.button){border-radius:var(--ieum-r-sm)}
+.ieum body .primary,.ieum body button.primary{background:var(--ieum-blue);border-color:var(--ieum-blue);color:#fff;box-shadow:none}
+.ieum body .primary:hover:not(:disabled),.ieum body button.primary:hover:not(:disabled){background:var(--ieum-blue-hover);border-color:var(--ieum-blue-hover);color:#fff;filter:none}
+.ieum-customer .button,.ieum-customer .outline{min-height:46px;font-size:14px;font-weight:600}
+.ieum-customer .secondary,.ieum-customer .outline{background:#fff;border:1px solid var(--ieum-line-strong);color:var(--ieum-ink)}
+.ieum-customer .secondary:hover:not(:disabled),.ieum-customer .outline:hover{background:var(--ieum-blue-soft);border-color:var(--ieum-blue-line);color:var(--ieum-blue)}
+.ieum-customer .small{min-height:40px;font-size:14px}
+.ieum-customer .text-button{font-size:14px;font-weight:600;color:var(--ieum-blue)}
+.ieum-admin :is(#payment-directory,#payment-admin-wallet,#payment-admin-key,#payment-admin-history,#probe-workspace) :is(button,.button),.ieum-admin #payment-back{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 14px;font-size:13px;font-weight:600;border:1px solid var(--ieum-line-strong);background:#fff;color:var(--ieum-ink);cursor:pointer}
+.ieum-admin :is(#payment-directory,#payment-admin-wallet,#payment-admin-key,#payment-admin-history,#probe-workspace) :is(button,.button):hover:not(:disabled),.ieum-admin #payment-back:hover{border-color:var(--ieum-blue-line);background:var(--ieum-blue-soft);color:var(--ieum-blue)}
+
+/* ───────── 입력칸 ───────── */
+.ieum-customer :is(.form-stack,main .card,.journey-form,.login-card) :is(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select),
+.ieum-customer #demo-tools select{min-height:46px;border:1px solid var(--ieum-line-strong);border-radius:var(--ieum-r-sm);background:#fff;color:var(--ieum-ink);font-size:15px}
+.ieum-customer :is(.form-stack,main .card,.journey-form,.login-card) :is(input,select):focus{border-color:var(--ieum-blue);box-shadow:var(--ieum-focus);outline:none}
+.ieum-admin :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border-color:var(--ieum-line-strong);border-radius:var(--ieum-r-sm);color:var(--ieum-ink)}
+.ieum-admin :is(input,select,textarea):focus{border-color:var(--ieum-blue);box-shadow:var(--ieum-focus);outline:none}
+.ieum-admin .account-page select{min-height:38px;padding:7px 10px;font-size:14px;background:#fff}
+
+/* ───────── 상태 표시 ───────── */
+.ieum-customer .badge{font-size:12px;font-weight:600;padding:4px 9px;border-radius:6px}
+.ieum-admin :is(.ops-badge,.server-badge,.dns-badge){font-size:12px;border-radius:6px}
+
+/* ───────── 요약 숫자 (관리자 화면 공통: 테두리 상자 + 구분선) ───────── */
+.ieum-admin :is(.customer-summary,.ops-summary,.summary){display:grid;gap:1px;padding:0;background:var(--ieum-line);border:1px solid var(--ieum-line);border-radius:var(--ieum-r-md);overflow:hidden}
+.ieum-admin :is(.customer-summary,.ops-summary)>div,.ieum-admin .summary>article{background:#fff;border:0;border-radius:0;padding:16px 20px;min-width:0}
+.ieum-admin :is(.customer-summary,.ops-summary)>div+div{border-left:0}
+.ieum-admin :is(.customer-summary,.ops-summary,.summary) small{font-size:12px;color:var(--ieum-muted)}
+.ieum-admin :is(.customer-summary,.ops-summary,.summary) strong{display:block;margin-top:4px;font-size:24px;line-height:1.35;font-weight:700;color:var(--ieum-ink);font-variant-numeric:tabular-nums}
+
+/* ───────── 표 ───────── */
+.ieum-admin table th{font-size:12px;font-weight:600;color:var(--ieum-muted);background:var(--ieum-subtle)}
+.ieum-admin table td{font-size:13px;color:var(--ieum-text)}
+.ieum-admin table td strong{color:var(--ieum-ink)}
+.ieum-admin table td small{font-size:12px;color:var(--ieum-faint)}
+
+/* ───────── 내 이용권 (고객) ───────── */
+.ieum-customer .pass-title{font-size:28px;letter-spacing:-.03em}
+.ieum-customer .metric-label{font-size:13px;color:var(--ieum-muted)}
+.ieum-customer .pass-metrics strong{font-size:18px}
+.ieum-customer .pass-metrics>div:last-child strong{font-size:22px}
+.ieum-customer .field-help,.ieum-customer .key-retention,.ieum-customer .history-item .history-meta,.ieum-customer .history-item .history-state,.ieum-customer .data-placeholder p,.ieum-customer .price-summary p,.ieum-customer .privacy-note,.ieum-customer .simulation-tools{font-size:13px;line-height:1.75}
+.ieum-customer .key-details,.ieum-customer .key-details code{font-size:13px}
+.ieum-customer .account-identity{font-size:14px}
+.ieum-customer .account-identity>span:last-child{font-size:13px}
+.ieum-customer .form-stack>label:not(.consent){font-size:14px;color:var(--ieum-ink)}
+.ieum-customer .price-summary>div{font-size:14px}
+.ieum-customer .price-summary strong{font-size:22px}
+.ieum-customer .history-item h3{font-size:15px}
+.ieum-customer .history-item .amount{font-size:15px}
+.ieum-customer .data-card .muted,.ieum-customer .history-card .muted,.ieum-customer .application-card .muted{font-size:14px}
+.ieum-customer .data-placeholder strong{font-size:15px;color:var(--ieum-ink);font-weight:600}
+.ieum-customer .progress-steps li{font-size:13px}
+.ieum-customer .processing-card>p{font-size:14px}
+.ieum-customer .empty-state{font-size:14px}
+.ieum-customer .account-footer{font-size:13px;color:var(--ieum-faint)}
+.ieum-customer .account-footer span{font-size:12px}
+.ieum-customer .login-intro>p,.ieum-customer .intro-steps{font-size:14px}
+.ieum-customer .intro-steps span{font-size:12px}
+.ieum-customer .login-card h3{font-size:19px}
+.ieum-customer .login-links{font-size:14px}
+.ieum-customer .form-error,.ieum-customer .consent{font-size:13px}
+.ieum-customer .confirmation-facts>div{font-size:14px}
+.ieum-customer .confirmation-note,.ieum-customer .demo-code-note{font-size:13px}
+
+/* 결제 처리 내역 (내 이용권 하단, 관리자 결제 확인 공통) */
+.ieum #payment-history>h2,.ieum #payment-directory>h2,.ieum #payment-admin-history>h2{font-size:18px;margin:0 0 6px}
+.ieum #payment-history>button,.ieum #payment-admin-history>button{margin:8px 0 4px}
+.ieum #payment-history>p,.ieum #payment-directory>p,.ieum #payment-admin-history>p{font-size:13px;color:var(--ieum-muted);margin:6px 0}
+.ieum .payment-status-item{display:grid;gap:4px;padding:18px 0;border-top:1px solid var(--ieum-line);margin:0}
+.ieum .payment-status-item:first-of-type{margin-top:12px}
+.ieum .payment-status-item>p:first-child{font-size:13px;color:var(--ieum-muted);margin:0}
+.ieum .payment-status-item h2{font-size:12px!important;font-weight:700;letter-spacing:.08em;color:var(--ieum-blue);margin:6px 0 0}
+.ieum .payment-status-item h3{font-size:16px;line-height:1.5;margin:2px 0;color:var(--ieum-ink)}
+.ieum .payment-status-item small{font-size:12px;color:var(--ieum-faint)}
+.ieum .payment-status-item p{font-size:14px;line-height:1.7;color:var(--ieum-text);margin:0}
+.ieum .payment-status-item .button,.ieum .payment-status-item button{justify-self:start;margin-top:8px}
+.ieum-admin #payment-selection:not(:empty){font-size:18px;margin:24px 0 10px;overflow-wrap:anywhere}
+.ieum-admin #payment-back{margin:16px 0 0}
+.ieum-admin .account-page>.panel{margin-top:16px;background:#fff;border:1px solid var(--ieum-line);border-radius:14px;padding:24px}
+
+/* ───────── 가입 화면 ───────── */
+.ieum-customer .heading h1{font-size:40px;letter-spacing:-.04em}
+.ieum-customer .heading>p:last-child{font-size:15px}
+.ieum-customer .steps strong{font-size:14px}
+.ieum-customer .steps p{font-size:12px}
+.ieum-customer .steps li>span{font-size:12px}
+.ieum-customer .promise h2{font-size:14px}
+.ieum-customer .promise p,.ieum-customer .back{font-size:13px}
+.ieum-customer #signup-login{font-size:13px}
+.ieum-customer .card{padding:32px}
+.ieum-customer .card-heading h2{font-size:21px}
+.ieum-customer .card-heading>span{font-size:12px}
+.ieum-customer .preview-note,.ieum-customer .connection-note{font-size:13px}
+.ieum-customer .field-label{font-size:14px;color:var(--ieum-ink)}
+.ieum-customer .field-label>span{font-size:12px}
+.ieum-customer .help,.ieum-customer .field-feedback{font-size:12px}
+.ieum-customer .consent-heading h3{font-size:15px}
+.ieum-customer .consent-heading>span{font-size:12px}
+.ieum-customer .consent-row label{font-size:14px}
+.ieum-customer .consent-row b{font-size:12px}
+.ieum-customer .view{font-size:12px}
+.ieum-customer .privacy-summary>div,.ieum-customer .privacy-summary p{font-size:12px}
+.ieum-customer .join-progress{font-size:13px}
+.ieum-customer .status{font-size:13px}
+.ieum-customer main .card .primary{min-height:50px;font-size:15px;border-radius:var(--ieum-r-sm)}
+.ieum-customer .username-row button{font-size:14px;border-radius:var(--ieum-r-sm)}
+.ieum-customer .footnote{font-size:12px}
+.ieum-customer .policy-note h2{font-size:15px}
+.ieum-customer .policy-note p{font-size:13px}
+.ieum-customer .result p,.ieum-customer .result dl{font-size:13px}
+
+/* ───────── 바닥글 ───────── */
+.ieum-customer body>footer{max-width:none;margin:40px 0 0;padding:28px max(24px,calc((100% - var(--ieum-customer-width))/2));border-top:1px solid var(--ieum-line);font-size:13px;color:var(--ieum-faint);background:transparent}
+.ieum-customer body>footer :is(p,span){font-size:13px;color:var(--ieum-faint)}
+
+/* ───────── 홈페이지 ───────── */
+.ieum-home .quick-plan{box-shadow:0 1px 2px #1723380a}
+.ieum-home .guide-prep,.ieum-home .policy-details dl{border-radius:var(--ieum-r-md)}
+.ieum-home .trial-offer{background:var(--ieum-blue-soft);border-color:var(--ieum-blue-line)}
+.ieum-home .device-picker button[aria-pressed=true]{background:var(--ieum-ink);border-color:var(--ieum-ink)}
+
+/* ───────── 관리자: 결제 확인·중국 접속 시험·상담 (격리 미리보기 화면) ───────── */
+.ieum-admin .account-page>h2{color:var(--ieum-ink)}
+.ieum-admin #probe-workspace:not([hidden]){display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;margin-top:8px}
+.ieum-admin #probe-workspace>label{display:grid;gap:6px;font-size:13px;color:var(--ieum-muted);min-width:220px}
+.ieum-admin #probe-workspace>[role=status]{flex-basis:100%;margin:0;font-size:13px;color:var(--ieum-muted)}
+.ieum-admin #probe-workspace>[role=status]:empty{display:none}
+.ieum-admin #probe-workspace>.panel:empty{display:none}
+.ieum-admin #support-admin-login:not([hidden]){display:inline-flex;align-items:center;min-height:40px;padding:8px 16px;border-radius:var(--ieum-r-sm);background:var(--ieum-blue);color:#fff;font-size:14px;font-weight:600;text-decoration:none}
+.ieum-admin #probe-workspace>.panel{flex-basis:100%;margin:4px 0 0;background:#fff;border:1px solid var(--ieum-line);border-radius:14px;padding:24px 28px}
+.ieum-admin #probe-workspace>.panel>p{font-size:14px;line-height:1.75;color:var(--ieum-text);margin:6px 0}
+.ieum-admin #probe-workspace>.panel>p:first-child{display:inline-block;font-size:12px;font-weight:600;color:var(--ieum-warn);background:var(--ieum-warn-bg);padding:4px 10px;border-radius:6px;margin:0 0 10px}
+.ieum-admin #probe-workspace>.panel>h2{font-size:22px;letter-spacing:-.02em;margin:4px 0 6px}
+.ieum-admin #probe-workspace>.panel>h3{font-size:16px;margin:26px 0 6px;padding-top:20px;border-top:1px solid var(--ieum-line)}
+.ieum-admin .probe-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin:16px 0;background:var(--ieum-line);border:1px solid var(--ieum-line);border-radius:var(--ieum-r-md);overflow:hidden}
+.ieum-admin .probe-facts>div{background:#fff;padding:14px 18px}
+.ieum-admin .probe-facts dt{font-size:12px;color:var(--ieum-muted)}
+.ieum-admin .probe-facts dd{margin:4px 0 0;font-size:24px;font-weight:700;color:var(--ieum-ink);font-variant-numeric:tabular-nums}
+.ieum-admin #probe-workspace>.panel>ol{list-style:none;counter-reset:probe;display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:12px 0 16px}
+.ieum-admin #probe-workspace>.panel>ol>li{counter-increment:probe;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--ieum-line);border-radius:999px;font-size:13px;color:var(--ieum-text);background:var(--ieum-subtle)}
+.ieum-admin #probe-workspace>.panel>ol>li::before{content:counter(probe);display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#fff;border:1px solid var(--ieum-line-strong);font-size:11px;font-weight:700;color:var(--ieum-muted)}
+
+/* 키 관리 화면 */
+.ieum-admin .server-strip{padding:18px 22px}
+.ieum-admin #server-meta{font-size:13px;color:var(--ieum-text)}
+.ieum-admin .mode-note{font-size:13px;border-radius:var(--ieum-r-sm)}
+.ieum-admin .inventory{padding:24px}
+.ieum-admin .inventory .fine{font-size:12px}
+
+/* 격리 키 작업 관리 */
+.ieum-admin #auth,.ieum-admin #workspace:not([hidden]):has(.toolbar){border-color:var(--ieum-line);border-radius:14px}
+.ieum-admin #workspace:has(.toolbar) section{margin-top:16px;padding:16px 20px;border:0;border-radius:var(--ieum-r-md);background:var(--ieum-subtle)}
+.ieum-admin #workspace:has(.toolbar) section h3{font-size:15px;margin:0 0 6px}
+
+/* 팝업 닫기 버튼: 모든 창에서 같은 테두리 버튼 */
+.ieum :is(#policy-close,#cancel-confirmation){display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:6px 12px;border:1px solid var(--ieum-line-strong);border-radius:var(--ieum-r-sm);background:#fff;color:var(--ieum-ink);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+.ieum :is(#policy-close,#cancel-confirmation):hover{border-color:var(--ieum-blue-line);background:var(--ieum-blue-soft);color:var(--ieum-blue)}
+
+/* 관리자 접힘 메뉴·고객 목록 보조 글자 */
+.ieum-admin .auth-readiness>summary span,.ieum-admin .tool-fold>summary .fine{font-size:12px}
+.ieum-admin .portal-customers td:first-child strong{font-size:13px}
+.ieum-admin .portal-customers td:first-child small{font-size:12px}
+.ieum-admin .inventory table{min-width:680px}
+
+/* ───────── 상담 버튼(고객) ───────── */
+.ieum .support-launcher{font-weight:700!important}
+/* 홈페이지 header 규칙이 상담창 머리까지 줄이던 문제 보정 */
+.ieum .support-widget-head{max-width:none;margin:0;border-bottom:0;flex-wrap:nowrap;width:auto;align-self:stretch}
+.ieum .support-widget .support-guide>button:last-of-type{min-height:48px;font-size:14px;font-weight:700;border-radius:var(--ieum-r-sm)}
+.ieum .support-widget .support-topic{font-size:13px;border-radius:var(--ieum-r-sm)}
+
+/* ───────── 반응형 ───────── */
+@media(max-width:1000px){
+ .ieum-admin .probe-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .ieum-admin body .support-admin-page{padding:16px 12px 32px!important}
+ .ieum .support-launcher{padding:12px 18px!important;font-size:13px!important}
+}
+@media(max-width:680px){
+ .ieum-customer body>header,.ieum-customer .site-header{min-height:60px;padding:10px 16px;gap:12px}
+ .ieum-admin body>header,.ieum .ieum-bar{min-height:58px;padding:10px 16px;gap:10px 14px;flex-wrap:wrap}
+ .ieum .ieum-bar-links{gap:4px 14px;font-size:13px}
+ .ieum body .brand{font-size:19px}
+ .ieum-customer body main{padding-left:18px;padding-right:18px}
+ .ieum-admin body main,.ieum-admin body main:has(#server-management:not([hidden])){padding:20px 16px 40px}
+ .ieum .demo span,.ieum .preview-bar span{display:block;margin:2px 0 0}
+ .ieum-customer .page-heading h1{font-size:28px}
+ .ieum-customer .panel{padding:22px}
+ .ieum-customer .card{padding:24px 20px}
+ .ieum-customer .heading h1{font-size:31px}
+ .ieum-customer .steps strong{font-size:12px;line-height:1.5}
+ .ieum-customer :is(.form-stack,main .card,.journey-form,.login-card) :is(input:not([type=checkbox]):not([type=radio]):not([type=hidden]),select){font-size:16px}
+ .ieum-customer .pass-title{font-size:25px}
+ .ieum-customer body>footer{padding:22px 18px}
+ .ieum-admin main h1,.ieum-admin #workspace>h1{font-size:23px}
+ .ieum-admin :is(.customer-summary,.ops-summary)>div,.ieum-admin .summary>article{padding:13px 14px}
+ .ieum-admin :is(.customer-summary,.ops-summary,.summary) strong{font-size:21px}
+ .ieum-admin #probe-workspace>label{min-width:0;flex:1}
+ .ieum-admin #probe-workspace>.panel{padding:20px}
+}
+
+/* ───────── 내 이용권 · 검증 결제 카드와 신청 (고객 화면, 관리자 결제 확인 공통) ───────── */
+.ieum .verified-grid{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:20px;align-items:start;margin-top:20px}
+.ieum .verified-grid>.panel{margin:0;min-width:0}
+.ieum .verified-grid:not(:has(#verified-order:not([hidden]))){grid-template-columns:minmax(0,1fr)}
+.ieum .wallet-card{display:grid;gap:18px}
+.ieum .wallet-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ieum .wallet-head h2{margin:0;font-size:18px;color:var(--ieum-ink)}
+.ieum .wallet-chip{font-size:12px;font-weight:700;line-height:1.5;padding:3px 10px;border-radius:999px;background:var(--ieum-subtle);color:var(--ieum-muted)}
+.ieum .wallet-chip[data-state=active]{background:var(--ieum-ok-bg);color:var(--ieum-ok)}
+.ieum .wallet-chip[data-state=needs_review]{background:var(--ieum-warn-bg);color:var(--ieum-warn)}
+.ieum .wallet-chip[data-state=expired]{background:var(--ieum-danger-bg);color:var(--ieum-danger)}
+.ieum .wallet-chip[data-state=trial]{background:var(--ieum-blue-soft);color:var(--ieum-blue)}
+.ieum .wallet-hero[data-state=trial]{background:var(--ieum-blue-soft);color:var(--ieum-ink);box-shadow:inset 0 0 0 1px var(--ieum-blue-line)}
+.ieum body .wallet-card .wallet-refresh{margin-left:auto;min-height:34px;padding:6px 12px;font-size:13px}
+.ieum .wallet-hero{padding:22px 22px 20px;border-radius:var(--ieum-r-md);background:var(--ieum-blue);color:#fff}
+.ieum .wallet-hero:not([data-state=active]){background:var(--ieum-subtle);color:var(--ieum-ink)}
+.ieum .wallet-big{display:block;font-size:34px;font-weight:800;letter-spacing:-.04em;line-height:1.2;font-variant-numeric:tabular-nums}
+.ieum .wallet-hero:not([data-state=active]) .wallet-big{font-size:24px}
+.ieum .wallet-message{margin:6px 0 0;font-size:14px;line-height:1.6;opacity:.92}
+.ieum .wallet-facts{margin:0;display:grid}
+.ieum .wallet-fact{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-top:1px solid var(--ieum-line)}
+.ieum .wallet-fact dt{font-size:13px;color:var(--ieum-muted)}
+.ieum .wallet-fact dd{margin:0;font-size:14px;font-weight:600;color:var(--ieum-ink);text-align:right}
+.ieum .wallet-fact dt{white-space:nowrap}
+.ieum .wallet-cycle{flex-wrap:wrap;row-gap:2px}
+.ieum .wallet-cycle dd{font-size:16px;font-weight:700}
+.ieum .wallet-cycle-detail{flex-basis:100%;font-size:12px;line-height:1.6;color:var(--ieum-muted);text-align:right}
+.ieum .wallet-fine{display:grid;gap:2px}
+.ieum .wallet-fine p,.ieum .wallet-loading,.ieum .order-loading{margin:0;font-size:12px;line-height:1.7;color:var(--ieum-faint)}
+.ieum .wallet-error{margin:0;font-size:14px;color:var(--ieum-danger)}
+.ieum .order-card{display:grid;gap:22px}
+.ieum .order-head h2{margin:0;font-size:18px;color:var(--ieum-ink)}
+.ieum .order-intro{margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--ieum-muted)}
+.ieum .order-trial{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border:1px solid var(--ieum-blue-line);border-radius:var(--ieum-r-md);background:var(--ieum-blue-soft)}
+.ieum .order-trial[data-selected=true]{box-shadow:inset 0 0 0 1px var(--ieum-blue);border-color:var(--ieum-blue)}
+.ieum .order-trial-copy{display:grid;gap:2px;min-width:0}
+.ieum .order-trial-label{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--ieum-blue)}
+.ieum .order-trial-copy strong{font-size:16px;color:var(--ieum-ink)}
+.ieum .order-trial-copy p{margin:2px 0 0;font-size:13px;line-height:1.6;color:var(--ieum-muted)}
+.ieum body .order-trial-start{flex:none;min-width:150px;background:#fff}
+.ieum .order-group{display:grid;gap:10px;min-width:0;margin:0;padding:0;border:0}
+.ieum .order-group legend{float:left;width:100%;padding:0;margin:0 0 10px;font-size:13px;font-weight:700;color:var(--ieum-ink)}
+.ieum .order-options{clear:both;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ieum .order-options-single{grid-template-columns:minmax(0,1fr)}
+.ieum .order-option{position:relative;display:grid;gap:4px;align-content:start;padding:16px;border:1px solid var(--ieum-line-strong);border-radius:var(--ieum-r-md);background:#fff;cursor:pointer;transition:border-color .15s,background-color .15s,box-shadow .15s}
+.ieum .order-option:hover{border-color:var(--ieum-blue-line)}
+.ieum .order-option[data-selected=true]{border-color:var(--ieum-blue);background:var(--ieum-blue-soft);box-shadow:inset 0 0 0 1px var(--ieum-blue)}
+.ieum .order-option:has(input:focus-visible),.ieum .order-method:has(input:focus-visible){box-shadow:var(--ieum-focus)}
+.ieum .order-option[data-disabled=true]{cursor:not-allowed;background:var(--ieum-subtle);border-color:var(--ieum-line)}
+.ieum .order-option[data-disabled=true]>:not(input){opacity:.55}
+.ieum :is(.order-option,.order-method) input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:inherit}
+.ieum .order-option-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.ieum .order-option-title{font-size:15px;font-weight:700;color:var(--ieum-ink)}
+.ieum .order-option-badge{flex:none;font-size:11px;font-weight:700;line-height:1.5;padding:1px 8px;border-radius:999px;background:var(--ieum-blue);color:#fff}
+.ieum .order-option-price{font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--ieum-ink);font-variant-numeric:tabular-nums}
+.ieum .order-option-meta{font-size:12px;line-height:1.6;color:var(--ieum-muted)}
+.ieum .order-option-note{font-size:13px;line-height:1.5;color:var(--ieum-muted);margin-bottom:6px}
+.ieum .order-preview{margin:0;font-size:13px;line-height:1.6;color:var(--ieum-muted)}
+.ieum .order-reason{margin:0;padding:10px 12px;border-radius:var(--ieum-r-sm);background:var(--ieum-subtle);font-size:13px;line-height:1.6;color:var(--ieum-text)}
+.ieum .order-methods{clear:both;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.ieum .order-method{position:relative;display:flex;align-items:center;justify-content:center;min-height:46px;padding:8px 10px;border:1px solid var(--ieum-line-strong);border-radius:var(--ieum-r-sm);background:#fff;font-size:14px;font-weight:600;line-height:1.4;color:var(--ieum-text);text-align:center;cursor:pointer}
+.ieum .order-method:hover{border-color:var(--ieum-blue-line)}
+.ieum .order-method[data-selected=true]{border-color:var(--ieum-blue);background:var(--ieum-blue-soft);color:var(--ieum-blue)}
+.ieum .order-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:20px;border-top:1px solid var(--ieum-line)}
+.ieum .order-total span{display:block;font-size:13px;color:var(--ieum-muted)}
+.ieum .order-total strong{font-size:24px;font-weight:800;letter-spacing:-.02em;color:var(--ieum-ink);font-variant-numeric:tabular-nums}
+.ieum body .order-submit{min-width:220px}
+.ieum .order-checkout{display:grid;gap:14px;padding:22px;border:1px solid var(--ieum-blue-line);border-radius:var(--ieum-r-md);background:var(--ieum-blue-soft)}
+.ieum .order-checkout-title{margin:0;font-size:17px;font-weight:700;color:var(--ieum-ink)}
+.ieum .order-checkout-facts{margin:0;display:grid}
+.ieum .order-checkout-facts>div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid var(--ieum-blue-line)}
+.ieum .order-checkout-facts dt{font-size:13px;color:var(--ieum-muted)}
+.ieum .order-checkout-facts dd{margin:0;font-size:14px;font-weight:600;color:var(--ieum-ink);text-align:right}
+.ieum .order-checkout-note{margin:0;font-size:12px;line-height:1.7;color:var(--ieum-muted)}
+.ieum .order-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ieum .order-actions .button{flex:1 1 180px}
+.ieum .order-message{margin:0;padding:12px 14px;border-radius:var(--ieum-r-sm);background:var(--ieum-subtle);font-size:14px;line-height:1.6;color:var(--ieum-text)}
+.ieum .order-message[data-kind=ok]{background:var(--ieum-ok-bg);color:var(--ieum-ok)}
+.ieum .order-message[data-kind=error]{background:var(--ieum-danger-bg);color:var(--ieum-danger)}
+.ieum .order-fine{margin:0;font-size:12px;line-height:1.7;color:var(--ieum-faint)}
+.ieum .faq details p.faq-example{margin:4px 0 0;padding:10px 14px;border-radius:var(--ieum-r-sm);background:var(--ieum-subtle);font-size:14px;font-variant-numeric:tabular-nums}
+.ieum .order-policy{margin:0;font-size:13px;line-height:1.7;color:var(--ieum-muted)}
+@media (max-width:980px){.ieum .verified-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){
+ .ieum .order-options{grid-template-columns:minmax(0,1fr)}
+ .ieum .order-option{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"top price" "note price" "meta price";column-gap:12px;align-items:center;padding:14px 16px}
+ .ieum .order-option-top{grid-area:top;justify-content:flex-start}.ieum .order-option-price{grid-area:price;font-size:18px}.ieum .order-option-meta{grid-area:meta}.ieum .order-option-note{grid-area:note;margin:0}
+ .ieum .order-methods{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .ieum .order-trial{flex-direction:column;align-items:stretch}
+ .ieum .order-summary{flex-direction:column;align-items:stretch;gap:12px}
+ .ieum body .order-submit{width:100%;min-width:0}
+ .ieum .wallet-big{font-size:28px}
+ .ieum .wallet-hero{padding:18px}
+}
+.ieum-customer .notice:empty{padding:0;margin:0;min-height:0;border:0;background:none}
+.ieum-admin .wallet-hero{padding:16px 20px}
+.ieum-admin .wallet-big,.ieum-admin .wallet-hero:not([data-state=active]) .wallet-big{font-size:24px}
+@media (min-width:760px){.ieum-admin .wallet-facts{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}.ieum-admin .wallet-fact{flex-direction:column;gap:2px}.ieum-admin .wallet-fact dd{text-align:left}}
+.ieum-admin .wallet-cycle-detail{text-align:left}
+
+/* ───────── 결제 처리 확인 · 고객 목록 (고객당 한 줄) ───────── */
+.ieum .pd-head,.ieum .pd-row{display:grid;grid-template-columns:minmax(0,1fr) 72px 84px 84px 150px 20px;align-items:center;column-gap:12px}
+.ieum .pd-head{margin-top:14px;padding:8px 14px;border-radius:var(--ieum-r-sm);background:var(--ieum-subtle);font-size:12px;font-weight:600;color:var(--ieum-muted)}
+.ieum .pd-list{list-style:none;margin:0 0 8px;padding:0}
+.ieum .pd-list>li{border-bottom:1px solid var(--ieum-line)}
+.ieum-admin #payment-directory .pd-row{display:grid;width:100%;min-height:52px;margin:0;padding:10px 14px;border:0;border-radius:0;background:transparent;color:var(--ieum-text);font-size:14px;font-weight:400;text-align:left;cursor:pointer}
+.ieum-admin #payment-directory .pd-row:hover{background:var(--ieum-blue-soft);color:var(--ieum-text)}
+.ieum-admin #payment-directory .pd-row:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--ieum-blue)}
+.ieum .pd-id{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:var(--ieum-ink)}
+.ieum .pd-count{text-align:right;font-variant-numeric:tabular-nums;color:var(--ieum-ink)}
+.ieum .pd-count[data-zero=true]{color:var(--ieum-faint)}
+.ieum .pd-count[data-warn=true]{color:var(--ieum-warn);font-weight:700}
+.ieum .pd-date{text-align:right;font-size:13px;color:var(--ieum-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ieum .pd-go{text-align:right;font-size:18px;line-height:1;color:var(--ieum-faint)}
+.ieum .pd-row .pd-summary,.ieum .pd-row .pd-date-short{display:none}
+.ieum .pd-summary{justify-self:end;font-size:12px;font-weight:700;line-height:1.5;padding:2px 8px;border-radius:999px;white-space:nowrap;background:var(--ieum-subtle);color:var(--ieum-muted)}
+.ieum .pd-summary[data-kind=warn]{background:var(--ieum-warn-bg);color:var(--ieum-warn)}
+.ieum .pd-summary[data-kind=pending]{background:var(--ieum-blue-soft);color:var(--ieum-blue)}
+@media (max-width:760px){
+ .ieum .pd-head{display:none}
+ .ieum .pd-list{border-top:1px solid var(--ieum-line);margin-top:12px}
+ .ieum-admin #payment-directory .pd-row{grid-template-columns:minmax(0,1fr) auto auto 14px;column-gap:10px;padding:12px 4px}
+ .ieum .pd-row .pd-count,.ieum .pd-row .pd-date{display:none}
+ .ieum .pd-row .pd-summary,.ieum .pd-row .pd-date-short{display:inline-block}
+ .ieum .pd-date-short{font-size:12px;color:var(--ieum-muted);font-variant-numeric:tabular-nums}
+}
+.ieum .pd-head .pd-id,.ieum .pd-head .pd-count,.ieum .pd-head .pd-date{font-family:inherit;font-size:12px;font-weight:600;color:var(--ieum-muted)}
+
+/* ───────── 결제 처리 내역 (결제당 한 줄 + 상태 표시) ───────── */
+.ieum .ph-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ieum .ph-head h2{margin:0;font-size:18px;color:var(--ieum-ink)}
+.ieum body .ph-head .button{min-height:34px;padding:6px 12px;font-size:13px;margin:0}
+.ieum .ph-note,.ieum .ph-state{margin:6px 0 0;font-size:12px;line-height:1.7;color:var(--ieum-faint)}
+.ieum .ph-state{font-size:14px;color:var(--ieum-muted);margin-top:14px}
+.ieum .ph-list{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--ieum-line)}
+.ieum .ph-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:2px;padding:12px 2px;border-bottom:1px solid var(--ieum-line)}
+.ieum .ph-main{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:10px;min-width:0}
+.ieum .ph-kind{font-size:15px;font-weight:700;color:var(--ieum-ink)}
+.ieum .ph-time{font-size:13px;color:var(--ieum-muted);font-variant-numeric:tabular-nums}
+.ieum .ph-chip{justify-self:end;font-size:12px;font-weight:700;line-height:1.5;padding:2px 9px;border-radius:999px;white-space:nowrap;background:var(--ieum-subtle);color:var(--ieum-muted)}
+.ieum .ph-chip[data-kind=ok]{background:var(--ieum-ok-bg);color:var(--ieum-ok)}
+.ieum .ph-chip[data-kind=pending]{background:var(--ieum-blue-soft);color:var(--ieum-blue)}
+.ieum .ph-chip[data-kind=warn],.ieum .ph-chip[data-kind=error]{background:var(--ieum-warn-bg);color:var(--ieum-warn)}
+.ieum .ph-detail,.ieum .ph-admin{grid-column:1/-1;margin:0;font-size:13px;line-height:1.6;color:var(--ieum-muted)}
+.ieum .ph-admin{color:var(--ieum-warn)}
+.ieum .ph-nav{display:flex;gap:8px;margin-top:12px}
+.ieum .ph-nav:empty{display:none}
+
+/* ───────── 관리자 표: 좁은 화면에서는 기록마다 한 덩어리로 (ieum-ui.js가 열 이름을 붙임) ───────── */
+@media (max-width:760px){
+ .ieum-admin table.ieum-stack{width:100%;min-width:0!important;border-collapse:collapse}
+ .ieum-admin table.ieum-stack>thead{display:none}
+ .ieum-admin table.ieum-stack>tbody>tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:6px 14px;padding:12px 14px;border-bottom:1px solid var(--ieum-line);background:#fff}
+ .ieum-admin table.ieum-stack>tbody>tr>td{display:block;min-width:0;padding:0;border:0;font-size:13px;line-height:1.55;text-align:left;white-space:normal;overflow-wrap:anywhere}
+ .ieum-admin table.ieum-stack>tbody>tr>td::before{content:attr(data-label);display:block;font-size:12px;font-weight:600;color:var(--ieum-faint)}
+ .ieum-admin table.ieum-stack>tbody>tr>td[data-label=""]::before{display:none}
+ .ieum-admin table.ieum-stack>tbody>tr>td:first-child{grid-column:1/-1;font-size:14px}
+ .ieum-admin table.ieum-stack>tbody>tr>td:not(:first-child):not(.ieum-stack-action):nth-child(even){grid-column:1}
+ .ieum-admin table.ieum-stack>tbody>tr>td:not(:first-child):not(.ieum-stack-action):nth-child(odd){grid-column:2/4}
+ .ieum-admin table.ieum-stack>tbody>tr>td:first-child::before{display:none}
+ .ieum-admin table.ieum-stack>tbody>tr:has(>td.ieum-stack-action)>td:first-child{grid-column:1/3}
+ .ieum-admin table.ieum-stack>tbody>tr>td.ieum-stack-action{grid-column:3;grid-row:1;justify-self:end;align-self:start}
+ .ieum-admin table.ieum-stack>tbody>tr>td.ieum-stack-action::before{display:none}
+ .ieum-admin table.ieum-stack>tbody>tr.ieum-stack-single{display:block}
+ .ieum-admin table.ieum-stack>tbody>tr.ieum-stack-single>td{grid-column:auto}
+ .ieum-admin .table-wrap:has(>table.ieum-stack),.ieum-admin .table-scroll:has(>table.ieum-stack){overflow:visible}
+}
+/* 관리자 점검 접이식 상자: 닫힌 상태는 얇은 한 줄로 촘촘하게 */
+.ieum-admin details.auth-readiness{margin:10px 0;padding:0}
+.ieum-admin details.auth-readiness>summary{padding:14px 18px;font-size:14px}
+.ieum-admin details.auth-readiness[open]{padding:0 18px 16px}
+.ieum-admin details.auth-readiness[open]>summary{padding:14px 0}
+
+/* ───────── 관리자 상담 목록: 대화당 두 줄 (이름·이메일·표시 / 문의 제목) ───────── */
+.ieum .support-admin .support-thread{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"name email badge" "preview preview unread";column-gap:8px;row-gap:4px;align-items:center;padding-right:12px}
+.ieum .support-admin .support-chat-name{grid-area:name;font-size:14px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow-wrap:normal}
+.ieum .support-admin .support-chat-email{grid-area:email;min-width:0;font-size:12px;color:var(--ieum-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow-wrap:normal}
+.ieum .support-admin .support-chat-preview{grid-area:preview;margin:0;font-size:13px;color:var(--ieum-text)}
+.ieum .support-admin .support-pending-count{grid-area:badge;position:static;justify-self:end;font-size:12px;line-height:1.4;padding:2px 8px}
+.ieum .support-admin .support-thread>.support-unread{grid-area:unread;justify-self:end;font-size:12px;font-weight:700;line-height:1.4;padding:2px 8px;border-radius:999px;background:var(--ieum-blue-soft);color:var(--ieum-blue);white-space:nowrap}
+
+/* ───────── 모바일: 같은 내용이 두 번 나오는 안내 줄이기 ───────── */
+@media (max-width:760px){
+ .ieum-customer .layout>.intro>.steps{display:none}
+ .ieum-customer .login-intro .intro-steps{display:none}
+}
+/* 12px 미만 글자 정리 */
+.ieum-admin table td button,.ieum-admin table td .button{font-size:13px}
+.ieum .support-pager,.ieum body .support-pager button{font-size:12px!important}
+.ieum .account-language-preview span,.ieum .language-selector span{font-size:12px}
+.ieum-admin .fine,.ieum-admin #server-health-result .fine,.ieum-admin .development-tools>summary .fine{font-size:12px}
+
+/* ───────── 홈페이지: 데이터 추가 안내, 검토 도구 숨김, 모바일 길이 단축 ───────── */
+.ieum-home .addon-offer{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:16px 0 0;padding:18px 24px;border:1px solid var(--ieum-line);border-radius:14px;background:#fff}
+.ieum-home .addon-label{font-size:13px;font-weight:700;color:var(--ieum-blue)}
+.ieum-home .addon-offer p{margin:4px 0 0;font-size:15px;color:var(--ieum-text)}
+.ieum-home .addon-offer .price{flex:none;margin:0;font-size:28px;font-weight:800;color:var(--ieum-ink)}
+.ieum-home .addon-offer .price span{font-size:15px;font-weight:600;margin-left:2px}
+/* 디자인 검토 도구는 주소 끝에 #demo-workbench 를 붙였을 때만 보입니다 */
+.ieum-home .demo-workbench:not(:target){display:none}
+@media (max-width:760px){
+ .ieum-home .quick-plan{display:none}
+ .ieum-home .benefit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .ieum-home .benefit-grid>article{padding:14px;border:1px solid var(--ieum-line);border-radius:12px;background:#fff;margin:0}
+ .ieum-home .benefit-grid>article h3{font-size:15px;line-height:1.45;margin:4px 0 0}
+ .ieum-home .benefit-grid>article p,.ieum-home .benefit-grid>article .benefit-tag{display:none}
+ .ieum-home .plan-grid{gap:10px}
+ .ieum-home .plan{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name price" "fit price" "total action";column-gap:12px;row-gap:2px;align-items:center;padding:16px 18px}
+ .ieum-home .plan>h3{grid-area:name;margin:0;font-size:18px}
+ .ieum-home .plan>p:not(.total-label){grid-area:fit;margin:0;font-size:13px;color:var(--ieum-muted)}
+ .ieum-home .plan>.price{grid-area:price;margin:0;font-size:26px;justify-self:end}
+ .ieum-home .plan>.total-label{grid-area:total;margin:6px 0 0;font-size:12px}
+ .ieum-home .plan>button{grid-area:action;justify-self:end;margin:6px 0 0;min-height:36px;padding:6px 14px;font-size:13px;width:auto}
+ .ieum-home .addon-offer{padding:16px 18px;gap:12px}
+ .ieum-home .addon-offer .price{font-size:22px}
+ .ieum-home .trial-offer{padding:18px}
+ .ieum-home .trial-offer h3{font-size:19px}
+}
+
+/* ───────── 읽지 않은 답변 배지 (1:1 문의 링크·상담 버튼·내 문의 탭) ───────── */
+.ieum #support-notice[data-unread]::after,.ieum .support-widget-tabs button[data-unread]::after,.ieum .support-launcher[data-unread]::after{content:attr(data-unread);display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 4px;margin-left:6px;border-radius:999px;background:var(--ieum-blue);color:#fff;font-size:12px;font-weight:700;line-height:1;vertical-align:1px;box-sizing:border-box;font-variant-numeric:tabular-nums}
+.ieum #support-notice[data-unread]{font-weight:700;color:var(--ieum-ink)}
+.ieum .support-launcher[data-unread]{overflow:visible}
+.ieum .support-launcher[data-unread]::after{position:absolute;top:-7px;right:-5px;margin:0;min-width:22px;height:22px;box-shadow:0 0 0 2px #fff}
+
+/* ───────── 장애 보상 (관리자) ───────── */
+.ieum-admin .outage-page :is(button,.button):not(.oa-row){display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 14px;font-size:13px;font-weight:600;border:1px solid var(--ieum-line-strong);background:#fff;color:var(--ieum-ink);cursor:pointer}
+.ieum-admin .outage-page :is(button,.button):not(.oa-row):hover:not(:disabled){border-color:var(--ieum-blue-line);background:var(--ieum-blue-soft);color:var(--ieum-blue)}
+.ieum-admin .outage-page :is(button,.button).primary{background:var(--ieum-blue);border-color:var(--ieum-blue);color:#fff}
+.ieum-admin .outage-page :is(button,.button).primary:hover:not(:disabled){background:var(--ieum-blue-hover);border-color:var(--ieum-blue-hover);color:#fff}
+.ieum-admin .outage-page :is(button,.button):disabled{opacity:.5;cursor:not-allowed}
+.ieum-admin .oa-summary:not([hidden]){display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) auto;margin-top:8px}
+.ieum-admin .oa-summary>.oa-summary-action{display:flex;flex-direction:column;justify-content:center;gap:6px}
+.ieum .oa-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.ieum .oa-list-head h2{margin:0;font-size:18px;letter-spacing:-.02em;color:var(--ieum-ink)}
+.ieum .outage-page h3{margin:22px 0 8px;font-size:15px;color:var(--ieum-ink)}
+.ieum .oa-head,.ieum .oa-row{display:grid;grid-template-columns:150px minmax(0,1fr) 96px 80px 190px;align-items:center;column-gap:14px}
+.ieum .oa-head{padding:8px 14px;border-radius:var(--ieum-r-sm);background:var(--ieum-subtle);font-size:12px;font-weight:600;color:var(--ieum-muted)}
+.ieum .oa-head>span:last-child{text-align:right}
+.ieum .oa-list{list-style:none;margin:0;padding:0}
+.ieum .oa-list>li{border-bottom:1px solid var(--ieum-line)}
+.ieum .oa-row{width:100%;min-height:52px;padding:10px 14px;border:0;border-radius:0;background:#fff;text-align:left;font:inherit;font-size:14px;color:var(--ieum-text);cursor:pointer}
+.ieum .oa-row:hover{background:var(--ieum-subtle)}
+.ieum .oa-row[data-selected=true]{background:var(--ieum-blue-soft);box-shadow:inset 3px 0 0 var(--ieum-blue)}
+.ieum .oa-instance{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:var(--ieum-ink)}
+.ieum :is(.oa-period,.oa-duration){font-variant-numeric:tabular-nums;white-space:nowrap}
+.ieum .oa-duration{text-align:right}
+.ieum .oa-source{font-size:13px;color:var(--ieum-muted)}
+.ieum .oa-chip{justify-self:end;font-size:12px;font-weight:700;line-height:1.5;padding:2px 9px;border-radius:999px;white-space:nowrap;background:var(--ieum-subtle);color:var(--ieum-muted)}
+.ieum .oa-chip[data-kind=ok]{background:var(--ieum-ok-bg);color:var(--ieum-ok)}
+.ieum .oa-chip[data-kind=pending]{background:var(--ieum-blue-soft);color:var(--ieum-blue)}
+.ieum .oa-chip[data-kind=warn]{background:var(--ieum-warn-bg);color:var(--ieum-warn)}
+.ieum .oa-state,.ieum .oa-help,.ieum .oa-impact-note{margin:0 0 12px;font-size:14px;line-height:1.7;color:var(--ieum-muted)}
+.ieum .oa-nav{display:flex;gap:8px;margin-top:12px}
+.ieum .oa-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;margin:0;border:1px solid var(--ieum-line);border-radius:var(--ieum-r-md);overflow:hidden}
+.ieum .oa-facts>div{padding:12px 16px;border-right:1px solid var(--ieum-line);border-bottom:1px solid var(--ieum-line);background:#fff}
+.ieum .oa-facts dt{font-size:12px;color:var(--ieum-muted)}
+.ieum .oa-facts dd{margin:4px 0 0;font-size:14px;font-weight:600;color:var(--ieum-ink);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.ieum .oa-warning{margin:12px 0 0;padding:10px 14px;border-radius:var(--ieum-r-sm);background:var(--ieum-warn-bg);color:var(--ieum-warn);font-size:13px;line-height:1.6}
+.ieum .oa-table{width:100%;border-collapse:collapse;font-size:13px}
+.ieum .oa-table :is(th,td){padding:9px 12px;border-bottom:1px solid var(--ieum-line);text-align:left;vertical-align:top}
+.ieum .oa-customer a{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ieum-blue);text-decoration:none}
+.ieum .oa-result{font-weight:700;white-space:nowrap}
+.ieum .oa-result[data-kind=ok]{color:var(--ieum-ok)}
+.ieum .oa-result[data-kind=warn]{color:var(--ieum-warn)}
+.ieum .oa-result[data-kind=muted]{color:var(--ieum-faint);font-weight:600}
+.ieum .oa-decision{margin-top:18px;padding:18px;border:1px solid var(--ieum-blue-line);border-radius:var(--ieum-r-md);background:var(--ieum-blue-soft)}
+.ieum .oa-decision h3{margin-top:0}
+.ieum .oa-field{display:grid;gap:6px;min-width:0;margin:0 0 12px}
+.ieum .oa-label{font-size:13px;font-weight:600;color:var(--ieum-ink)}
+.ieum-admin .outage-page .oa-field :is(input,select,textarea){width:100%;min-height:40px;padding:8px 10px;border:1px solid var(--ieum-line-strong);border-radius:var(--ieum-r-sm);background:#fff;font:inherit;font-size:14px;color:var(--ieum-ink);box-sizing:border-box}
+.ieum .oa-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 14px}
+.ieum #outage-individual .oa-form{grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr) minmax(0,1.4fr)}
+.ieum .oa-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ieum .oa-confirm{margin:0 0 12px;font-size:14px;font-weight:600;color:var(--ieum-ink)}
+.ieum .oa-message{margin:12px 0 0;padding:10px 14px;border-radius:var(--ieum-r-sm);background:var(--ieum-subtle);font-size:13px;line-height:1.6;color:var(--ieum-text)}
+.ieum .oa-message[data-kind=ok]{background:var(--ieum-ok-bg);color:var(--ieum-ok)}
+.ieum .oa-message[data-kind=warn]{background:var(--ieum-warn-bg);color:var(--ieum-warn)}
+.ieum .oa-message[data-kind=error]{background:var(--ieum-danger-bg);color:var(--ieum-danger)}
+@media (max-width:980px){.ieum-admin .oa-summary:not([hidden]){grid-template-columns:repeat(3,minmax(0,1fr))}.ieum-admin .oa-summary>div:nth-child(5){grid-column:span 2}.ieum-admin .oa-summary>.oa-summary-action{grid-column:1/-1}.ieum .oa-form,.ieum #outage-individual .oa-form{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+@media (max-width:760px){
+ .ieum-admin .oa-summary:not([hidden]){grid-template-columns:repeat(2,minmax(0,1fr))}
+ .ieum .oa-head{display:none}
+ .ieum .oa-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"instance chip" "period duration";row-gap:4px}
+ .ieum .oa-instance{grid-area:instance}.ieum .oa-chip{grid-area:chip}.ieum .oa-period{grid-area:period;font-size:13px;color:var(--ieum-muted)}.ieum .oa-duration{grid-area:duration;font-size:13px}
+ .ieum .oa-source{display:none}
+ .ieum .oa-form,.ieum #outage-individual .oa-form{grid-template-columns:minmax(0,1fr)}
+ .ieum .oa-table thead{display:none}
+ .ieum .oa-table tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:10px 0;border-bottom:1px solid var(--ieum-line)}
+ .ieum .oa-table td{padding:0;border:0}
+ .ieum .oa-table td:nth-child(2){grid-column:1/-1;grid-row:2;color:var(--ieum-muted)}
+ .ieum .oa-table td.oa-result{grid-column:2;grid-row:1;text-align:right}
+}
+/* Customer key card (test server example key) */
+.ieum .key-access{display:grid;gap:8px;padding:14px 16px;border-radius:var(--ieum-r-md);background:var(--ieum-subtle)}.ieum .key-access-label{font-size:13px;color:var(--ieum-muted)}.ieum .key-access-value{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.55;word-break:break-all;color:var(--ieum-ink);user-select:all}.ieum .key-access-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.ieum .key-access-actions .button{min-height:38px;padding:8px 14px;font-size:13px}.ieum .key-access-status{font-size:13px;color:var(--ieum-muted)}
+
+/* 2026-11-03 My pass: on wide screens the current pass is a strip on top and the purchase/extension panel uses the full width */
+@media (min-width:981px){
+.ieum .verified-grid{grid-template-columns:minmax(0,1fr)}
+.ieum .verified-grid>.wallet-card{grid-template-columns:minmax(240px,300px) minmax(0,1fr);align-items:center;column-gap:28px}
+.ieum .verified-grid>.wallet-card>.wallet-head,.ieum .verified-grid>.wallet-card>.wallet-fine,.ieum .verified-grid>.wallet-card>.wallet-error,.ieum .verified-grid>.wallet-card>.wallet-loading{grid-column:1/-1}
+.ieum .verified-grid>.wallet-card .wallet-facts{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:0}
+.ieum .verified-grid>.wallet-card .wallet-fact{flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:2px;border-top:0;padding:4px 0 4px 18px;border-left:1px solid var(--ieum-line)}
+.ieum .verified-grid>.wallet-card .wallet-fact dd,.ieum .verified-grid>.wallet-card .wallet-cycle-detail{text-align:left}
+/* 2026-11-05 the cycle detail line wraps inside its own column instead of running over the next cell */
+.ieum .verified-grid>.wallet-card .wallet-fact{min-width:0}
+.ieum .verified-grid>.wallet-card .wallet-cycle{flex-wrap:nowrap}
+.ieum .verified-grid>.wallet-card .wallet-cycle-detail{flex-basis:auto;width:100%;white-space:normal;overflow-wrap:anywhere}
+/* 2026-11-05 My VPN key on wide screens: facts in one row on top, the key box full width below, notes on one line */
+.ieum .verified-grid>#verified-key{grid-template-columns:minmax(0,1fr);row-gap:14px}
+.ieum .verified-grid>#verified-key .wallet-facts{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));column-gap:0}
+.ieum .verified-grid>#verified-key .wallet-fact{padding:2px 18px 2px 0;border-left:0;border-right:1px solid var(--ieum-line);margin-right:18px}
+.ieum .verified-grid>#verified-key .wallet-fact:first-child{padding-left:0}
+.ieum .verified-grid>#verified-key .wallet-fact:last-child{border-right:0;margin-right:0}
+.ieum .verified-grid>#verified-key .wallet-fact dd{white-space:nowrap}
+.ieum .verified-grid>#verified-key .key-access{margin-top:2px}
+.ieum .verified-grid>#verified-key>.wallet-loading{margin:0}
+.ieum .verified-grid>#verified-key>.wallet-loading+.wallet-loading{margin-top:-6px}
+.ieum .order-card{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px}
+.ieum .order-card>*{grid-column:1/-1}
+.ieum .order-card>fieldset.order-group:nth-of-type(2){grid-column:1}
+.ieum .order-card>fieldset.order-group:nth-of-type(3){grid-column:2}
+.ieum .order-card>fieldset.order-group{align-self:start}
+}

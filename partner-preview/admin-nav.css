@@ -1,0 +1,28 @@
+/* Administrator menu bar shared by every administrator screen (2026-11-05). Loaded with ieum-ui.css. */
+.ieum-admin-nav{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;min-height:52px;padding:8px max(16px,calc((100% - 1180px)/2));background:#172746;color:#fff;font-size:14px;font-family:"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
+.ieum-admin-nav-brand{color:#fff;text-decoration:none;font-weight:700;font-size:15px;white-space:nowrap}
+.ieum-admin-nav-list{display:flex;flex-wrap:wrap;gap:2px 4px;list-style:none;margin:0;padding:0;align-items:center}
+.ieum-admin-nav-list>li{position:relative;display:flex;align-items:center;gap:6px}
+.ieum-admin-nav-list a{color:#dbe4ff;text-decoration:none;padding:7px 10px;border-radius:8px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.ieum-admin-nav-list a:hover{background:rgba(255,255,255,.08);color:#fff}
+.ieum-admin-nav-list a[aria-current=page]{background:rgba(255,255,255,.16);color:#fff;font-weight:600}
+.ieum-admin-nav-sub{display:inline-flex;gap:2px;margin-left:-4px}
+.ieum-admin-nav-sub a{font-size:13px;color:#b7c4ea;padding:6px 8px}
+.ieum-admin-nav-sub a::before{content:"·";margin-right:6px;color:#6f7fa8}
+.ieum-admin-nav-badge{display:inline-block;min-width:18px;padding:0 5px;border-radius:999px;background:#ff8a4c;color:#1b1b1b;font-size:11.5px;font-weight:700;line-height:18px;text-align:center}
+.ieum-admin-nav-dev details{position:relative}
+.ieum-admin-nav-dev summary{list-style:none;cursor:pointer;color:#9fb0d8;padding:7px 10px;border-radius:8px;font-size:13px;white-space:nowrap}
+.ieum-admin-nav-dev summary::-webkit-details-marker{display:none}
+.ieum-admin-nav-dev summary::after{content:" ▾";font-size:11px}
+.ieum-admin-nav-dev summary:hover{background:rgba(255,255,255,.08);color:#fff}
+.ieum-admin-nav-menu{position:absolute;top:100%;left:0;z-index:30;display:grid;min-width:180px;padding:6px;border-radius:10px;background:#fff;box-shadow:0 10px 30px rgba(10,20,50,.22)}
+.ieum-admin-nav-menu a{color:#16233d;font-size:13.5px;padding:8px 10px}
+.ieum-admin-nav-menu a:hover{background:#eef2fb;color:#16233d}
+.ieum-admin-nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.ieum-admin-nav-right a{color:#dbe4ff;text-decoration:none}
+.ieum-admin-nav-user{color:#b7c4ea;font-size:13px}
+.ieum-admin-nav-logout{font:inherit;font-size:13px;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:5px 10px;cursor:pointer}
+.ieum-admin-nav-logout:hover{background:rgba(255,255,255,.1)}
+.ieum-admin-nav-note{margin:0;padding:10px max(16px,calc((100% - 1180px)/2));background:#fff4e0;color:#8a4b00;font-size:14px}
+.ieum-admin-nav-note a{color:#8a4b00;font-weight:600}
+@media (max-width:640px){.ieum-admin-nav{padding:6px 12px;gap:6px 10px}.ieum-admin-nav-list a{padding:6px 8px;font-size:13.5px}.ieum-admin-nav-user{display:none}.ieum-admin-nav-sub{display:none}}

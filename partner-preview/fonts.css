@@ -1,6 +1,16 @@
+/* Full font: downloaded only for rare Hangul missing from the core subset below. */
 @font-face {
   font-family: "Noto Sans KR";
   src: url("./fonts/NotoSansKR-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7A3;
+}
+/* Core subset (~650KB): common Hangul, Latin, symbols and site text. Declared last so it is tried first. */
+@font-face {
+  font-family: "Noto Sans KR";
+  src: url("./fonts/NotoSansKR-ieum-core-v1.woff2") format("woff2");
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
