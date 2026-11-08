@@ -1370,6 +1370,12 @@ footer.wrap { padding-block: 0 calc(40px + env(safe-area-inset-bottom, 0px)); fo
  ],
  "updates": [
   {
+   "date": "2026-11-09",
+   "health": "on_track",
+   "title": "중국 접속 점검 화면에 점검 도구 목록을 추가했습니다",
+   "body": "관리자 '중국 접속 점검' 화면 아래에 '점검 도구 (직접 확인하기)' 칸을 만들어, 지금까지 쓴 외부 점검 사이트 4곳을 정리했습니다. ① ping.pe: 중국 약 13곳(통신 3사·텐센트·알리)에서 VPN 서버 접속 포트가 열리는지. ② ViewDNS: 중국 5곳 DNS가 vpn1·vpn2·홈페이지 주소를 올바른 IP로 돌려주는지(DNS 오염). ③ EXPERTE: 상하이·베이징·선전에서 홈페이지·앱 내려받기 주소가 열리는지(홍콩·독일·미국 대조 포함). ④ vpnMentor: 웹 주소 점검(Google Play를 '접근 가능'으로 잘못 보여 준 적이 있어 참고용). 도구마다 확인하는 것·쓰는 곳·방법·한계를 적었고, ViewDNS와 EXPERTE는 우리 주소로 바로 점검하는 버튼이 있습니다. 권장 순서는 ViewDNS → ping.pe → EXPERTE이고, Outline 연결 자체는 중국 안에서 앱으로만 확인된다는 점도 함께 표시했습니다. 화면 파일은 로그인 없이 읽힐 수 있어 서버 IP와 접속 포트는 넣지 않았습니다."
+  },
+  {
    "date": "2026-11-08",
    "health": "on_track",
    "title": "중국 접속 확인 방법 리서치와 VPN 서버 외부 점검 (두 서버 모두 정상)",
