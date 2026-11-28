@@ -29,6 +29,8 @@ html.ieum{-webkit-text-size-adjust:100%}
 
 /* 일본어·중국어는 띄어쓰기가 없어 keep-all(단어 단위 줄바꿈)이면 문장이 화면 밖으로 나간다 */
 html.ieum:is([lang=ja],[lang=zh-CN]) body *{word-break:normal;line-break:strict}
+/* The access key is one long unbroken string: it keeps breaking anywhere in Chinese and Japanese too (2026-11-06). */
+html.ieum:is([lang=ja],[lang=zh-CN]) .key-access-value{word-break:break-all;overflow-wrap:anywhere}
 
 /* 안내 띠: 홈·가입·내 이용권의 미리보기 문구를 같은 모양으로 */
 .ieum .demo,.ieum .preview-bar,.ieum .draft-banner{background:var(--ieum-blue-soft);color:#2d4b8f;font-size:12px;font-weight:700;letter-spacing:0;line-height:1.7;text-align:center;padding:9px 16px}
@@ -93,7 +95,7 @@ html.ieum:is([lang=ja],[lang=zh-CN]) body *{word-break:normal;line-break:strict}
 .ieum-customer .secondary:hover:not(:disabled),.ieum-customer .outline:hover{background:var(--ieum-blue-soft);border-color:var(--ieum-blue-line);color:var(--ieum-blue)}
 .ieum-customer .small{min-height:40px;font-size:14px}
 .ieum-customer .text-button{font-size:14px;font-weight:600;color:var(--ieum-blue)}
-.ieum-admin :is(#payment-directory,#payment-admin-wallet,#payment-admin-key,#payment-admin-history,#probe-workspace) :is(button,.button),.ieum-admin #payment-back{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 14px;font-size:13px;font-weight:600;border:1px solid var(--ieum-line-strong);background:#fff;color:var(--ieum-ink);cursor:pointer}
+.ieum-admin :is(#payment-directory,#payment-admin-wallet,#payment-admin-key,#payment-admin-history,#probe-workspace) :is(button,.button),.ieum-admin #payment-back{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:6px 14px;line-height:22px;font-size:13.5px;border-radius:8px;font-weight:600;border:1px solid var(--ieum-line-strong);background:#fff;color:var(--ieum-ink);cursor:pointer}
 .ieum-admin :is(#payment-directory,#payment-admin-wallet,#payment-admin-key,#payment-admin-history,#probe-workspace) :is(button,.button):hover:not(:disabled),.ieum-admin #payment-back:hover{border-color:var(--ieum-blue-line);background:var(--ieum-blue-soft);color:var(--ieum-blue)}
 
 /* ───────── 입력칸 ───────── */
@@ -321,6 +323,8 @@ html.ieum:is([lang=ja],[lang=zh-CN]) body *{word-break:normal;line-break:strict}
 .ieum .order-card{display:grid;gap:22px}
 .ieum .order-head h2{margin:0;font-size:18px;color:var(--ieum-ink)}
 .ieum .order-intro{margin:4px 0 0;font-size:14px;line-height:1.6;color:var(--ieum-muted)}
+.ieum .order-allowance{margin:0 0 10px;font-size:13px;font-weight:600;color:var(--ieum-ink)}
+.ieum-home .plan .plan-data{margin:2px 0 0;font-size:13px;font-weight:600;color:var(--ieum-ink)}
 .ieum .order-trial{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border:1px solid var(--ieum-blue-line);border-radius:var(--ieum-r-md);background:var(--ieum-blue-soft)}
 .ieum .order-trial[data-selected=true]{box-shadow:inset 0 0 0 1px var(--ieum-blue);border-color:var(--ieum-blue)}
 .ieum .order-trial-copy{display:grid;gap:2px;min-width:0}
@@ -495,12 +499,6 @@ html.ieum:is([lang=ja],[lang=zh-CN]) body *{word-break:normal;line-break:strict}
  .ieum-home .benefit-grid>article h3{font-size:15px;line-height:1.45;margin:4px 0 0}
  .ieum-home .benefit-grid>article p,.ieum-home .benefit-grid>article .benefit-tag{display:none}
  .ieum-home .plan-grid{gap:10px}
- .ieum-home .plan{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name price" "fit price" "total action";column-gap:12px;row-gap:2px;align-items:center;padding:16px 18px}
- .ieum-home .plan>h3{grid-area:name;margin:0;font-size:18px}
- .ieum-home .plan>p:not(.total-label){grid-area:fit;margin:0;font-size:13px;color:var(--ieum-muted)}
- .ieum-home .plan>.price{grid-area:price;margin:0;font-size:26px;justify-self:end}
- .ieum-home .plan>.total-label{grid-area:total;margin:6px 0 0;font-size:12px}
- .ieum-home .plan>button{grid-area:action;justify-self:end;margin:6px 0 0;min-height:36px;padding:6px 14px;font-size:13px;width:auto}
  .ieum-home .addon-offer{padding:16px 18px;gap:12px}
  .ieum-home .addon-offer .price{font-size:22px}
  .ieum-home .trial-offer{padding:18px}
@@ -514,7 +512,7 @@ html.ieum:is([lang=ja],[lang=zh-CN]) body *{word-break:normal;line-break:strict}
 .ieum .support-launcher[data-unread]::after{position:absolute;top:-7px;right:-5px;margin:0;min-width:22px;height:22px;box-shadow:0 0 0 2px #fff}
 
 /* ───────── 장애 보상 (관리자) ───────── */
-.ieum-admin .outage-page :is(button,.button):not(.oa-row){display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 14px;font-size:13px;font-weight:600;border:1px solid var(--ieum-line-strong);background:#fff;color:var(--ieum-ink);cursor:pointer}
+.ieum-admin .outage-page :is(button,.button):not(.oa-row){display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:6px 14px;line-height:22px;font-size:13.5px;border-radius:8px;font-weight:600;border:1px solid var(--ieum-line-strong);background:#fff;color:var(--ieum-ink);cursor:pointer}
 .ieum-admin .outage-page :is(button,.button):not(.oa-row):hover:not(:disabled){border-color:var(--ieum-blue-line);background:var(--ieum-blue-soft);color:var(--ieum-blue)}
 .ieum-admin .outage-page :is(button,.button).primary{background:var(--ieum-blue);border-color:var(--ieum-blue);color:#fff}
 .ieum-admin .outage-page :is(button,.button).primary:hover:not(:disabled){background:var(--ieum-blue-hover);border-color:var(--ieum-blue-hover);color:#fff}
@@ -611,4 +609,459 @@ html.ieum:is([lang=ja],[lang=zh-CN]) body *{word-break:normal;line-break:strict}
 .ieum .order-card>fieldset.order-group:nth-of-type(2){grid-column:1}
 .ieum .order-card>fieldset.order-group:nth-of-type(3){grid-column:2}
 .ieum .order-card>fieldset.order-group{align-self:start}
+}
+/* 결제·이용권 (2026-11-06): the selected customer's header, a summary line, and one card per action — title and
+   rule, fields with their labels above in two columns, confirmation and the action button in the card footer. */
+.ieum .pe-page-head{margin:4px 0 16px}
+.ieum .pe-back{padding:0;border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:var(--ieum-blue);cursor:pointer}
+.ieum .pe-back:hover{text-decoration:underline}
+.ieum .pe-title-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:10px}
+.ieum .pe-title{min-width:0}
+.ieum .pe-title h2{margin:0;font-size:20px;line-height:1.4;color:var(--ieum-ink);overflow-wrap:anywhere}
+.ieum .pe-sub{margin:2px 0 0;font-size:13px;color:#66738a;overflow-wrap:anywhere}
+.ieum .pe-title-row .button{width:auto;min-width:0;padding:8px 14px;border-radius:8px;font-size:13px}
+.ieum .pe-summary{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 16px}
+.ieum .pe-stat{flex:1 1 200px;margin:0;padding:12px 14px;border:1px solid #e3e9f4;border-radius:10px;background:#f8faff}
+.ieum .pe-stat dt{font-size:12px;color:#66738a}
+.ieum .pe-stat dd{margin:2px 0 0;font-size:15px;font-weight:650;color:var(--ieum-ink)}
+.ieum .pe-blocked{margin:0 0 12px;padding:8px 12px;border-radius:8px;background:#fff4e0;color:#8a4b00;font-size:13px}
+.ieum .pe-card{margin:0 0 12px;border:1px solid #e3e9f4;border-radius:12px;background:#fff;overflow:hidden}
+.ieum .pe-card-head{padding:14px 16px 0}
+.ieum .pe-card-head h3{display:flex;align-items:center;gap:8px;margin:0;font-size:15px;color:var(--ieum-ink)}
+.ieum .pe-card>.pe-help,.ieum .pe-card-head .pe-help{margin:4px 0 0;font-size:12.5px;line-height:1.6;color:#66738a}
+.ieum .pe-card>.pe-help{padding:0 16px 14px}
+.ieum .pe-badge{padding:1px 8px;border-radius:999px;background:#fff1c2;color:#6b4e00;font-size:11.5px;font-weight:700}
+.ieum .pe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;padding:14px 16px 0}
+.ieum .pe-field{display:grid;align-content:start;gap:6px;min-width:0}
+.ieum .pe-wide{grid-column:1/-1}
+.ieum .pe-label{font-size:12.5px;font-weight:650;color:#3a4a66}
+.ieum .pe-label em{margin-left:6px;font-style:normal;font-weight:500;color:#8a96aa}
+.ieum .pe-field>select,.ieum .pe-field>input{width:100%;height:38px;box-sizing:border-box;padding:0 10px;border:1px solid #d6deeb;border-radius:8px;background:#fff;font:inherit;font-size:14px;color:var(--ieum-ink)}
+.ieum .pe-field>select:focus,.ieum .pe-field>input:focus,.ieum .pe-money:focus-within{outline:0;border-color:var(--ieum-blue);box-shadow:0 0 0 3px rgba(36,83,212,.12)}
+.ieum .pe-money{display:flex;align-items:stretch;height:38px;box-sizing:border-box;border:1px solid #d6deeb;border-radius:8px;background:#fff;overflow:hidden}
+.ieum .pe-money input{flex:1;min-width:0;border:0;outline:0;padding:0 10px;background:transparent;font:inherit;font-size:14px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ieum-ink)}
+.ieum .pe-unit{display:flex;align-items:center;padding:0 12px;border-left:1px solid #eef2f8;background:#f8faff;color:#66738a;font-size:13px}
+.ieum .pe-hint{font-size:12px;color:#7a879d}
+.ieum .pe-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:16px;padding:12px 16px;border-top:1px solid #eef2f8;background:#fafbfe}
+.ieum .pe-check{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#3a4a66;cursor:pointer}
+.ieum .pe-check input{width:16px;height:16px;margin:2px 0 0;accent-color:var(--ieum-blue)}
+.ieum .pe-foot .button{width:auto;min-width:0;margin-left:auto;padding:9px 16px;border-radius:8px;font-size:13.5px}
+.ieum .pe-foot .button.pe-danger{background:#c4320a;border-color:#c4320a;color:#fff}
+.ieum .pe-foot .button.pe-danger:disabled{background:#efc5b8;border-color:#efc5b8;color:#fff}
+.ieum .pe-foot .button:disabled{cursor:default}
+@media (max-width:640px){.ieum .pe-grid{grid-template-columns:1fr}.ieum .pe-foot .button{width:100%;margin-left:0}}
+.ieum .pe-page-head{margin-top:0}
+.ieum .pe-page-head .pe-back{min-height:0;height:auto;padding:0;border:0;border-radius:0;background:none;box-shadow:none;color:var(--ieum-blue)}
+.ieum .pe-grid{max-width:880px}
+.ieum #payment-admin-status[hidden]{display:none}
+html.ieum .pe-page-head button.pe-back{min-height:0!important;height:auto!important;padding:0!important;border:0!important;background:none!important;box-shadow:none!important;width:auto!important}
+/* 이용권 종료·환불 (2026-11-06 2차): 환불 범위 선택, 제자리 확인(요약 한 줄 + [확정][취소]), 버튼 바로 아래 결과 */
+.ieum .pe-scope{margin:0;padding:0;border:0;min-width:0;display:grid;gap:8px}
+.ieum .pe-scope legend{padding:0;margin:0 0 6px;font-size:12.5px;font-weight:650;color:#3a4a66}
+.ieum .pe-option{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid #d6deeb;border-radius:10px;background:#fff;cursor:pointer}
+.ieum .pe-option:has(input:checked){border-color:var(--ieum-blue);background:#f4f7ff}
+.ieum .pe-option input{width:16px;height:16px;margin:3px 0 0;flex:none;accent-color:var(--ieum-blue)}
+.ieum .pe-option span{display:grid;gap:2px;min-width:0}
+.ieum .pe-option strong{font-size:13.5px;color:var(--ieum-ink)}
+.ieum .pe-option-sub{font-size:12.5px;line-height:1.5;color:#66738a}
+.ieum .pe-option-off{cursor:default;opacity:.6}
+.ieum .pe-foot{flex-direction:column;align-items:stretch}
+.ieum .pe-foot>.button{align-self:flex-end}
+.ieum .pe-confirm{display:grid;gap:8px;padding:10px 12px;border:1px solid #f3d1a6;border-radius:10px;background:#fffaf2}
+.ieum .pe-confirm-text{margin:0;font-size:13px;line-height:1.6;color:var(--ieum-ink)}
+.ieum .pe-confirm .pe-field>input{height:36px}
+.ieum .pe-confirm-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+.ieum .pe-foot .pe-confirm-actions .button{margin-left:0}
+.ieum .pe-result{margin:0;padding:8px 12px;border-radius:8px;font-size:13px;line-height:1.5;background:#eef3ff;color:#1d3a8a}
+.ieum .pe-result[data-kind=success]{background:#e8f6ee;color:#11633a}
+.ieum .pe-result[data-kind=error]{background:#fdecea;color:#a1271b}
+.ieum .pe-card>.pe-result{margin:0 16px 14px}
+.ieum .pe-parts{display:grid;gap:8px;min-width:0}
+.ieum .pe-part{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,180px);align-items:center;gap:10px;padding:10px 12px;border:1px solid #e3e9f4;border-radius:10px;background:#fbfcff}
+.ieum .pe-part-who{display:grid;gap:2px;min-width:0}
+.ieum .pe-part-who strong{font-size:13.5px;color:var(--ieum-ink);overflow-wrap:anywhere}
+.ieum .pe-part .pe-hint{overflow-wrap:anywhere}
+.ieum .pe-total{margin:2px 0 0;padding:8px 12px;border-radius:8px;background:#f4f7ff;font-size:13.5px;font-weight:650;color:var(--ieum-ink)}
+.ieum .pe-total[data-ok=false]{background:#fdecea;color:#a1271b;font-weight:600}
+.ieum .pe-account{background:#fdecea;color:#a1271b}
+.ieum .pe-account[data-state=closed]{background:#eef1f6;color:#3a4a66}
+.ieum .pa-account{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;background:#fdecea;color:#a1271b;font-size:12.5px;font-weight:700;vertical-align:middle}
+.ieum .pa-account[data-state=closing]{background:#fff1dc;color:#8a4b00}
+.ieum .pa-account[data-state=closed]{background:#eef1f6;color:#3a4a66}
+@media (max-width:640px){.ieum .pe-part{grid-template-columns:1fr}}
+@media (max-width:640px){.ieum .pe-foot>.button{align-self:stretch}.ieum .pe-confirm-actions .button{flex:1 1 0}}
+/* 결제 고객 목록 (2026-11-06 2차): 닉네임·아이디·이메일과 고객 찾기 */
+.ieum .pd-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0 4px}
+.ieum .pd-search{flex:1 1 260px;margin:0}
+.ieum .pd-search input{width:100%;height:40px;box-sizing:border-box;padding:0 12px;border:1px solid #d6deeb;border-radius:8px;background:#fff;font:inherit;font-size:14px;color:var(--ieum-ink)}
+.ieum .pd-search input:focus{outline:0;border-color:var(--ieum-blue);box-shadow:0 0 0 3px rgba(36,83,212,.12)}
+.ieum .pd-tools>button{width:auto;min-width:0}
+.ieum .pd-who{display:grid;min-width:0;gap:1px}
+.ieum .pd-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:650;color:var(--ieum-ink)}
+.ieum .pd-sub{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:var(--ieum-muted)}
+.ieum .pd-head .pd-who{font-size:12px;font-weight:600;color:var(--ieum-muted)}
+.ieum .pd-found,.ieum .pd-none,.ieum .pd-page{margin:10px 0 4px;font-size:13px;color:var(--ieum-muted)}
+.ieum-admin #payment-directory .pd-row.pd-result{grid-template-columns:minmax(0,1fr) auto auto 20px}
+.ieum .pd-state{justify-self:end;font-size:12px;font-weight:650;padding:2px 8px;border-radius:999px;background:var(--ieum-subtle);color:var(--ieum-muted);white-space:nowrap}
+@media (max-width:760px){.ieum-admin #payment-directory .pd-row.pd-result{grid-template-columns:minmax(0,1fr) auto 14px}}
+/* 장애 보상 · 개별 고객 (2026-11-06 2차): 이름·아이디·이메일로 찾아 고르기, 고른 고객 확인, 제자리 확정 */
+.ieum .oa-who{align-content:start}
+.ieum .oa-picked{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-height:40px;padding:6px 10px;border:1px solid var(--ieum-blue);border-radius:var(--ieum-r-sm);background:var(--ieum-blue-soft)}
+.ieum .oa-picked strong{flex:1 1 auto;min-width:0;font-size:14px;color:var(--ieum-ink);overflow-wrap:anywhere}
+.ieum-admin .oa-picked .button{width:auto;min-width:0;min-height:30px;padding:4px 10px;font-size:12.5px}
+.ieum .oa-results{display:grid;gap:4px}
+.ieum .oa-results:empty{display:none}
+.ieum .oa-results .oa-state{margin:4px 0 0;font-size:13px}
+.ieum-admin .oa-result-row{display:grid;gap:2px;width:100%;margin:0;padding:8px 10px;border:1px solid var(--ieum-line);border-radius:var(--ieum-r-sm);background:#fff;text-align:left;font:inherit;cursor:pointer;color:var(--ieum-ink)}
+.ieum-admin .oa-result-row:hover{border-color:var(--ieum-blue);background:var(--ieum-blue-soft)}
+.ieum .oa-result-row strong{font-size:14px}
+.ieum .oa-result-row span{font-size:12.5px;color:var(--ieum-muted);overflow-wrap:anywhere}
+.ieum-admin .oa-link{justify-self:start;width:auto;min-width:0;min-height:0;margin:0;padding:0;border:0;background:none;box-shadow:none;font:inherit;font-size:12.5px;color:var(--ieum-blue);cursor:pointer;text-decoration:underline}
+/* 내 이용권 상태 카드 (2026-11-06 3차): 남은 기간 옆 남은 데이터, 다시 채워지는 날, 다음 행동 버튼 하나 */
+.ieum .wallet-hero[data-state=no-data],.ieum .wallet-hero[data-state=held]{background:#fff4e5;color:var(--ieum-ink);box-shadow:inset 0 0 0 1px #f3d1a6}
+.ieum .wallet-hero[data-state=expired],.ieum .wallet-hero[data-state=trial-ended]{background:#f3f5f9;color:var(--ieum-ink)}
+.ieum .wallet-data{margin:8px 0 0;font-size:16px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.ieum .wallet-hero[data-state=active] .wallet-data[data-low=true]{color:#ffe08a}
+.ieum .wallet-hero:not([data-state=active]) .wallet-data[data-low=true]{color:#b04a00}
+.ieum .wallet-refill{margin:2px 0 0;font-size:13px;opacity:.85}
+.ieum .wallet-action{margin-top:14px;min-height:42px}
+.ieum .wallet-hero[data-state=active] .wallet-action.button.secondary{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.55)}
+.ieum .wallet-hero[data-state=active] .wallet-action.button.secondary:hover{background:rgba(255,255,255,.24)}
+.ieum .wallet-hero[data-state=active] .wallet-action.button.primary{background:#fff;color:var(--ieum-blue);border-color:#fff}
+/* 내 VPN 키 · 연결이 안 돼요 */
+.ieum .key-help{margin-top:12px;border:1px solid var(--ieum-line);border-radius:var(--ieum-r-md);background:#fff}
+.ieum .key-help>summary{cursor:pointer;list-style:none;padding:12px 16px;font-size:14px;font-weight:700;color:var(--ieum-ink)}
+.ieum .key-help>summary::-webkit-details-marker{display:none}
+.ieum .key-help>summary::after{content:'＋';float:right;color:var(--ieum-muted);font-weight:500}
+.ieum .key-help[open]>summary::after{content:'－'}
+.ieum .key-help-lead{margin:0 16px 8px;font-size:13px;color:var(--ieum-muted)}
+.ieum .key-help-steps{margin:0 16px 12px;padding-left:20px;display:grid;gap:6px;font-size:14px;line-height:1.6}
+.ieum .key-help-ask{margin:0 16px 16px;width:auto}
+@media (max-width:640px){.ieum .key-help-ask{width:calc(100% - 32px)}.ieum .wallet-action{width:100%}}
+.ieum .ph-change{grid-column:1/-1;margin:0;font-size:13.5px;font-weight:650;color:var(--ieum-ink);font-variant-numeric:tabular-nums}
+/* 회원 탈퇴 확인 상자 (2026-11-06 3차): 브라우저 창 대신 화면 안에서, 잃는 것을 줄마다 */
+.ieum .close-confirm{display:grid;gap:8px;margin-top:4px;padding:14px 16px;border:1px solid #f1c4bf;border-radius:var(--ieum-r-md);background:#fdf3f2}
+.ieum .close-confirm strong{font-size:15px;color:#7d1d14}
+.ieum .close-confirm ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px;line-height:1.6;color:var(--ieum-ink)}
+.ieum .close-confirm-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ieum .close-confirm .button.danger{background:#b3261e;border-color:#b3261e;color:#fff}
+.ieum .close-confirm .button.danger:hover{background:#8f1d17}
+/* 떠 있는 버튼이 내용을 가리지 않게 (2026-11-06 3차, 결정 D-1): 고객 화면 아래 여백과 초점 스크롤 여백 */
+html.ieum-customer{scroll-padding-bottom:112px}
+.ieum-customer body{padding-bottom:88px}
+@media (max-width:640px){html.ieum-customer{scroll-padding-bottom:132px}.ieum-customer body{padding-bottom:96px}}
+/* 로그인 전 이용권 안내·고객센터 연락처 (2026-11-06 3차, 항목 7·21) */
+.ieum .login-plan{margin:16px 0 22px}
+/* The chosen pass (dist/plan-pick.mjs, 2026-11-07): one calm summary card on sign-in and sign-up, a link back to
+   change it, and sign-up as a quiet second step under the login button. */
+.ieum .plan-pick{padding:14px 16px;border:1px solid var(--ieum-blue-line);border-radius:var(--ieum-r-md);background:var(--ieum-blue-soft);color:var(--ieum-ink)}
+.ieum .plan-pick-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ieum .plan-pick-label{font-size:12px;font-weight:600;color:var(--ieum-muted)}
+.ieum .plan-pick-change{font-size:13px;font-weight:700;color:var(--ieum-blue);text-decoration:none}
+.ieum .plan-pick-change:hover{text-decoration:underline}
+.ieum .plan-pick-main{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:6px}
+.ieum .plan-pick-name{font-size:18px;font-weight:800;letter-spacing:-.02em}
+.ieum .plan-pick .plan-badge{padding:2px 9px;border-radius:999px;background:#fff;color:var(--ieum-blue);font-size:12px;font-weight:700}
+.ieum .plan-pick-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;margin:4px 0 0;font-size:14px;line-height:1.6}
+.ieum .plan-pick-amount{font-weight:700;font-variant-numeric:tabular-nums}
+.ieum .plan-pick-dot,.ieum .plan-pick-meta{color:var(--ieum-muted)}
+.ieum .plan-pick-note{margin:8px 0 0;padding-top:8px;border-top:1px solid var(--ieum-blue-line);font-size:13px;line-height:1.6;color:var(--ieum-text)}
+.ieum .login-join{display:grid;gap:8px;margin:18px 0 4px;padding-top:18px;border-top:1px solid var(--ieum-line);text-align:center}
+.ieum .login-join-ask{margin:0;font-size:14px;font-weight:700;color:var(--ieum-ink)}
+.ieum .login-join .button{width:100%}
+.ieum .login-join-note{margin:0;font-size:12.5px;color:var(--ieum-muted)}
+.ieum .login-contact{margin-top:12px}
+.ieum .auth-lost{position:sticky;top:0;z-index:30;margin:0 0 12px;padding:12px 16px;border:1px solid #efc9c6;border-left:3px solid #c2483f;border-radius:8px;background:#fff8f7;color:#852d26;font-size:14px;line-height:1.6}
+.ieum .auth-lost a{margin-left:6px;font-weight:700}
+/* 휴대폰 첫 화면에서 가격이 바로 보이게 (2026-11-06 3차, 항목 3): 오른쪽 요약 카드가 숨는 폭에서만 */
+.ieum-home .hero-price{display:none}
+@media (max-width:760px){.ieum-home .hero-price{display:block;margin:0 0 18px;padding:10px 14px;border:1px solid #cfd9e8;border-left:3px solid #2d49eb;border-radius:8px;background:#fff;font-size:15px;line-height:1.6;color:#23344d}.ieum-home .hero-price strong{color:#1d3fb8}}
+/* 고객 화면 공통 하단: 약관 링크와 사업자 정보 (2026-11-06 4차, 항목 26, dist/customer-footer.mjs) */
+.ieum-customer :is(body,main)>footer{flex-wrap:wrap}
+.ieum-customer .ieum-business{flex:1 0 100%;width:100%;margin-top:10px;padding-top:12px;border-top:1px solid var(--ieum-line,#e1e6ee);font-size:12px;line-height:1.7;color:var(--ieum-faint,#748197)}
+.ieum-customer .ieum-business-links{display:block;margin-bottom:6px;font-size:13px}
+.ieum-customer .ieum-business-links a{color:var(--ieum-ink,#23344d);text-decoration:none}
+.ieum-customer .ieum-business-links a:hover{text-decoration:underline}
+.ieum-customer .ieum-business-facts{display:flex;flex-wrap:wrap;gap:2px 14px;margin:0}
+.ieum-customer .ieum-business-facts div{display:flex;gap:5px}
+.ieum-customer .ieum-business-facts dt{font-weight:600}
+.ieum-customer .ieum-business-facts dd{margin:0}
+.ieum-customer .ieum-business-note{margin:6px 0 0;font-size:12px;color:#8a4b00}
+/* 결제 직전 환불 규정 확인 (2026-11-07 4차, 항목 13) */
+.ieum .order-terms{margin:14px 0 10px;padding:12px 14px;border:1px solid var(--ieum-line,#e1e6ee);border-radius:8px;background:#fafbfd}
+.ieum .order-terms .order-policy{margin:0 0 8px;font-size:13px;line-height:1.6}
+.ieum .order-refund-link{font-weight:700;white-space:nowrap}
+.ieum .order-ack{display:flex;align-items:flex-start;gap:8px;font-size:14px;font-weight:650;cursor:pointer}
+.ieum .order-ack input{width:18px;height:18px;margin-top:2px;flex:none}
+.ieum .order-ack[data-missing=true]{color:#b3261e}
+/* 중국 접속 점검: 홈페이지·앱 다운로드 (2026-11-07, 항목 5) */
+.ieum .cwc{margin-top:18px}
+.ieum .cwc h2{margin:0 0 6px;font-size:18px}
+.ieum .cwc-list{list-style:none;margin:10px 0 0;padding:0}
+.ieum .cwc-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--ieum-line,#e1e6ee)}
+.ieum .cwc-main{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ieum .cwc-url{font-size:12px;color:var(--ieum-faint,#748197);overflow-wrap:anywhere}
+.ieum .cwc-note{font-size:12px;color:var(--ieum-faint,#748197)}
+.ieum .cwc-side{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:none;font-size:12px}
+.ieum .cwc-state{padding:2px 8px;border-radius:999px;background:#eef1f6;font-weight:700}
+.ieum .cwc-row[data-state=ok] .cwc-state{background:#e5f4e4;color:#1e6b2a}
+.ieum .cwc-row[data-state=blocked] .cwc-state{background:#fbebeb;color:#9b2a22}
+.ieum .cwc-row[data-state=unstable] .cwc-state{background:#f9eeda;color:#8a5a00}
+.ieum .cwc-when{color:var(--ieum-faint,#748197)}
+/* 2단계 A-33: the right column shrinks (at most 45%) and wraps; on a phone the row stacks so the left text never breaks letter by letter */
+.ieum .cwc-main{flex:1 1 auto}
+.ieum .cwc-side{flex:0 1 auto;max-width:45%;text-align:right;overflow-wrap:anywhere}
+@media (max-width:640px){.ieum .cwc-row{flex-direction:column;gap:6px}.ieum .cwc-side{max-width:none;align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap;gap:4px 8px}}
+/* 요금 카드 아래 결제 수단 (항목 4) */
+.ieum-home .plan-payments{margin:14px 0 0;font-size:14px;color:var(--ieum-ink,#23344d)}
+/* Won and yuan cards (2026-11-07): every card has the same rows (period · discount, who it suits, both prices,
+   the monthly price, data) so the three line up at the same size; the discount badge only on 90 and 180 days. */
+.ieum-home .plan-grid{align-items:stretch}
+.ieum-home .plan{display:flex;flex-direction:column}
+.ieum-home .plan .plan-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:28px}
+.ieum-home .plan .plan-top h3{margin:0}
+.ieum-home .plan .plan-badge{flex:none;padding:3px 10px;border-radius:999px;background:var(--ieum-blue-soft);color:var(--ieum-blue);font-size:12px;font-weight:700}
+.ieum-home .plan .plan-fit{margin:6px 0 0;font-size:14px;color:var(--ieum-muted)}
+.ieum-home .plan-prices{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin:16px 0 12px;border-top:1px solid var(--ieum-line);border-bottom:1px solid var(--ieum-line)}
+.ieum-home .plan-prices>div{display:flex;flex-direction:column;gap:2px;padding:12px 0;min-width:0}
+.ieum-home .plan-prices>div+div{border-left:1px solid var(--ieum-line);padding-left:14px}
+.ieum-home .plan-prices strong{font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-.02em;color:var(--ieum-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ieum-home .plan-prices strong span,.ieum-home .quick-prices .quick-price span,.ieum-home .addon-prices .price span{font-size:15px;font-weight:600;margin-left:2px}
+.ieum-home .plan-prices small,.ieum-home .quick-prices small{font-size:12px;color:var(--ieum-faint)}
+.ieum-home .plan .plan-month{margin:0;font-size:14px;font-weight:700;color:var(--ieum-ink);font-variant-numeric:tabular-nums}
+.ieum-home .plan>.plan-data{margin:2px 0 18px}
+.ieum-home .plan>button{margin-top:auto}
+/* The featured (90-day) card keeps the same inner lines as the others: its 2px border takes 1px of the padding. */
+.ieum-home .plan.featured{padding:27px}
+/* Pointing at or tapping a card highlights it (dist/plan-pick.mjs). */
+.ieum-home .plan{cursor:pointer;transition:border-color .15s,background-color .15s,box-shadow .15s}
+.ieum-home .quick-prices{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin:6px 0 4px}
+.ieum-home .quick-prices>div+div{border-left:1px solid var(--ieum-line);padding-left:14px}
+.ieum-home .quick-prices .quick-price{font-size:40px;line-height:1.15;white-space:nowrap}
+.ieum-home .addon-prices{display:flex;align-items:baseline;gap:14px;flex:none}
+.ieum-home .addon-prices .price+.price{padding-left:14px;border-left:1px solid var(--ieum-line)}
+/* Order card: the amount in the chosen method's currency, the other one small under it. */
+.ieum .order-option-alt{font-size:12.5px;color:var(--ieum-muted);font-variant-numeric:tabular-nums}
+.ieum .order-currency-note{margin:8px 0 0;font-size:12.5px;line-height:1.6;color:var(--ieum-muted)}
+@media (max-width:760px){
+ .ieum-home .plan{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"top top" "fit fit" "prices prices" "month action" "data action";column-gap:12px;row-gap:0;align-items:center;padding:16px 18px}
+ .ieum-home .plan>.plan-top{grid-area:top}
+ .ieum-home .plan>.plan-fit{grid-area:fit;margin:2px 0 0;font-size:13px}
+ .ieum-home .plan>.plan-prices{grid-area:prices;margin:12px 0 10px}
+ .ieum-home .plan-prices>div{padding:10px 0}
+ .ieum-home .plan-prices strong{font-size:22px}
+ .ieum-home .plan>.plan-month{grid-area:month;font-size:13px}
+ .ieum-home .plan>.plan-data{grid-area:data;margin:2px 0 0;font-size:12.5px}
+ .ieum-home .plan>button{grid-area:action;justify-self:end;margin:0;min-height:36px;padding:6px 14px;font-size:13px;width:auto}
+ .ieum-home .addon-prices{gap:10px}.ieum-home .addon-prices .price+.price{padding-left:10px}
+ .ieum-home .plan.featured{padding:15px 17px}
+}
+@media (max-width:640px){
+ .ieum .order-option{grid-template-areas:"top price" "note alt" "meta alt"}
+ .ieum .order-option-alt{grid-area:alt;justify-self:end;align-self:start}
+}
+.ieum-home .plan-payments strong{margin-right:6px}
+.ieum-home .plan-payments span{color:var(--ieum-faint,#748197);font-size:13px}
+.ieum .cwc-detail{font-size:12px;color:var(--ieum-ink,#23344d)}
+.cwc-tool .cwc-main{gap:4px}.cwc-tool-name{font-weight:700;color:var(--ieum-ink,#23344d)}.cwc-tool .cwc-note b{color:var(--ieum-ink,#23344d);font-weight:600}
+.cwc-quick{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:4px;font-size:12px}.cwc-quick>span{color:var(--ieum-faint,#748197)}.cwc-quick a{padding:3px 10px;border:1px solid var(--ieum-line,#e1e6ee);border-radius:999px;text-decoration:none}
+
+/* 휴대폰 첫 화면 마지막 줄이 떠 있는 버튼에 가리지 않게 (2026-11-07 다듬기) */
+@media (max-width:760px){.ieum-home .hero-note{padding-right:64px}}
+/* 고객 화면 다듬기 (2026-11-07) */
+/* 내 이용권: PC에서 읽기 좋은 폭, 머리말 한 줄, 고칠 수 없는 칸은 글자로 */
+.ieum-account{--ieum-customer-width:960px}
+.ieum-account .account-identity{display:flex;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 6px}
+.ieum-account #customer-email{font-weight:700}
+.ieum-account #settings-id,.ieum-account #settings-email{border:0;background:transparent;padding:0;min-height:auto;height:auto;box-shadow:none;font-weight:700;color:var(--ieum-ink,#23344d);pointer-events:none}
+.ieum-account #customer-settings{margin-top:18px}
+.ieum-account .settings-export{margin:22px 0 6px;padding-top:18px;border-top:1px solid var(--ieum-line,#e1e6ee)}
+.ieum-account .settings-export h2{margin:0 0 6px;font-size:18px}
+.ieum-account .settings-close{margin-top:22px;padding-top:18px;border-top:1px solid var(--ieum-line,#e1e6ee)}
+/* Logged-out 내 이용권 (2026-11-07): the login card and a guide card side by side, centred on one top line; on a
+   phone the guide follows the card. Sign-up sits under the login button (plan-pick.mjs fills in the chosen pass). */
+.ieum-customer .login-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:start;gap:28px;padding:8px 0 40px}
+.ieum-customer .login-card{padding:30px 32px}
+.ieum-customer .login-card h3{margin:0;font-size:22px;letter-spacing:-.02em}
+.ieum-customer .login-card .form-stack>.button.primary{margin-top:6px}
+.ieum-customer .login-links{display:flex;justify-content:center;align-items:center;gap:10px;margin:14px 0 0;font-size:14px;color:var(--ieum-faint)}
+.ieum-customer .login-links .text-button{color:var(--ieum-muted);font-weight:600}
+.ieum-customer .login-links .text-button:hover{color:var(--ieum-blue)}
+.ieum-customer .login-intro{padding:28px 28px 24px;border:1px solid var(--ieum-line);border-radius:14px;background:var(--ieum-subtle)}
+.ieum-customer .login-intro h2{margin:8px 0 20px;font-size:20px;line-height:1.4;letter-spacing:-.02em;color:var(--ieum-ink)}
+.ieum-customer .login-intro .intro-steps{display:grid;gap:16px;margin:0;padding:0;list-style:none}
+.ieum-customer .login-intro .intro-steps li{display:flex;gap:12px;align-items:flex-start}
+.ieum-customer .login-intro .intro-steps b{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ieum-blue-soft);color:var(--ieum-blue);font-size:13px;font-weight:800}
+.ieum-customer .login-intro .intro-steps strong{display:block;font-size:15px;line-height:1.5;color:var(--ieum-ink)}
+.ieum-customer .login-intro .intro-steps li span{display:block;margin:2px 0 0;font-size:13px;line-height:1.6;color:var(--ieum-muted)}
+.ieum-customer .login-intro-note{margin:22px 0 0;padding-top:16px;border-top:1px solid var(--ieum-line);font-size:13px;line-height:1.7;color:var(--ieum-muted)}
+.ieum-customer .login-intro .login-contact{margin:8px 0 0;font-size:13px;line-height:1.7}
+@media (max-width:760px){
+ .ieum-customer .login-layout{grid-template-columns:minmax(0,1fr);gap:16px;padding:0 0 24px}
+ .ieum-customer .login-card{padding:22px 18px}
+ .ieum-customer .login-card h3{font-size:20px}
+ .ieum-customer .login-intro{padding:20px 18px}
+ .ieum-customer .login-intro h2{margin:6px 0 16px;font-size:18px}
+ .ieum-customer .login-intro .intro-steps{display:grid;gap:14px}
+}
+.ieum-customer .page-description{word-break:keep-all}
+/* 2026-11-07: 현재 이용권, 내 VPN 키 and 기간 연장 share one three-column grid on wide screens (same 10px gap as the
+   duration cards), so their dividers fall on the same two vertical lines: the blue pass box takes the first column,
+   the end date and this cycle's allowance the next two; the key card shows server, issue date and usage (its end
+   date is the pass end, shown once on the pass card). Each divider keeps room on both sides, and values wrap by word. */
+@media (min-width:981px){
+ .ieum .verified-grid>.wallet-card:not(#verified-key){grid-template-columns:repeat(3,minmax(0,1fr));column-gap:10px;align-items:center}
+ .ieum .verified-grid>.wallet-card:not(#verified-key)>.wallet-hero{grid-column:1}
+ .ieum .verified-grid>.wallet-card:not(#verified-key)>.wallet-facts{grid-column:2/4;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:10px}
+ .ieum .verified-grid>.wallet-card:not(#verified-key) .wallet-fact{padding:4px 16px 4px 20px;gap:4px;border-left:1px solid var(--ieum-line)}
+ .ieum .verified-grid>#verified-key .wallet-facts{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:10px}
+ .ieum .verified-grid>#verified-key .wallet-fact{padding:2px 16px 2px 20px;margin:0;border-right:0;border-left:1px solid var(--ieum-line)}
+ .ieum .verified-grid>#verified-key .wallet-fact:first-child{padding-left:0;border-left:0}
+ .ieum .verified-grid>.wallet-card .wallet-fact dd{line-height:1.5;white-space:normal}
+ .ieum .verified-grid>.wallet-card .wallet-fact dd,.ieum .verified-grid>.wallet-card .wallet-cycle-detail{word-break:keep-all;overflow-wrap:break-word}
+}
+
+/* Same three lines inside 기간 연장: the data add-on takes the first column, the payment methods the other two. */
+@media (min-width:981px){
+ .ieum .order-card{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:10px}
+ .ieum .order-card>fieldset.order-group.order-topup{grid-column:1}
+ .ieum .order-card>fieldset.order-group.order-topup+fieldset.order-group{grid-column:2/4}
+}
+/* 접속 키 목록 (2026-11-07): same type sizes as the 고객 page — card numbers 22px, labels and sub lines 12–12.5px,
+   table 13px — and a long breakdown goes on a small line instead of wrapping in the big number. */
+.ieum-admin #summary strong{font-size:22px;line-height:1.3}
+.ieum-admin #summary small{font-size:12.5px}
+.ieum-admin #summary .summary-sub{display:block;margin-top:2px;font-size:12px;color:var(--ieum-faint)}
+.ieum-admin #server-meta span{font-size:13px}
+.ieum-admin #measurement-note{font-size:12.5px;line-height:1.6}
+/* ID 찾기·비밀번호 재설정 (2026-11-07): only the 6-digit code is large and spaced; a calmer title; the two links apart */
+.recovery-panel h3#local-recovery-title{font-size:20px;line-height:1.35;margin:4px 0 14px;letter-spacing:-.01em}
+.recovery-panel.verification input{font-size:15px!important;letter-spacing:normal;font-variant-numeric:normal}
+.recovery-panel.verification input::placeholder{letter-spacing:normal;font-size:15px;color:#9aa6b8}
+.recovery-panel.verification #local-recovery-code{font-size:20px!important;letter-spacing:6px;font-variant-numeric:tabular-nums}
+.recovery-panel .recovery-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin-top:12px}
+.recovery-panel .recovery-links .text-button{padding:4px 0}
+.recovery-panel .recovery-links .text-button+.text-button{position:relative;padding-left:20px}
+.recovery-panel .recovery-links .text-button+.text-button::before{content:'';position:absolute;left:0;top:50%;width:1px;height:12px;margin-top:-6px;background:#d3dbe8}
+/* 4단계 관리자 로그인 */
+.ieum .admin-login-page{max-width:420px;margin:48px auto;padding:0 16px}
+.ieum .admin-login-card h1{margin:4px 0 16px;font-size:22px}
+.ieum .admin-login-brand{margin:0;font-weight:700;color:var(--ieum-blue)}
+.ieum .admin-operator-pick{display:grid;gap:8px;margin:0;padding:0;border:0}
+.ieum .admin-operator-pick legend{margin-bottom:6px;font-weight:650}
+.ieum .admin-operator{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid #d6deeb;border-radius:10px;cursor:pointer}
+.ieum .admin-operator:has(input:checked){border-color:var(--ieum-blue);background:#f4f7ff}
+/* 4단계 A-16: 되돌릴 수 없는 승인·내리기는 빨강 */
+.ieum .oa-actions .button.danger,.ieum .oa-inline-confirm .button.danger{background:#c4320a;border-color:#c4320a;color:#fff}
+.ieum .oa-inline-confirm{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;margin-left:8px;font-size:13px}
+.ieum .sec-filter{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.ieum .sec-filter select{width:auto;min-height:36px;margin:0}
+.ieum .admin-operator input{width:18px;height:18px;min-height:0;margin:0;padding:0;flex:none;accent-color:var(--ieum-blue)}
+.ieum .admin-operator{font-size:15px;font-weight:600;justify-content:flex-start}
+.ieum .pe-legal{color:#3a4a66}
+.ieum .pe-warn{color:#a1271b}
+/* 5단계 A-11: 최근 결제 칸에 상품·금액 */
+@media (min-width:761px){.ieum .pd-head:not(.x),.ieum-admin #payment-directory .pd-row:not(.pd-result){grid-template-columns:minmax(0,1fr) 64px 76px 76px 250px 20px}}
+
+/* 8단계 (A-17): a notice line keeps '내리기' at its top right, not between the sentences; the question to confirm takes
+   its own line under it. */
+.ieum .oa-notices>li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:8px;row-gap:4px;align-items:start}
+.ieum .oa-notices>li>.oa-notice-kind{grid-column:1;grid-row:1}
+.ieum .oa-notices>li>.oa-notice-body{grid-column:2;grid-row:1;word-break:keep-all;overflow-wrap:anywhere}
+.ieum .oa-notices>li>.oa-notice-when{grid-column:2;grid-row:2}
+.ieum .oa-notices>li>button{grid-column:3;grid-row:1;width:auto}
+.ieum .oa-notices>li>.oa-inline-confirm{grid-column:1/-1;grid-row:3;margin-left:0}
+/* 관리자 화면 검토 9단계 (A-65): these screens' own buttons follow the shared sizes — 36px, 44px on a phone. */
+@media (max-width:640px){.ieum-admin :is(#payment-directory,#payment-admin-wallet,#payment-admin-key,#payment-admin-history,#probe-workspace) :is(button,.button),.ieum-admin #payment-back,.ieum-admin .outage-page :is(button,.button):not(.oa-row){min-height:44px}}
+/* 메일 발송 2단계: '메일로도 보내기' under the notice period. */
+.ieum .oa-notice-mail{display:flex;gap:8px;align-items:center;margin:10px 0 0;font-size:13px;color:#33435f}
+.ieum .oa-notice-mail input{width:18px;height:18px;margin:0}
+/* 담당자 입금 확인 결제 (2026-11-24): the order screen shows where to pay (account or QR), the order number and '입금했어요'. */
+.order-pay-guide{display:grid;gap:10px}
+.order-pay-loading,.order-pay-missing{margin:0;font-size:14px;color:var(--ieum-muted)}
+.order-pay-facts{margin:0;display:grid;padding:2px 14px;background:var(--ieum-surface);border:1px solid var(--ieum-blue-line);border-radius:var(--ieum-r-sm)}
+.order-pay-facts>div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--ieum-line)}
+.order-pay-facts>div:first-child{border-top:0}
+.order-pay-facts dt{flex-shrink:0;font-size:13px;color:var(--ieum-muted)}
+.order-pay-facts dd{margin:0;display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px;min-width:0;text-align:right}
+.order-pay-facts strong{font-size:15px;color:var(--ieum-ink);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.order-pay-facts .order-copy{flex:0 0 auto;min-height:32px;padding:4px 10px;font-size:12px}
+.order-qr{margin:0;justify-self:center;padding:12px;background:#fff;border:1px solid var(--ieum-blue-line);border-radius:var(--ieum-r-md)}
+.order-qr img{display:block;width:220px;max-width:60vw;height:auto;aspect-ratio:1;object-fit:contain}
+.order-pay-hint{margin:0;font-size:14px;line-height:1.6;font-weight:600;color:var(--ieum-ink)}
+.order-pay-note,.order-pay-deadline{margin:0;font-size:13px;line-height:1.6;color:var(--ieum-muted)}
+.order-paid{display:grid;gap:10px}
+.order-payer{display:grid;gap:6px;font-size:13px;color:var(--ieum-muted)}
+.order-payer input{min-height:46px;padding:0 12px;font-size:16px;color:var(--ieum-ink);background:var(--ieum-surface);border:1px solid var(--ieum-line-strong);border-radius:var(--ieum-r-sm)}
+.order-payer input[aria-invalid=true]{border-color:var(--ieum-danger)}
+.order-paid .order-paid-button{flex:1 1 100%}
+.order-waiting-note{margin:0;padding:12px 14px;background:var(--ieum-surface);border-radius:var(--ieum-r-sm);font-size:14px;line-height:1.6;color:var(--ieum-ink)}
+.order-safety{font-weight:600}
+.order-actions-quiet .button{flex:0 0 auto;min-height:40px;background:transparent;border-color:transparent;color:var(--ieum-blue)}
+/* 결제·이용권 → 입금 확인 · 받는 계좌·QR (2026-11-24) */
+.dp-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px}
+.dp-head h2,.dp-panel>h2{margin:0}
+.dp-intro{margin:6px 0 0;max-width:760px;font-size:13px;line-height:1.7;color:var(--ieum-muted)}
+.dp-refresh{flex:0 0 auto}
+.dp-note{margin:12px 0 0;padding:10px 12px;border-radius:var(--ieum-r-sm);background:var(--ieum-subtle);font-size:13px;line-height:1.6;color:var(--ieum-text)}
+.dp-note[data-kind=ok]{background:var(--ieum-ok-bg);color:var(--ieum-ok)}
+.dp-note[data-kind=error]{background:var(--ieum-danger-bg);color:var(--ieum-danger)}
+.dp-empty{margin:14px 0 0;font-size:14px;color:var(--ieum-muted)}
+.dp-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.dp-item{display:grid;gap:8px;padding:14px 16px;border:1px solid var(--ieum-line);border-radius:var(--ieum-r-md);background:var(--ieum-surface)}
+.dp-item[data-notice=true]{border-color:var(--ieum-blue-line);background:var(--ieum-blue-soft)}
+.dp-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.dp-ref{font-size:16px;color:var(--ieum-ink);font-variant-numeric:tabular-nums}
+.dp-amount{margin-left:auto;font-size:16px;color:var(--ieum-ink);font-variant-numeric:tabular-nums}
+.dp-chip{font-size:12px;font-weight:700;line-height:1.5;padding:2px 8px;border-radius:999px;background:var(--ieum-subtle);color:var(--ieum-muted);white-space:nowrap}
+.dp-chip[data-kind=notice]{background:var(--ieum-blue);color:#fff}
+.dp-chip[data-kind=late]{background:var(--ieum-warn-bg);color:var(--ieum-warn)}
+.dp-body{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-size:13px;color:var(--ieum-muted)}
+.dp-who{padding:0;border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--ieum-blue);cursor:pointer;text-align:left;overflow-wrap:anywhere}
+.dp-payer{font-weight:700;color:var(--ieum-ink)}
+.dp-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.dp-ask{flex:1 1 100%;margin:0;font-size:14px;font-weight:600;color:var(--ieum-ink)}
+.dp-recent{margin-top:14px;font-size:13px;color:var(--ieum-muted)}
+.dp-recent summary{cursor:pointer;font-weight:600}
+.dp-recent ul{margin:8px 0 0;padding-left:18px;line-height:1.8}
+.dp-accounts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:14px}
+.dp-account{display:grid;align-content:start;gap:10px;padding:14px 16px;border:1px solid var(--ieum-line);border-radius:var(--ieum-r-md);background:var(--ieum-surface)}
+.dp-account[data-enabled=true]{border-color:var(--ieum-blue-line)}
+.dp-account-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dp-toggle{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ieum-ink)}
+.dp-field{display:grid;gap:4px;font-size:13px;color:var(--ieum-muted)}
+.dp-field input[type=text]{min-height:40px;padding:0 10px;font-size:15px;border:1px solid var(--ieum-line-strong);border-radius:var(--ieum-r-sm);color:var(--ieum-ink);background:var(--ieum-surface)}
+.dp-qr img{width:140px;height:140px;object-fit:contain;border:1px solid var(--ieum-line);border-radius:var(--ieum-r-sm);background:#fff}
+.dp-file{position:relative;justify-self:start;overflow:hidden}
+.dp-file input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.dp-qr small{font-size:12px;line-height:1.5}
+.dp-saved-at{margin:0;font-size:12px;color:var(--ieum-faint)}
+.order-checkout-facts dt{flex-shrink:0;white-space:nowrap}
+.order-payer-hint{font-size:12px;color:var(--ieum-muted)}
+/* 결제 안내 → '안내' box: all payment notes in one titled list (2026-11-24) */
+.order-notice{display:grid;gap:8px;padding:14px 16px;background:var(--ieum-surface);border:1px solid var(--ieum-blue-line);border-left:4px solid var(--ieum-blue);border-radius:var(--ieum-r-sm)}
+.order-notice-title{margin:0;font-size:14px;font-weight:700;color:var(--ieum-blue)}
+.order-notice ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.order-notice li{font-size:13px;line-height:1.6;color:var(--ieum-ink)}
+.order-notice li:first-child{font-weight:600}
+/* Home header (2026-11-24): the sign-in buttons keep one size before and after sign-in, and appear once the session is
+   known instead of flipping 로그인·회원가입 → 내 이용권·로그아웃 (shown after 1.2s anyway if the script never runs). */
+header #account,header #signup-entry,header #home-logout{min-width:96px;justify-content:center;text-align:center}
+header:not([data-auth]) #account,header:not([data-auth]) #signup-entry{visibility:hidden;animation:ieum-auth-show 0s linear 1.2s forwards}
+@keyframes ieum-auth-show{to{visibility:visible}}
+/* 화면 다듬기 (2026-11-24) ------------------------------------------------------------------------------------------
+   Korean lines break between words, not inside them (labels, list items, terms, small notes and buttons too);
+   long IDs and addresses still wrap. */
+:where(label,li,dt,dd,small,legend,figcaption,button,.button){word-break:keep-all;overflow-wrap:break-word}
+/* Phones: FAQ and other fold-out rows are a full finger tall, and the sign-up '내용 보기' links are easy to hit. */
+@media (max-width:640px){
+ .ieum-customer main details>summary{padding-top:10px;padding-bottom:10px}
+ .ieum-customer .view{min-height:40px;display:inline-flex;align-items:center}
+}
+/* 깊은 점검 (2026-11-24) — 휴대폰에서 손가락보다 작던 고객 화면 버튼·링크 */
+@media (max-width:640px){
+ .site-header nav>a{display:inline-flex;align-items:center;min-height:40px}
+ .wallet-refresh,.ph-head>.button,.order-copy{min-height:40px!important}
+ .order-copy{min-width:52px}
+ .ieum-business-links>a{display:inline-flex;align-items:center;min-height:36px}
 }

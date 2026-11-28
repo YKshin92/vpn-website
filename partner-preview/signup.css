@@ -9,3 +9,28 @@
 .join-progress{display:flex;gap:15px;padding:0 0 18px;margin-bottom:20px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}.join-progress [aria-current]{color:var(--blue);font-weight:700}#join-next{margin-top:24px}#join-back{margin-top:24px}
 
 .username-row{display:flex;gap:10px;align-items:stretch}.username-row input{min-width:0;flex:1}.username-row button{flex:none;white-space:nowrap;border:1px solid #ccd6ec;background:#fff;color:#234acb;border-radius:7px;padding:0 16px;font:inherit;font-size:12px}.field-feedback{font-size:11px;line-height:1.8;margin:6px 0;color:#657c9f}.field-feedback.success{color:#19734b}.field-feedback.error{color:#b42318}input[aria-invalid="true"]{border-color:#d96a61}.signup-error{margin:20px 0 14px;padding:16px 18px;border:1px solid #efc9c6;border-left:3px solid #c2483f;border-radius:7px;background:#fff8f7;color:#852d26;font-size:12px;line-height:1.8}.signup-error strong{display:block;font-size:13px}.signup-error p{margin:5px 0}.signup-error a{color:#234acb;font-weight:600}
+/* 칸마다 무엇이 틀렸는지 (2026-11-06 3차, 항목 6·7·21) */
+.field-error{margin:6px 0 0;color:#b3261e;font-size:12px;line-height:1.6;font-weight:600}
+input[aria-invalid="true"],select[aria-invalid="true"]{border-color:#c2483f;background:#fffafa}
+.field-label .optional{margin-left:4px;color:#748197;font-weight:500}
+/* The chosen pass: the summary card from plan-pick.mjs, styled in ieum-ui.css (.plan-pick, 2026-11-07). */
+.signup-plan{margin:0 0 16px}
+.signup-contact{margin-top:10px}
+/* 중국에서 받을 수 있는 메일 안내 (항목 9) */
+.email-china{color:#8a4b00}
+.referral-field{margin-top:14px}
+/* 이메일 인증 단계 정리 (2026-11-16): 보낸 주소 → 코드 → 버튼 → 안 될 때 할 일 */
+.status:empty{display:none}
+#signup-form:has(+ #signup-verification:not([hidden])) .footnote{display:none}
+#signup-verification .sent-note{font-size:14px;line-height:1.7;color:#4a5a73;margin:6px 0 18px;font-weight:400}
+#signup-verification .sent-note strong{color:var(--ink);font-weight:700;word-break:break-all}
+#signup-verification .field-label input{display:block;width:100%;margin-top:8px;min-height:52px;font-size:20px;letter-spacing:.3em;text-align:center}
+#signup-verification .code-hint{font-size:12px;line-height:1.7;color:#748197;margin:8px 0 18px}
+#signup-verification .primary{justify-content:center;text-align:center}
+#signup-verification .panel-status{margin:12px 0 0;font-size:13px;line-height:1.7;color:#b3261e;font-weight:600}
+#signup-verification .verify-actions{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 20px;margin-top:16px}
+#signup-verification .verify-actions .view{padding:6px 0;min-height:32px}
+#signup-verification .signup-contact{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;line-height:1.7;color:#748197}
+#signup-form:has(+ #signup-verification:not([hidden])){margin-bottom:0;padding-bottom:0;border-bottom:0}
+#signup-verification{border-top:0;margin-top:0;padding-top:4px}
+#signup-verification .signup-contact{text-align:left}

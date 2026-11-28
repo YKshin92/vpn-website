@@ -29,7 +29,7 @@ $('#logout').onclick=async()=>{try{await api('/api/auth/logout','POST',{});signe
 // View by path (2026-11-05): /admin shows the real customer list, /admin/servers the real server panel + keys, /admin/dev the example screens.
 const adminPath=typeof location==='object'&&location?String(location.pathname??''):'';const adminViewMeta=(()=>{try{return document.querySelector('meta[name="ieum-admin-view"]')?.content||'';}catch{return '';}})();const adminView=['customers','servers','dev'].includes(adminViewMeta)?adminViewMeta:adminPath.startsWith('/admin/servers')?'servers':adminPath.startsWith('/admin/dev')?'dev':'customers';if(document.documentElement?.dataset)document.documentElement.dataset.view=adminView;
 if(adminView==='servers'){$('#customers').hidden=true;$('#server-management').hidden=false;}
-try{const kf=document.getElementById('keys-frame');if(kf&&adminView==='servers')kf.src='./keys.html?embed=1';}catch{}
+
 try{document.title=({customers:'고객',servers:'서버',dev:'개발 도구'})[adminView]+' · 이음 관리자';}catch{}try{const identityBox=document.getElementById('identity');if(identityBox){identityBox.hidden=true;identityBox.setAttribute('aria-hidden','true');}}catch{}
 document.querySelectorAll('[data-tab]').forEach(button=>button.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));$('#customers').hidden=button.dataset.tab!=='customers';$('#server-management').hidden=button.dataset.tab!=='server-management';if(button.dataset.tab==='server-management'){enterServerManagement();}});
 document.querySelectorAll('.tool-fold').forEach(fold=>fold.ontoggle=()=>{if(fold.open&&fold.querySelector('#jobs'))loadJobs().catch(e=>notice(e.message));});

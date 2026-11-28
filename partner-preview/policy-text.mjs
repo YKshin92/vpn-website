@@ -22,3 +22,6 @@ export function renderPolicy(doc,text){
  }
  return {title,section};
 }
+// The date a document takes effect, as written in it ("2026년 12월 1일부터 시행"), for "시행일" labels; the stored
+// release date is only when the text was published (2026-11-06 4차, review item 2).
+export function effectiveDate(text){const m=/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일부터 시행/.exec(String(text??''));if(!m)return null;const [y,mo,d]=[+m[1],+m[2],+m[3]];return mo>=1&&mo<=12&&d>=1&&d<=31?{year:y,month:mo,day:d,label:y+'년 '+mo+'월 '+d+'일',dotted:y+'.'+String(mo).padStart(2,'0')+'.'+String(d).padStart(2,'0')}:null;}

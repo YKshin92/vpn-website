@@ -1,0 +1,383 @@
+/* 이음 관리자 팔레트 (2026-11-11, decided: 14가지 색, 먼저 고객 화면 전체). One navy line of colors (hue 264°): page,
+   white, sunken grey, line, field border, muted text, disabled, navy; blue only for what can be pressed or is selected;
+   red only for a problem. A usual state is a quiet grey badge; one that needs a look gets a "!" and darker text.
+   Loaded after every other stylesheet; the screen rules are scoped to #staging-customers. */
+:root.ieum-admin{
+ --p-page:#f4f6fa;--p-surface:#ffffff;--p-sunken:#edf0f7;--p-line:#dfe4ee;--p-control:#8892a6;
+ --p-ink:#14213d;--p-muted:#5d6a85;--p-disabled:#9da5b5;
+ --p-blue:#2858cd;--p-blue-press:#1f48ae;--p-blue-soft:#ecf3ff;
+ --p-red:#ad2c3a;--p-red-press:#93202e;--p-red-soft:#ffeeed;
+ --p-focus:0 0 0 2px var(--p-surface),0 0 0 4px var(--p-blue);
+ --p-float:0 12px 32px rgba(20,33,61,.16),0 2px 6px rgba(20,33,61,.08);
+}
+
+/* ---------- 모든 관리자 화면 (2026-11-11) ----------
+   관리자 전용 CSS(admin.css 등)는 색 값을 직접 14가지로 바꿨고, 고객 화면과 함께 쓰는 ieum-ui.css·customer-support.css는
+   여기서 같은 선택자로 관리자 화면에서만 덮어씁니다 (이 파일은 관리자 화면에만 로드). 아래 줄은 그 두 파일에서 만든 것입니다. */
+:root.ieum-admin :is(input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea):not(:focus):not(:disabled):not([aria-invalid=true]){border-color:var(--p-control)}
+:root.ieum-admin :is(input,select,textarea):disabled{color:var(--p-disabled)}
+:root.ieum-admin :is(input,select,textarea){color:var(--p-ink)}
+/* ieum-ui.css (84 rules) */
+:root{--ieum-blue:#2858cd;--ieum-blue-hover:#2858cd;--ieum-blue-soft:#ecf3ff;--ieum-blue-line:#dfe4ee;--ieum-ink:#14213d;--ieum-text:#14213d;--ieum-muted:#5d6a85;--ieum-faint:#5d6a85;--ieum-line:#dfe4ee;--ieum-line-strong:#dfe4ee;--ieum-bg:#f4f6fa;--ieum-subtle:#f4f6fa;--ieum-ok:#14213d;--ieum-ok-bg:#edf0f7;--ieum-warn:#14213d;--ieum-warn-bg:#f4f6fa;--ieum-danger:#ad2c3a;--ieum-danger-bg:#ffeeed}
+.ieum :is(button,a,input,select,textarea,summary):focus-visible{outline:3px solid #2858cd}
+.ieum .demo,.ieum .preview-bar,.ieum .draft-banner{color:#1f48ae}
+.ieum .demo span,.ieum .preview-bar span{color:#5d6a85}
+.ieum-admin [role=status]:not(:empty):is(#page-status,#support-admin-status,#payment-admin-status,#probe-auth-status){color:#5d6a85}
+.ieum-customer .notice{background:#edf0f7}
+.ieum .pe-sub{color:#5d6a85}
+.ieum .pe-stat{border:1px solid #dfe4ee;background:#f4f6fa}
+.ieum .pe-stat dt{color:#5d6a85}
+.ieum .pe-blocked{background:#f4f6fa;color:#14213d}
+.ieum .pe-card{border:1px solid #dfe4ee}
+.ieum .pe-card>.pe-help,.ieum .pe-card-head .pe-help{color:#5d6a85}
+.ieum .pe-badge{background:#edf0f7;color:#14213d}
+.ieum .pe-label{color:#14213d}
+.ieum .pe-label em{color:#5d6a85}
+.ieum .pe-field>select,.ieum .pe-field>input{border:1px solid #dfe4ee}
+.ieum .pe-field>select:focus,.ieum .pe-field>input:focus,.ieum .pe-money:focus-within{box-shadow:0 0 0 3px rgba(40,88,205,.12)}
+.ieum .pe-money{border:1px solid #dfe4ee}
+.ieum .pe-unit{border-left:1px solid #dfe4ee;background:#f4f6fa;color:#5d6a85}
+.ieum .pe-hint{color:#5d6a85}
+.ieum .pe-foot{border-top:1px solid #dfe4ee;background:#f4f6fa}
+.ieum .pe-check{color:#14213d}
+.ieum .pe-foot .button.pe-danger{background:#ad2c3a;border-color:#ad2c3a}
+.ieum .pe-foot .button.pe-danger:disabled{background:#edf0f7;border-color:#dfe4ee}
+.ieum .pe-scope legend{color:#14213d}
+.ieum .pe-option{border:1px solid #dfe4ee}
+.ieum .pe-option:has(input:checked){background:#f4f6fa}
+.ieum .pe-option-sub{color:#5d6a85}
+.ieum .pe-confirm{border:1px solid #dfe4ee;background:#f4f6fa}
+.ieum .pe-result{background:#ecf3ff;color:#1f48ae}
+.ieum .pe-result[data-kind=success]{background:#edf0f7;color:#14213d}
+.ieum .pe-result[data-kind=error]{background:#ffeeed;color:#ad2c3a}
+.ieum .pe-part{border:1px solid #dfe4ee;background:#ffffff}
+.ieum .pe-total{background:#f4f6fa}
+.ieum .pe-total[data-ok=false]{background:#ffeeed;color:#ad2c3a}
+.ieum .pe-account{background:#ffeeed;color:#ad2c3a}
+.ieum .pe-account[data-state=closed]{background:#edf0f7;color:#14213d}
+.ieum .pa-account{background:#ffeeed;color:#ad2c3a}
+.ieum .pa-account[data-state=closing]{background:#edf0f7;color:#14213d}
+.ieum .pa-account[data-state=closed]{background:#edf0f7;color:#14213d}
+.ieum .pd-search input{border:1px solid #dfe4ee}
+.ieum .pd-search input:focus{box-shadow:0 0 0 3px rgba(40,88,205,.12)}
+.ieum .wallet-hero[data-state=no-data],.ieum .wallet-hero[data-state=held]{background:#f4f6fa;box-shadow:inset 0 0 0 1px #dfe4ee}
+.ieum .wallet-hero[data-state=expired],.ieum .wallet-hero[data-state=trial-ended]{background:#f4f6fa}
+.ieum .wallet-hero[data-state=active] .wallet-data[data-low=true]{color:#dfe4ee}
+.ieum .wallet-hero:not([data-state=active]) .wallet-data[data-low=true]{color:#14213d}
+.ieum .close-confirm{border:1px solid #ffeeed;background:#f4f6fa}
+.ieum .close-confirm strong{color:#ad2c3a}
+.ieum .close-confirm .button.danger{background:#ad2c3a;border-color:#ad2c3a}
+.ieum .close-confirm .button.danger:hover{background:#93202e}
+.ieum .auth-lost{border:1px solid #ffeeed;border-left:3px solid #ad2c3a;background:#f4f6fa;color:#ad2c3a}
+@media (max-width:760px){.ieum-home .hero-price{border:1px solid #dfe4ee;border-left:3px solid #2858cd;color:#14213d}}
+@media (max-width:760px){.ieum-home .hero-price strong{color:#1f48ae}}
+.ieum-customer .ieum-business{border-top:1px solid var(--ieum-line,#dfe4ee);color:var(--ieum-faint,#5d6a85)}
+.ieum-customer .ieum-business-links a{color:var(--ieum-ink,#14213d)}
+.ieum-customer .ieum-business-note{color:#14213d}
+.ieum .order-terms{border:1px solid var(--ieum-line,#dfe4ee);background:#f4f6fa}
+.ieum .order-ack[data-missing=true]{color:#ad2c3a}
+.ieum .cwc-row{border-top:1px solid var(--ieum-line,#dfe4ee)}
+.ieum .cwc-url{color:var(--ieum-faint,#5d6a85)}
+.ieum .cwc-note{color:var(--ieum-faint,#5d6a85)}
+.ieum .cwc-state{background:#edf0f7}
+.ieum .cwc-row[data-state=ok] .cwc-state{background:#edf0f7;color:#14213d}
+.ieum .cwc-row[data-state=blocked] .cwc-state{background:#ffeeed;color:#ad2c3a}
+.ieum .cwc-row[data-state=unstable] .cwc-state{background:#edf0f7;color:#14213d}
+.ieum .cwc-when{color:var(--ieum-faint,#5d6a85)}
+.ieum-home .plan-payments{color:var(--ieum-ink,#14213d)}
+.ieum-home .plan-payments span{color:var(--ieum-faint,#5d6a85)}
+.ieum .cwc-detail{color:var(--ieum-ink,#14213d)}
+.cwc-tool-name{color:var(--ieum-ink,#14213d)}
+.cwc-tool .cwc-note b{color:var(--ieum-ink,#14213d)}
+.cwc-quick>span{color:var(--ieum-faint,#5d6a85)}
+.cwc-quick a{border:1px solid var(--ieum-line,#dfe4ee)}
+.ieum-account #settings-id,.ieum-account #settings-email{color:var(--ieum-ink,#14213d)}
+.ieum-account .settings-export{border-top:1px solid var(--ieum-line,#dfe4ee)}
+.ieum-account .settings-close{border-top:1px solid var(--ieum-line,#dfe4ee)}
+.recovery-panel.verification input::placeholder{color:#9da5b5}
+.recovery-panel .recovery-links .text-button+.text-button::before{background:#dfe4ee}
+.ieum .admin-operator{border:1px solid #dfe4ee}
+.ieum .admin-operator:has(input:checked){background:#f4f6fa}
+.ieum .oa-actions .button.danger,.ieum .oa-inline-confirm .button.danger{background:#ad2c3a;border-color:#ad2c3a}
+.ieum .pe-legal{color:#14213d}
+.ieum .pe-warn{color:#ad2c3a}
+.ieum .oa-notice-mail{color:#14213d}
+/* customer-support.css (81 rules) */
+.support-inbox{--support-blue:#2858cd;--support-ink:#14213d;--support-line:#dfe4ee}
+.support-inbox button,.support-widget button{border:1px solid #dfe4ee;color:#14213d}
+.support-inbox button:hover,.support-widget button:hover{border-color:#8892a6;background:#f4f6fa}
+.support-inbox input,.support-inbox textarea,.support-inbox select,.support-widget input{border:1px solid #dfe4ee;color:#14213d}
+.support-inbox button:focus-visible,.support-widget button:focus-visible,.support-inbox input:focus-visible,.support-inbox textarea:focus-visible,.support-widget input:focus-visible{outline:3px solid #2858cd}
+.support-inbox .support-primary,.support-widget .support-primary{background:#2858cd;border-color:#2858cd}
+.support-status{color:#ad2c3a;background:#f4f6fa}
+.support-layout{border:1px solid #dfe4ee}
+.support-list{background:#ffffff;border-right:1px solid #dfe4ee}
+.support-eyebrow{color:#5d6a85}
+.support-inbox .support-thread[aria-pressed=true]{border-color:#dfe4ee;background:#ecf3ff}
+.support-thread-state{color:#5d6a85}
+.support-unread{color:#2858cd}
+.support-list-empty{color:#5d6a85}
+.support-conversation{background:#f4f6fa}
+.support-chat-head{border-bottom:1px solid #dfe4ee}
+.support-pill{background:#ecf3ff;color:#2858cd}
+.support-date-line{color:#9da5b5}
+.support-bubble{border:1px solid #dfe4ee}
+.is-own .support-bubble{background:#2858cd;border-color:#2858cd}
+.support-composer{border-top:1px solid #dfe4ee}
+.support-composer-hint{color:#5d6a85}
+.support-context{border-left:1px solid #dfe4ee}
+.support-context h4{color:#5d6a85}
+.support-context-note{color:#5d6a85}
+.support-empty-note{color:#9da5b5}
+.support-readonly{color:#5d6a85;background:#f4f6fa}
+.support-new p{color:#5d6a85}
+.support-privacy{color:#9da5b5!important}
+.support-launcher{background:#2858cd!important}
+.support-widget-window{border:1px solid #dfe4ee}
+.support-widget-head{background:#2858cd}
+.support-hours{background:#f4f6fa;border-bottom:1px solid #dfe4ee}
+.support-hours strong{color:#5d6a85}
+.support-hours p{color:#5d6a85}
+.support-widget-tabs{border-bottom:1px solid #dfe4ee}
+.support-widget-tabs button{color:#5d6a85}
+.support-widget-tabs button[aria-pressed=true]{color:#2858cd;border-bottom:2px solid #2858cd}
+.support-guide>p{color:#5d6a85}
+.support-widget .support-topic{background:#ffffff}
+.support-guide-question{background:#2858cd}
+.support-guide-answers small{color:#9da5b5}
+.support-guide-answer{background:#f4f6fa;color:#14213d}
+.support-guide>button:last-of-type{background:#2858cd}
+.support-admin-intro{color:#5d6a85}
+#support-admin-status{color:#5d6a85}
+#support-admin-notice{color:#2858cd}
+@media(max-width:1150px){.support-admin .support-context{border-top:1px solid #dfe4ee}}
+.support-inbox .support-primary:hover,.support-widget .support-primary:hover{background:#2858cd}
+.support-login-link{background:#2858cd}
+.support-customer .support-thread{border-bottom:1px solid #dfe4ee}
+.support-customer .support-thread:before{background:#2858cd}
+.support-customer .support-timeline{background:#dfe4ee}
+.support-customer .support-date-line{color:#5d6a85}
+.support-customer .support-chat-head{background:#f4f6fa}
+.support-customer .support-composer textarea{background:#f4f6fa}
+.support-customer .support-composer{border-top:1px solid #dfe4ee}
+.support-customer .support-new{background:#dfe4ee}
+.support-chat-filters button{color:#5d6a85}
+.support-chat-filters button[aria-pressed=true]{background:#ecf3ff!important;color:#2858cd}
+.support-admin .support-thread{border-bottom:1px solid #dfe4ee}
+.support-chat-email{color:#5d6a85}
+.support-chat-preview{color:#5d6a85}
+.support-pending-count{background:#ad2c3a}
+.support-admin .support-thread>.support-unread{color:#2858cd}
+.support-chat-subject{color:#5d6a85}
+@media(max-width:700px){.support-admin .support-context{border-top:1px solid #dfe4ee}}
+.support-chat-wait{color:#5d6a85}
+.support-chat-wait.late{color:#14213d}
+.support-customer-link{color:#2858cd}
+.support-composer.with-templates .support-template{border:1px solid #dfe4ee;color:#14213d}
+.support-context .support-context-name{color:#14213d}
+.support-context .support-context-email{color:#5d6a85}
+.support-facts dt{color:#5d6a85}
+.support-facts dd{color:#14213d}
+.support-context-links .support-customer-link{color:#2858cd}
+.support-launcher[data-unread]::after{color:#2858cd}
+.support-contact{color:#5d6a85}
+.support-contact a{color:#2858cd}
+@media (max-width:640px){.support-launcher[data-unread]::after{background:#ad2c3a}}
+.support-admin .support-search input{border:1px solid #dfe4ee}
+
+/* 점검 '끄기'는 되돌릴 수 있는 동작이라 빨강을 쓰지 않음 (2026-11-11, 더보기와 같은 기준). */
+:root.ieum-admin .mon-turn-off,:root.ieum-admin .mon-turn-off:hover{color:var(--p-ink)}
+
+/* ---------- 오늘 할 일 ---------- */
+:root.ieum-admin #staging-customers .cx-card{border-color:var(--p-line);background:var(--p-surface);box-shadow:none}
+:root.ieum-admin #staging-customers .cx-card:hover{border-color:var(--p-control)}
+:root.ieum-admin #staging-customers .cx-card:focus-visible{outline:none;box-shadow:var(--p-focus)}
+:root.ieum-admin #staging-customers .cx-card-label{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-card-count,
+:root.ieum-admin #staging-customers .cx-card:is([data-tone=warn],[data-tone=good],[data-tone=blocked]) .cx-card-count{color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-card-sub,:root.ieum-admin #staging-customers .cx-card-hint{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-card-go-mark{color:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-card[data-tone=warn] .cx-card-label::before,
+:root.ieum-admin #staging-customers .cx-card[data-tone=blocked] .cx-card-label::before{content:"!";display:inline-grid;place-items:center;width:13px;height:13px;margin:0 5px 0 0;border:1.5px solid var(--p-ink);border-radius:50%;font-size:9px;font-weight:800;line-height:1;color:var(--p-ink);vertical-align:-2px;box-sizing:border-box}
+:root.ieum-admin #staging-customers .cx-card[data-tone=bad]{border-color:var(--p-red-soft);background:var(--p-red-soft)}
+:root.ieum-admin #staging-customers .cx-card[data-tone=bad] :is(.cx-card-count,.cx-card-label){color:var(--p-red)}
+:root.ieum-admin #staging-customers .cx-card[aria-pressed=true],:root.ieum-admin #staging-customers .cx-card-filter[aria-pressed=true]{border-color:var(--p-blue);box-shadow:inset 0 0 0 1px var(--p-blue);background:var(--p-surface)}
+:root.ieum-admin #staging-customers .cx-card-filter[aria-pressed=true] .cx-card-hint{color:var(--p-blue)}
+
+/* ---------- 목록 ---------- */
+:root.ieum-admin #staging-customers :is(.cx-list,.cx-detail){border-color:var(--p-line);background:var(--p-surface)}
+:root.ieum-admin #staging-customers .cx-tabs{border-bottom-color:var(--p-line)}
+:root.ieum-admin #staging-customers .cx-tabs .cx-tab{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-tabs .cx-tab:hover{background:var(--p-sunken);color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-tabs .cx-tab[aria-selected=true],:root.ieum-admin #staging-customers .cx-tabs .cx-tab[aria-selected=true]:hover{background:var(--p-ink);border-color:var(--p-ink);color:var(--p-surface);box-shadow:none}
+:root.ieum-admin #staging-customers .cx-tabs .cx-tab .cx-count{background:var(--p-sunken);color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-tabs .cx-tab[aria-selected=true] .cx-count{background:rgba(255,255,255,.18);color:var(--p-surface)}
+:root.ieum-admin #staging-customers .cx-tabs .cx-tab[data-empty=true]{color:var(--p-disabled)}
+:root.ieum-admin #staging-customers .cx-tab:focus-visible{outline:none;box-shadow:var(--p-focus)}
+:root.ieum-admin #staging-customers .cx-search{border-color:var(--p-control)}
+:root.ieum-admin #staging-customers .cx-search:focus-within{border-color:var(--p-blue);box-shadow:0 0 0 1px var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-search::before{border-color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-search::after{background:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-filter{border-color:var(--p-control);color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-filter:hover,:root.ieum-admin #staging-customers .cx-filter[aria-expanded=true]{background:var(--p-sunken);border-color:var(--p-control)}
+:root.ieum-admin #staging-customers .cx-filter.on{border-color:var(--p-line);background:var(--p-sunken)}
+:root.ieum-admin #staging-customers .cx-filter-key{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-filter-value{color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-clear{color:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-list .cx-sort{border-color:var(--p-control)}
+:root.ieum-admin #staging-customers .cx-sort-label{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-menu{border-color:var(--p-line);box-shadow:var(--p-float)}
+:root.ieum-admin #staging-customers .cx-menu-item:hover,:root.ieum-admin #staging-customers .cx-menu-item:focus-visible{background:var(--p-sunken)}
+/* 더보기의 계정 정지·탈퇴 처리 (2026-11-11): 메뉴에서는 다른 항목과 같은 글자색; 빨강은 누른 뒤 확인 창의 마지막 버튼에만. */
+:root.ieum-admin #staging-customers .cx-menu-item.danger{color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-menu-group{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-table th{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-table tbody tr:hover td{background:var(--p-page)}
+:root.ieum-admin #staging-customers .cx-table tbody tr[aria-selected=true] td,:root.ieum-admin #staging-customers .cx-table tbody tr[aria-selected=true]{background:var(--p-blue-soft)}
+:root.ieum-admin #staging-customers .cx-table tbody tr:focus-visible{outline:2px solid var(--p-blue);outline-offset:-2px}
+:root.ieum-admin #staging-customers .cx-sub{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-table tr.attention td:first-child{box-shadow:none}
+/* With a customer open the list is narrow: the seven states become one 상태 select (2026-11-11). */
+:root.ieum-admin #staging-customers .cx-state-pick{display:none}
+:root.ieum-admin #staging-customers[data-detail=open] .cx-tabs{display:none}
+:root.ieum-admin #staging-customers[data-detail=open] .cx-state-pick{display:flex;align-items:center;gap:8px;margin:14px 16px 0;height:40px;padding:0 8px 0 12px;border:1px solid var(--p-control);border-radius:8px;background:var(--p-surface);box-sizing:border-box;cursor:pointer}
+:root.ieum-admin #staging-customers .cx-state-pick:focus-within{border-color:var(--p-blue);box-shadow:0 0 0 1px var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-state-pick-label{flex:none;font-size:12.5px;color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-state-pick select{flex:1;min-width:0;height:100%;margin:0;padding:0;border:0;outline:0;background:transparent;font:inherit;font-size:14px;font-weight:650;color:var(--p-ink);cursor:pointer}
+:root.ieum-admin #staging-customers[data-detail=open] .cx-list>.cx-tools{padding:10px 16px 12px}
+
+/* ---------- 배지 ---------- */
+:root.ieum-admin #staging-customers .cx-chip,
+:root.ieum-admin #staging-customers .cx-chip:is([data-tone=good],[data-tone=info],[data-tone=muted]){background:var(--p-sunken);color:var(--p-muted);font-weight:600}
+:root.ieum-admin #staging-customers .cx-chip[data-tone=warn]{background:var(--p-sunken);color:var(--p-ink);font-weight:700}
+:root.ieum-admin #staging-customers .cx-chip[data-tone=warn]::before{content:"!";display:inline-grid;place-items:center;width:12px;height:12px;margin:0 4px 0 -2px;border:1.5px solid currentColor;border-radius:50%;font-size:8.5px;font-weight:800;line-height:1;vertical-align:-1.5px;box-sizing:border-box}
+:root.ieum-admin #staging-customers .cx-chip[data-tone=bad]{background:var(--p-red-soft);color:var(--p-red)}
+:root.ieum-admin #staging-customers .cx-bar{background:var(--p-sunken)}
+:root.ieum-admin #staging-customers .cx-bar-fill{background:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-bar[data-tone=warn] .cx-bar-fill{background:var(--p-ink)}
+
+/* ---------- 고객 상세: 머리 ---------- */
+:root.ieum-admin #staging-customers .cx-detail-head{background:var(--p-surface);border-bottom-color:var(--p-line);padding:20px 24px 0}
+:root.ieum-admin #staging-customers .cx-head-name h3{color:var(--p-ink);margin:0 0 8px}
+:root.ieum-admin #staging-customers .cx-head-name .cx-chips{margin:0 0 8px}
+:root.ieum-admin #staging-customers :is(.cx-head-actions>button,.cx-more-button){border-color:var(--p-control);color:var(--p-ink);background:var(--p-surface)}
+:root.ieum-admin #staging-customers :is(.cx-head-actions>button,.cx-more-button):hover{background:var(--p-blue-soft);border-color:var(--p-blue);color:var(--p-blue-press)}
+:root.ieum-admin #staging-customers :is(.cx-head-actions>button,.cx-more-button):focus-visible{outline:none;box-shadow:var(--p-focus)}
+:root.ieum-admin #staging-customers .cx-head-actions>.cx-close,:root.ieum-admin #staging-customers .cx-head-actions>.cx-close:hover{border-color:transparent;background:transparent;color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-head-actions>.cx-close:hover{color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-more-button::after{border-color:currentColor}
+:root.ieum-admin #staging-customers .cx-kpis{gap:10px;margin:18px 0 0}
+:root.ieum-admin #staging-customers .cx-kpi,:root.ieum-admin #staging-customers .cx-kpi[data-tone=warn]{padding:12px 14px;border-radius:10px;background:var(--p-sunken)}
+:root.ieum-admin #staging-customers .cx-kpi-label{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-kpi-value,:root.ieum-admin #staging-customers .cx-kpi:is([data-tone=warn],[data-tone=good]) .cx-kpi-value{margin-top:4px;color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-kpi-sub{margin-top:4px;color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-kpi[data-tone=warn] .cx-kpi-label::after{content:"!";display:inline-grid;place-items:center;width:12px;height:12px;margin:0 0 0 5px;border:1.5px solid var(--p-ink);border-radius:50%;font-size:8.5px;font-weight:800;line-height:1;color:var(--p-ink);vertical-align:-1.5px;box-sizing:border-box}
+:root.ieum-admin #staging-customers .cx-kpi[data-tone=bad]{background:var(--p-red-soft)}
+:root.ieum-admin #staging-customers .cx-kpi[data-tone=bad] .cx-kpi-value{color:var(--p-red)}
+:root.ieum-admin #staging-customers .cx-kpi .cx-bar{background:var(--p-line)}
+:root.ieum-admin #staging-customers .cx-notice{background:var(--p-blue-soft);color:var(--p-blue-press)}
+:root.ieum-admin #staging-customers .cx-notice[data-tone=good]{background:var(--p-sunken);color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-notice[data-tone=bad]{background:var(--p-red-soft);color:var(--p-red)}
+:root.ieum-admin #staging-customers .cx-dtabs{margin:16px 0 0;border-bottom:0}
+:root.ieum-admin #staging-customers .cx-dtabs .cx-tab.cx-dtab,:root.ieum-admin #staging-customers .cx-dtabs .cx-tab.cx-dtab:hover{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-dtabs .cx-tab.cx-dtab:hover{color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-dtabs .cx-tab.cx-dtab[aria-selected=true]{color:var(--p-ink);border-bottom-color:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-dtabs .cx-count{background:var(--p-sunken);color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-dtabs .cx-tab.cx-dtab[aria-selected=true] .cx-count{background:var(--p-blue-soft);color:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-dtabs .cx-tab.cx-dtab[data-empty=true]{color:var(--p-disabled)}
+
+/* ---------- 고객 상세: 탭 내용 (간격: 구역 사이 28px, 구역 안 10px) ---------- */
+:root.ieum-admin #staging-customers .cx-tabpanel{padding:22px 24px 28px}
+:root.ieum-admin #staging-customers .cx-tabpanel .cx-section{padding:0;border:0}
+:root.ieum-admin #staging-customers .cx-tabpanel .cx-section h4{margin:0 0 10px;font-size:13.5px;font-weight:700;color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-tabpanel>.cx-section+.cx-section,:root.ieum-admin #staging-customers .cx-col>*+*{margin-top:28px}
+:root.ieum-admin #staging-customers .cx-overview{grid-template-columns:minmax(0,1.35fr) minmax(260px,1fr);gap:28px 40px}
+:root.ieum-admin #staging-customers .cx-tabpanel>.cx-overview{margin-top:4px}
+:root.ieum-admin #staging-customers .cx-all-clear{margin:0 0 22px;padding:0;background:none;color:var(--p-muted);font-size:13px}
+:root.ieum-admin #staging-customers .cx-all-clear::before{width:10px;height:5px;border-radius:0;background:none;border:solid var(--p-ink);border-width:0 0 1.8px 1.8px;transform:rotate(-45deg) translate(1px,-1px)}
+:root.ieum-admin #staging-customers .cx-tabpanel>.cx-tasks{margin:0 0 24px;padding:14px 16px;border:0;border-radius:10px;background:var(--p-sunken)}
+:root.ieum-admin #staging-customers .cx-tasks h4{color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-tasks h4::before{content:"!";display:inline-grid;place-items:center;width:14px;height:14px;margin:0 6px 0 0;border:1.5px solid var(--p-ink);border-radius:50%;font-size:9.5px;font-weight:800;line-height:1;vertical-align:-2px;box-sizing:border-box}
+:root.ieum-admin #staging-customers .cx-tasks ul{color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-detail a{color:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-temp-password{border-color:var(--p-control);background:var(--p-sunken)}
+:root.ieum-admin #staging-customers .cx-tabpanel .fine{color:var(--p-muted)}
+/* 최근 활동: date · kind · what (who below), one hairline between rows; a row that opens another tab says so with ›. */
+:root.ieum-admin #staging-customers .cx-feed-row{grid-template-columns:72px 30px minmax(0,1fr) 18px;gap:0 12px;align-items:baseline;padding:11px 0;border-bottom-color:var(--p-line)}
+:root.ieum-admin #staging-customers .cx-feed-row:first-child{padding-top:2px}
+:root.ieum-admin #staging-customers .cx-feed-at{color:var(--p-muted);font-size:12.5px}
+:root.ieum-admin #staging-customers .cx-feed-kind{font-size:12px;font-weight:600;color:var(--p-muted);white-space:nowrap}
+:root.ieum-admin #staging-customers .cx-feed-kind[data-tone=bad]{color:var(--p-red)}
+:root.ieum-admin #staging-customers .cx-feed-text{color:var(--p-ink);font-size:13.5px;line-height:1.5}
+:root.ieum-admin #staging-customers .cx-feed-by{display:block;margin-top:2px;font-size:12px}
+:root.ieum-admin #staging-customers .cx-feed-go{align-self:center;margin:0;padding:0;width:18px;height:22px;border:0;border-radius:4px;background:none;font:inherit;font-size:17px;line-height:1;color:var(--p-disabled);cursor:pointer}
+:root.ieum-admin #staging-customers .cx-feed-link{cursor:pointer}
+:root.ieum-admin #staging-customers .cx-feed-link:hover .cx-feed-go,:root.ieum-admin #staging-customers .cx-feed-go:focus-visible{color:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-feed-go:focus-visible{outline:none;box-shadow:var(--p-focus)}
+:root.ieum-admin #staging-customers .cx-feed-link:hover .cx-feed-text>span:first-child{color:var(--p-blue-press)}
+/* 이용 정보 · 계정: label / value rows. */
+:root.ieum-admin #staging-customers .cx-kv>div{grid-template-columns:88px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom-color:var(--p-line)}
+:root.ieum-admin #staging-customers .cx-kv>div:first-child{padding-top:2px}
+:root.ieum-admin #staging-customers .cx-kv dt{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-kv dd{color:var(--p-ink)}
+/* 관리자 메모. */
+:root.ieum-admin #staging-customers .cx-notes li{background:var(--p-sunken);color:var(--p-ink);padding:10px 12px;margin:0 0 8px}
+:root.ieum-admin #staging-customers .cx-form{margin:4px 0 0}
+:root.ieum-admin #staging-customers .cx-form input{height:36px;border-color:var(--p-control);color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-form input::placeholder{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-form input:focus{outline:none;border-color:var(--p-blue);box-shadow:0 0 0 1px var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-form button{height:36px;border-color:var(--p-control);color:var(--p-ink);background:var(--p-surface)}
+:root.ieum-admin #staging-customers .cx-form button:hover{background:var(--p-blue-soft);border-color:var(--p-blue);color:var(--p-blue-press)}
+/* 결제 · 문의 탭. */
+:root.ieum-admin #staging-customers .cx-mini-stat{border-color:var(--p-line)}
+:root.ieum-admin #staging-customers :is(.cx-prow,.cx-trow){border-bottom-color:var(--p-line)}
+:root.ieum-admin #staging-customers .cx-trow-subject{color:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-trow-subject:hover{color:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-link{color:var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-link.danger{color:var(--p-red)}
+
+/* ---------- 사용량 탭 (draft 074): 30일 막대그래프 ---------- */
+:root.ieum-admin #staging-customers .cx-usage-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}
+:root.ieum-admin #staging-customers .cx-usage-head h4{margin:0}
+:root.ieum-admin #staging-customers .cx-usage-head .cx-sub{font-variant-numeric:tabular-nums}
+:root.ieum-admin #staging-customers .cx-uchart{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:200px auto;column-gap:10px;row-gap:8px;margin:44px 0 0}
+:root.ieum-admin #staging-customers .cx-uaxis{grid-row:1;grid-column:1;display:flex;flex-direction:column;justify-content:space-between;margin:-7px 0;font-size:11px;color:var(--p-muted);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+:root.ieum-admin #staging-customers .cx-ubars{grid-row:1;grid-column:2;display:grid;grid-template-columns:repeat(30,minmax(0,1fr));gap:3px;align-items:end;border-bottom:1px solid var(--p-control);background:linear-gradient(var(--p-line) 1px,transparent 1px) 0 0/100% 50% repeat-y}
+:root.ieum-admin #staging-customers .cx-ubar{position:relative;height:100%;display:flex;align-items:flex-end;outline:none;cursor:default}
+:root.ieum-admin #staging-customers .cx-ubar-fill{display:block;width:100%;height:0;background:var(--p-blue);border-radius:3px 3px 0 0}
+:root.ieum-admin #staging-customers .cx-ubar[data-today=true] .cx-ubar-fill{background:var(--p-ink)}
+:root.ieum-admin #staging-customers .cx-ubar:is(:hover,:focus-visible):not([data-today=true]) .cx-ubar-fill{background:var(--p-blue-press)}
+:root.ieum-admin #staging-customers .cx-ubar:is(:hover,:focus-visible){background:var(--p-blue-soft);border-radius:3px 3px 0 0}
+:root.ieum-admin #staging-customers .cx-ubar:focus-visible{box-shadow:0 0 0 2px var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-utip{display:none;position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);z-index:5;padding:5px 9px;border-radius:6px;background:var(--p-ink);color:var(--p-surface);font-size:12px;line-height:1.4;white-space:nowrap;pointer-events:none;font-variant-numeric:tabular-nums}
+:root.ieum-admin #staging-customers .cx-ubar[data-edge=start] .cx-utip{left:0;transform:none}
+:root.ieum-admin #staging-customers .cx-ubar[data-edge=end] .cx-utip{left:auto;right:0;transform:none}
+:root.ieum-admin #staging-customers .cx-ubar:is(:hover,:focus-visible) .cx-utip{display:block}
+:root.ieum-admin #staging-customers .cx-uxlabels{grid-row:2;grid-column:2;display:grid;grid-template-columns:repeat(30,minmax(0,1fr));gap:3px;font-size:11px;color:var(--p-muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+:root.ieum-admin #staging-customers .cx-uxlabels>span:last-child{justify-self:end;color:var(--p-ink);font-weight:600}
+:root.ieum-admin #staging-customers .cx-usage-none{margin:16px 0 0}
+:root.ieum-admin #staging-customers .cx-usage-note{margin:16px 0 0;font-size:12px}
+
+/* ---------- 확인 창 ---------- */
+:root.ieum-admin #staging-customers .cx-modal-back{background:rgba(20,33,61,.45)}
+:root.ieum-admin #staging-customers .cx-modal{box-shadow:var(--p-float)}
+:root.ieum-admin #staging-customers .cx-modal-who{color:var(--p-muted)}
+:root.ieum-admin #staging-customers .cx-confirm-actions button{border-color:var(--p-control);color:var(--p-ink);background:var(--p-surface)}
+:root.ieum-admin #staging-customers .cx-confirm-actions button:hover{background:var(--p-sunken)}
+:root.ieum-admin #staging-customers .cx-confirm-actions button.primary{background:var(--p-blue);border-color:var(--p-blue);color:var(--p-surface)}
+:root.ieum-admin #staging-customers .cx-confirm-actions button.primary:hover{background:var(--p-blue-press);border-color:var(--p-blue-press)}
+:root.ieum-admin #staging-customers .cx-confirm-actions button.danger{background:var(--p-red);border-color:var(--p-red);color:var(--p-surface)}
+:root.ieum-admin #staging-customers .cx-confirm-actions button.danger:hover{background:var(--p-red-press);border-color:var(--p-red-press)}
+:root.ieum-admin #staging-customers .cx-confirm-actions button:disabled{background:var(--p-sunken);border-color:transparent;color:var(--p-disabled);opacity:1}
+:root.ieum-admin #staging-customers :is(.cx-field input,.cx-field select,.cx-confirm select,.cx-confirm input){border-color:var(--p-control)}
+:root.ieum-admin #staging-customers :is(.cx-field input,.cx-field select,.cx-confirm select,.cx-confirm input):focus{outline:none;border-color:var(--p-blue);box-shadow:0 0 0 1px var(--p-blue)}
+:root.ieum-admin #staging-customers .cx-modal-error{color:var(--p-red)}
+
+@media (max-width:1180px){:root.ieum-admin #staging-customers .cx-overview{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:960px){:root.ieum-admin #staging-customers .cx-detail-head{padding:16px 16px 0}:root.ieum-admin #staging-customers .cx-tabpanel{padding:18px 16px 24px}}
+@media (max-width:560px){
+ :root.ieum-admin #staging-customers .cx-feed-row{grid-template-columns:auto minmax(0,1fr) 18px;row-gap:2px}
+ :root.ieum-admin #staging-customers .cx-feed-row>.cx-feed-at{grid-column:1/-1}
+ :root.ieum-admin #staging-customers .cx-uchart{grid-template-rows:160px auto}
+ :root.ieum-admin #staging-customers .cx-ubars,:root.ieum-admin #staging-customers .cx-uxlabels{gap:2px}
+}

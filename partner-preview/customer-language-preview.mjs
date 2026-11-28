@@ -27,3 +27,5 @@ export function addAccountLanguagePreview(){
  render();window.addEventListener('storage',event=>{if(event.key==='ieum-language'){locale=normalizeLocale(event.newValue);select.value=locale;render();}});
 }
 if(typeof document!=='undefined')addAccountLanguagePreview();
+// The "맨 위로" button on every customer page (it loads its own stylesheet).
+if(typeof document!=='undefined'&&typeof window!=='undefined'){import('./back-to-top.mjs').catch(()=>{});import('./customer-notice-banner.mjs').catch(()=>{});import('./customer-footer.mjs').catch(()=>{});}

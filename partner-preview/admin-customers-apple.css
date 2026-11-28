@@ -1,0 +1,106 @@
+/* 고객 화면 리디자인 시안 (2026-11-10) — the shared design reference (Apple 분석 문서) applied to the 고객 screen only.
+   Principles taken: one action blue (#0066cc) for everything you can press or follow; near-black ink #1d1d1f;
+   parchment page (#f5f5f7) with white cards and a 1px hairline, no shadows on chrome; 18px card radius, pill-shaped
+   actions, chips and search; headlines weight 600 with slightly tight tracking; press = scale(.97); focus = 2px
+   #0071e3. Kept from 이음: Korean font fallback, status colours (good/warn/bad) and the danger red, the top menu.
+   Everything sits under body.cx-apple (admin.html only), so the other screens do not change. */
+:root.ieum-admin body.cx-apple{
+ --ap-blue:#0066cc;--ap-focus:#0071e3;--ap-ink:#1d1d1f;--ap-ink-80:#333333;--ap-muted:#6e6e73;--ap-hair:#e0e0e0;--ap-soft:#f0f0f0;
+ --ap-canvas:#ffffff;--ap-parchment:#f5f5f7;--ap-pearl:#fafafc;
+ background:var(--ap-parchment);color:var(--ap-ink);
+ font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+ -webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+:root.ieum-admin body.cx-apple main{background:transparent}
+
+/* Type: headline 34/600 tight, section 21/600, body 15 (dense data) and 17 on the detail head, captions 13–14. */
+:root.ieum-admin body.cx-apple main h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;font-size:34px;font-weight:600;line-height:1.18;letter-spacing:-.022em;color:var(--ap-ink)}
+:root.ieum-admin body.cx-apple main h1+p,:root.ieum-admin body.cx-apple main .lede{font-size:17px;line-height:1.47;color:var(--ap-muted)}
+:root.ieum-admin body.cx-apple main h2,:root.ieum-admin body.cx-apple .cx-today-title{font-size:21px;font-weight:600;line-height:1.19;letter-spacing:-.012em;color:var(--ap-ink)}
+:root.ieum-admin body.cx-apple main a{color:var(--ap-blue)}
+
+/* 오늘 할 일: white utility cards, 18px radius, hairline, no shadow; the number is the hero. */
+:root.ieum-admin body.cx-apple .cx-card{padding:18px 20px;gap:6px;border:1px solid var(--ap-hair);border-radius:18px;background:var(--ap-canvas);box-shadow:none;transition:transform .12s ease,border-color .12s ease}
+:root.ieum-admin body.cx-apple .cx-card:hover{border-color:#c7c7cc}
+:root.ieum-admin body.cx-apple .cx-card:active{transform:scale(.97)}
+:root.ieum-admin body.cx-apple .cx-card-label{font-size:14px;font-weight:400;color:var(--ap-ink-80);letter-spacing:-.016em}
+:root.ieum-admin body.cx-apple .cx-card-count{font-size:28px;font-weight:600;line-height:1.14;letter-spacing:-.02em;color:var(--ap-ink)}
+:root.ieum-admin body.cx-apple .cx-card-sub,:root.ieum-admin body.cx-apple .cx-card-hint{font-size:12px;color:var(--ap-muted);font-weight:400}
+:root.ieum-admin body.cx-apple .cx-card-go-mark{color:var(--ap-blue);font-weight:400}
+:root.ieum-admin body.cx-apple .cx-card-filter[aria-pressed=true]{border:2px solid var(--ap-focus);padding:17px 19px;background:var(--ap-canvas);box-shadow:none}
+:root.ieum-admin body.cx-apple .cx-card-filter[aria-pressed=true] .cx-card-hint{color:var(--ap-blue);font-weight:600}
+
+/* List and detail: two white cards on the parchment page. */
+:root.ieum-admin body.cx-apple .cx-list,:root.ieum-admin body.cx-apple .cx-detail{border:1px solid var(--ap-hair);border-radius:18px;background:var(--ap-canvas);box-shadow:none;overflow:hidden}
+:root.ieum-admin body.cx-apple .cx-detail{padding:24px}
+
+/* Status tabs = configurator chips: white pills with a hairline; the chosen one gets a 2px focus-blue ring. */
+:root.ieum-admin body.cx-apple .cx-tabs{gap:8px;padding:14px 16px 10px;border-bottom:0;--more-bg:var(--ap-canvas);--more-ink:var(--ap-muted)}
+:root.ieum-admin body.cx-apple .cx-tabs .cx-tab:not(.cx-dtab){padding:8px 15px;border:1px solid var(--ap-hair);border-radius:999px;background:var(--ap-canvas);color:var(--ap-ink);font-size:14px;font-weight:400;box-shadow:none}
+:root.ieum-admin body.cx-apple .cx-tabs .cx-tab:not(.cx-dtab):hover{border-color:#c7c7cc;background:var(--ap-canvas)}
+:root.ieum-admin body.cx-apple .cx-tabs .cx-tab:not(.cx-dtab)[aria-selected=true],:root.ieum-admin body.cx-apple .cx-tabs .cx-tab:not(.cx-dtab)[aria-selected=true]:hover{padding:7px 14px;border:2px solid var(--ap-focus);background:var(--ap-canvas);color:var(--ap-ink);font-weight:600;box-shadow:none}
+:root.ieum-admin body.cx-apple .cx-tabs .cx-count,:root.ieum-admin body.cx-apple .cx-tabs .cx-tab[aria-selected=true] .cx-count{background:var(--ap-parchment);color:var(--ap-muted);font-weight:600}
+
+/* Search = pill search input, 44px. */
+:root.ieum-admin body.cx-apple .cx-search{height:44px;max-width:none;padding:0 18px 0 40px;border:1px solid rgba(0,0,0,.08);border-radius:999px;background:var(--ap-parchment)}
+:root.ieum-admin body.cx-apple .cx-search::before{left:16px}:root.ieum-admin body.cx-apple .cx-search::after{left:25px}
+:root.ieum-admin body.cx-apple .cx-search input{font-size:15px;color:var(--ap-ink)}
+:root.ieum-admin body.cx-apple .cx-search:focus-within{border-color:var(--ap-focus);box-shadow:0 0 0 1px var(--ap-focus);background:var(--ap-canvas)}
+:root.ieum-admin body.cx-apple .cx-tools{padding:0 16px 12px;gap:8px}
+:root.ieum-admin body.cx-apple .cx-tools :is(.cx-filter,.cx-sort select){min-height:36px;border:1px solid var(--ap-hair);border-radius:999px;background:var(--ap-canvas);color:var(--ap-ink);font-size:13px;padding:0 14px}
+
+/* Customer table: quiet hairlines, the open row on parchment. */
+:root.ieum-admin body.cx-apple .cx-table{font-size:15px}
+:root.ieum-admin body.cx-apple .cx-table thead th{background:var(--ap-canvas);color:var(--ap-muted);font-size:12px;font-weight:400;letter-spacing:0;border-bottom:1px solid var(--ap-soft);text-transform:none}
+:root.ieum-admin body.cx-apple .cx-table tbody td{border-bottom:1px solid var(--ap-soft)}
+:root.ieum-admin body.cx-apple .cx-table tbody tr:hover{background:var(--ap-pearl)}
+:root.ieum-admin body.cx-apple .cx-table tbody tr[aria-selected=true]{background:var(--ap-parchment)}
+:root.ieum-admin body.cx-apple .cx-who strong,:root.ieum-admin body.cx-apple .cx-who b{font-weight:600;color:var(--ap-ink)}
+
+/* Status chips stay coloured (their meaning), shaped like Apple chips. */
+:root.ieum-admin body.cx-apple .cx-chip{padding:3px 10px;font-size:12px;font-weight:600;letter-spacing:0}
+
+/* Detail head: the name 28/600, then quiet facts; KPI tiles on parchment without borders. */
+:root.ieum-admin body.cx-apple .cx-detail-head h3{font-size:28px;font-weight:600;line-height:1.14;letter-spacing:-.02em;color:var(--ap-ink)}
+:root.ieum-admin body.cx-apple .cx-detail-head .cx-sub,:root.ieum-admin body.cx-apple .cx-detail-head p{color:var(--ap-muted);font-size:14px}
+:root.ieum-admin body.cx-apple .cx-kpis{gap:10px}
+:root.ieum-admin body.cx-apple .cx-kpi{padding:14px 16px;border:0;border-radius:11px;background:var(--ap-parchment)}
+:root.ieum-admin body.cx-apple .cx-kpi-label{font-size:12px;color:var(--ap-muted)}
+:root.ieum-admin body.cx-apple .cx-kpi-value{font-size:21px;font-weight:600;letter-spacing:-.012em;color:var(--ap-ink)}
+:root.ieum-admin body.cx-apple .cx-kpi-sub{font-size:12px;color:var(--ap-muted)}
+:root.ieum-admin body.cx-apple .cx-bar{background:#e8e8ed;border-radius:999px}
+:root.ieum-admin body.cx-apple .cx-bar-fill{background:var(--ap-blue);border-radius:999px}
+
+/* Detail tabs = sub-nav: plain words, the chosen one in ink with a blue underline. */
+:root.ieum-admin body.cx-apple .cx-dtabs{border-bottom:1px solid var(--ap-soft)}
+:root.ieum-admin body.cx-apple .cx-dtabs .cx-tab.cx-dtab{font-size:14px;color:var(--ap-muted);font-weight:400}
+:root.ieum-admin body.cx-apple .cx-dtabs .cx-tab.cx-dtab[aria-selected=true]{color:var(--ap-ink);font-weight:600;border-bottom-color:var(--ap-blue)}
+:root.ieum-admin body.cx-apple .cx-dtabs .cx-tab.cx-dtab[aria-selected=true] .cx-count{background:var(--ap-parchment);color:var(--ap-ink)}
+
+/* Buttons: the main action is a blue pill; the rest are ghost pills in blue; danger keeps its red, as a pill. */
+:root.ieum-admin body.cx-apple main :is(button,.button):is(.primary,.secondary,.danger){border-radius:999px;font-size:14px;font-weight:400;letter-spacing:-.016em;padding:7px 18px;min-height:36px;box-shadow:none;transition:transform .12s ease,background-color .12s ease}
+:root.ieum-admin body.cx-apple main :is(button,.button).primary{background:var(--ap-blue);border:1px solid var(--ap-blue);color:#fff}
+:root.ieum-admin body.cx-apple main :is(button,.button).primary:hover:not(:disabled){background:#0058b0;border-color:#0058b0}
+:root.ieum-admin body.cx-apple main :is(button,.button).secondary{background:transparent;border:1px solid var(--ap-blue);color:var(--ap-blue)}
+:root.ieum-admin body.cx-apple main :is(button,.button).secondary:hover:not(:disabled){background:rgba(0,102,204,.06)}
+:root.ieum-admin body.cx-apple main :is(button,.button).danger{border:1px solid var(--ad-danger,#b2353e)}
+:root.ieum-admin body.cx-apple main :is(button,.button,.cx-card,.cx-tab):active:not(:disabled){transform:scale(.97)}
+:root.ieum-admin body.cx-apple main :is(button,.button,a,input,select,textarea,.cx-card):focus-visible{outline:2px solid var(--ap-focus);outline-offset:2px}
+:root.ieum-admin body.cx-apple .cx-link,:root.ieum-admin body.cx-apple .cx-back,:root.ieum-admin body.cx-apple .cx-close{color:var(--ap-blue);font-weight:400}
+:root.ieum-admin body.cx-apple .cx-link:hover,:root.ieum-admin body.cx-apple .cx-back:hover{background:rgba(0,102,204,.06)}
+:root.ieum-admin body.cx-apple .cx-close{border-radius:999px}
+
+/* Forms inside the detail and its windows: pill-free fields, 11px radius, hairline. */
+:root.ieum-admin body.cx-apple :is(.cx-detail,.cx-modal) :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border:1px solid #d2d2d7;border-radius:11px;background:var(--ap-canvas);font-size:15px;color:var(--ap-ink)}
+:root.ieum-admin body.cx-apple :is(.cx-detail,.cx-modal) :is(input,select,textarea):focus{border-color:var(--ap-focus);box-shadow:0 0 0 1px var(--ap-focus);outline:0}
+:root.ieum-admin body.cx-apple .cx-modal{border-radius:18px;border:1px solid var(--ap-hair)}
+:root.ieum-admin body.cx-apple .cx-notes>*,:root.ieum-admin body.cx-apple .cx-notice{border-radius:11px}
+
+/* Phones: 44px targets, tighter type. */
+@media (max-width:640px){
+ :root.ieum-admin body.cx-apple main h1{font-size:28px}
+ :root.ieum-admin body.cx-apple .cx-card-count{font-size:24px}
+ :root.ieum-admin body.cx-apple .cx-detail{padding:18px}
+ :root.ieum-admin body.cx-apple .cx-detail-head h3{font-size:24px}
+ :root.ieum-admin body.cx-apple .cx-kpi-value{font-size:18px;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+ :root.ieum-admin body.cx-apple main :is(button,.button):is(.primary,.secondary,.danger),:root.ieum-admin body.cx-apple .cx-tabs .cx-tab:not(.cx-dtab){min-height:44px}
+}

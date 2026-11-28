@@ -19,3 +19,134 @@
 @media(max-width:700px){.support-admin-page{padding:16px 10px!important}.support-admin-page>header{gap:16px;margin-bottom:20px}.support-admin-page h1{font-size:24px}.support-admin-intro{font-size:12px;line-height:1.8}.support-admin .support-layout{display:flex;flex-direction:column;height:calc(100vh - 24px);height:calc(100dvh - 24px);min-height:340px;border-radius:12px}.support-admin .support-list{flex:1;min-height:0;overflow-y:auto;padding:18px 12px}.support-admin[data-view=conversation] .support-list{display:none}.support-admin[data-view=list] .support-conversation,.support-admin[data-view=list] .support-context{display:none}.support-admin .support-conversation{flex:1;min-height:0;order:1;overflow:hidden}.support-admin .support-chat-head{flex-shrink:0;padding:12px 10px;gap:8px;align-items:flex-start}.support-admin .support-chat-head>div{min-width:0}.support-admin .support-chat-head h2{font-size:14px;margin:0}.support-admin .support-chat-subject{font-size:10px;margin:3px 0 5px}.support-admin .support-back{display:block;flex-shrink:0;min-height:36px;padding:8px;font-size:11px}.support-admin .support-chat-head>.support-quiet{font-size:10px!important;padding:8px!important;white-space:normal;max-width:70px;min-height:36px}.support-admin .support-timeline{flex:1;min-height:80px;max-height:none;padding:16px 12px;overflow-y:auto}.support-admin .support-bubble{max-width:92%;padding:11px 12px}.support-admin .support-bubble p{font-size:13px}.support-admin .support-composer{flex-shrink:0;padding:10px;gap:7px}.support-admin .support-composer textarea{height:74px;min-height:60px;max-height:130px;resize:vertical;font-size:16px}.support-admin .support-composer-hint{font-size:9px;max-width:none}.support-admin .support-composer button{min-height:40px;font-size:12px}.support-admin .support-context{display:flex;order:2;flex:0 0 auto;max-height:115px;overflow:auto;gap:6px 12px;padding:10px 12px;border-top:1px solid #e6ebf3;align-items:center;background:#fff}.support-admin .support-context>.support-eyebrow,.support-admin .support-context>h3,.support-admin .support-context>h4{display:none}.support-admin .support-context>p{font-size:10px;margin:0;max-width:100%;overflow-wrap:anywhere}.support-admin .support-context>.support-context-note{font-size:9px;max-width:100%;width:100%}.support-admin .support-context .support-actions{padding:0}.support-admin .support-context button{min-height:36px}.support-admin .support-readonly{flex-shrink:0;padding:10px 12px;font-size:10px}.support-admin .support-chat-filters button{min-height:40px}.support-admin .support-thread{min-height:104px;padding-right:64px}.support-admin .support-chat-email{font-size:11px}.support-admin .support-pending-count{right:7px}.support-widget-window{max-width:100vw}.support-widget-head{flex-shrink:0}.support-widget .support-hours,.support-widget-tabs{flex-shrink:0}.support-widget-inbox .support-composer textarea{font-size:16px}}
 @media(max-width:700px){.support-admin .support-thread{padding-right:72px}.support-admin .support-chat-head h2,.support-admin .support-chat-subject{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.support-admin .support-chat-head .support-pill{font-size:10px;padding:2px 7px}.support-admin .support-layout:has(.support-composer:focus-within) .support-context{display:none}.support-admin .support-context>button,.support-admin .support-context>.support-actions{order:-1}}
 @media(max-width:360px){.support-admin .support-chat-head>.support-quiet{max-width:56px;font-size:9px!important}.support-admin .support-chat-name{font-size:13px}.support-admin .support-thread{padding-left:10px}.support-widget-head h2{font-size:18px}.support-guide{padding:16px}}
+/* Administrator 1:1 (2026-11-06): wait time on each thread, customer link, saved replies, send-and-close */
+.support-chat-wait{font-size:11px;color:#70819d}.support-chat-wait.late{color:#b54708;font-weight:650}
+.support-customer-link{display:inline-block;margin-top:6px;font-size:12px;color:#2453d4;text-decoration:none}.support-customer-link:hover{text-decoration:underline}
+.support-composer.with-templates{grid-template-columns:1fr auto auto}
+.support-composer.with-templates .support-template{grid-column:1/-1;justify-self:start;max-width:100%;font:inherit;font-size:12px;padding:6px 8px;border:1px solid #d6deeb;border-radius:8px;background:#fff;color:#33415c}
+.support-chat-filters{flex-wrap:wrap}
+.support-composer.with-templates textarea{min-height:150px}
+/* 2026-11-06 2차: 문의 옆 고객 요약(이용권·이번 주기 사용·키·최근 결제), 새 탭 링크, 답변칸이 첫 화면에 보이게 */
+.support-context .support-context-name{font-size:14px!important;font-weight:700;color:#172c50;margin:0}
+.support-context .support-context-email{margin:2px 0 14px;color:#6a7a94}
+.support-facts{display:grid;gap:10px;margin:0 0 14px}
+.support-facts>div{display:grid;gap:2px}
+.support-facts dt{font-size:11px;color:#8a98ae}
+.support-facts dd{margin:0;font-size:12.5px;font-weight:600;color:#172c50;overflow-wrap:anywhere}
+.support-context-links{display:flex;flex-wrap:wrap;gap:6px 12px;margin:0 0 6px}
+.support-context-links .support-customer-link{font-size:12px;color:#2854de;text-decoration:none}
+.support-context-links .support-customer-link:hover{text-decoration:underline}
+@media(min-width:701px){.support-admin .support-layout{height:max(560px,calc(100vh - 24px));height:max(560px,calc(100dvh - 24px));min-height:560px}}
+@media(min-width:701px) and (max-width:1150px){.support-admin .support-context{max-height:150px}.support-facts{grid-template-columns:repeat(4,minmax(0,1fr));margin:0}.support-admin .support-context>h3{display:none}}
+@media(max-width:700px){.support-admin .support-context>.support-facts{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;width:100%;margin:0}.support-facts dd{font-size:11px}.support-admin .support-context>.support-context-email{display:none}}
+/* 2026-11-06 3차: 떠 있는 '1:1 문의' 버튼 — 아이콘+글자, 휴대폰은 동그란 아이콘만(결정 D-1). 로그인 전 연락 경로. */
+.support-launcher{display:inline-flex!important;align-items:center;gap:8px}
+.support-launcher-icon{display:inline-flex;line-height:0}
+.support-launcher[data-unread]::after{content:attr(data-unread);display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;margin-left:2px;padding:0 6px;border-radius:999px;background:#fff;color:#2854de;font-size:12px;font-weight:800}
+.support-contact{margin:0 20px 20px;font-size:13px;line-height:1.6;color:#5f6f87}
+.support-contact a{color:#2854de;font-weight:650}
+@media (max-width:640px){
+ .support-widget{bottom:calc(16px + env(safe-area-inset-bottom,0px));right:16px}
+ .support-launcher{width:52px;height:52px;padding:0!important;justify-content:center;position:relative}
+ .support-launcher-text{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ .support-launcher[data-unread]::after{position:absolute;top:-4px;right:-4px;margin:0;background:#e5484d;color:#fff;box-shadow:0 0 0 2px #fff}
+}
+/* 6단계 A-23: 검색칸 */
+.support-admin .support-search{display:flex;gap:6px;margin:0 0 8px}
+.support-admin .support-search input{flex:1;min-width:0;min-height:40px;margin:0;padding:6px 10px;border:1px solid #d6deeb;border-radius:8px;font:inherit;font-size:14px}
+.support-admin .support-search button{width:auto;min-height:40px;margin:0}
+.support-notify{width:auto;margin:6px 0 10px}
+/* 6단계 A-24: 휴대폰 답변 화면 — 글자 12px 이상, 여백 16px, 누르기 쉬운 크기 */
+@media (max-width:700px){
+ .support-admin{padding-left:16px;padding-right:16px}
+ .support-admin .support-composer-hint{display:none}
+ .support-admin .support-context,.support-admin .support-facts,.support-admin .support-facts *,.support-admin .support-message-meta,.support-admin .support-chat-email,.support-admin .support-chat-preview,.support-admin .support-date-line,.support-admin .support-pill{font-size:max(12px,1em)}
+ .support-admin .support-facts dd,.support-admin .support-facts dt{font-size:13px}
+ .support-admin .support-customer-link{display:inline-flex;align-items:center;min-height:44px;padding:0 10px}
+ .support-admin .support-actions button,.support-admin .support-back{min-height:44px;white-space:nowrap}
+}
+/* 2026-11-19 FAQ one-tap send + phone chat layout (from a real phone screenshot: the top took ~36% of the screen,
+   messages ~26%, the newest message was cut off and most text was 9–13px). Desktop keeps its look. */
+.support-widget-close .support-close-x{display:none}
+.support-guide-menu[hidden],.support-guide-answers[hidden]{display:none}
+.support-widget .support-guide-ask{display:block;width:100%;margin-top:20px;min-height:48px;background:#2854de;color:#fff;border:0;font-size:14px;font-weight:700;border-radius:12px}
+.support-widget .support-guide-ask:hover{background:#2149ca;color:#fff}
+.support-guide-answers .support-guide-question{margin-top:4px}
+.support-guide-next{display:grid;gap:10px;margin-top:18px;padding:16px;border:1px solid #e3e9f3;border-radius:14px;background:#fff}
+.support-guide-next-title{margin:0;font-size:14px;font-weight:700;color:#172c50}
+.support-guide-next-note{margin:-2px 0 0;font-size:12px;line-height:1.6;color:#7e8da7}
+.support-widget .support-guide-send{width:100%;min-height:48px;background:#2854de;color:#fff;border:0;border-radius:12px;font-size:15px;font-weight:700}
+.support-widget .support-guide-send:hover{background:#2149ca;color:#fff}
+.support-widget .support-guide-send:disabled{opacity:.6;cursor:default}
+.support-widget .support-guide-again{min-height:44px;background:transparent;border:0;color:#2854de;font-size:14px;font-weight:600}
+.support-actions.support-actions-inline{padding:2px 0 4px;text-align:center;background:transparent}
+.support-actions-inline .support-quiet{background:#ffffffb8!important;border:0!important;border-radius:999px!important;color:#4a6283!important;font-size:12px!important;padding:6px 14px!important;max-width:none!important;min-height:0}
+.support-widget-inbox .support-chat-head .support-back,.support-widget-inbox .support-chat-head>.support-icon-button{flex-shrink:0;width:40px;height:40px;min-height:40px!important;max-width:none!important;padding:0!important;display:grid!important;place-items:center;font-size:18px!important;line-height:1}
+@media (max-width:640px){
+ .support-widget-window .support-widget-head{padding:4px 4px 4px 16px!important;min-height:52px}
+ .support-widget-window .support-widget-head h2{font-size:17px!important;margin:0!important;line-height:1.3}
+ .support-widget-window .support-widget-close{width:44px;height:44px;padding:0!important;display:grid;place-items:center;border:0!important;border-radius:12px!important;background:transparent!important}
+ .support-widget-close .support-close-x{display:block;font-size:20px;line-height:1}
+ .support-widget-close .support-close-word{display:none}
+ .support-widget-window[data-view=inbox] .support-hours{display:none}
+ .support-widget-window .support-hours{padding:8px 16px!important}
+ .support-widget-window .support-hours strong{font-size:12px}
+ .support-widget-window .support-hours p{font-size:12px!important;line-height:1.5!important;margin:2px 0 0!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .support-widget-window .support-widget-tabs{gap:0;padding:0}
+ .support-widget-window .support-widget-tabs button{flex:1;min-height:46px;padding:0 8px;font-size:15px;text-align:center}
+ .support-widget-window .support-guide{padding:16px!important}
+ .support-guide-menu h3{font-size:17px;line-height:1.5;margin:0 0 4px}
+ .support-guide-menu>p{font-size:14px;line-height:1.6;margin:0 0 4px}
+ .support-widget .support-topic{font-size:15px!important;padding:13px 14px!important;min-height:50px}
+ .support-widget .support-guide-form{margin:16px 0 0}
+ .support-widget .support-guide-form input{font-size:16px!important;min-height:46px}
+ .support-widget .support-guide-form button{font-size:14px!important;min-height:46px}
+ .support-widget .support-guide-question{font-size:15px;margin-left:40px;padding:11px 14px}
+ .support-widget .support-guide-answers small{font-size:12px}
+ .support-widget .support-guide-answer{font-size:15px;line-height:1.7}
+ .support-widget-inbox .support-list{padding:16px!important}
+ .support-widget-inbox .support-thread-title{font-size:15px!important}
+ .support-widget-inbox .support-chat-head{padding:6px!important;gap:2px!important;min-height:56px;background:#fff!important}
+ .support-widget-inbox .support-chat-head h2{display:none}
+ .support-widget-inbox .support-chat-head>div{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+ .support-widget-inbox .support-chat-subject{max-width:100%;margin:0!important;font-size:15px!important;font-weight:700;color:#172c50;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal}
+ .support-widget-inbox .support-chat-head .support-pill{font-size:12px!important;padding:1px 8px!important}
+ .support-widget-inbox .support-chat-head .support-back,.support-widget-inbox .support-chat-head>.support-quiet{flex-shrink:0;width:44px;height:44px;min-height:44px!important;max-width:none!important;padding:0!important;display:grid!important;place-items:center;border:0!important;background:transparent!important;border-radius:12px!important}
+ .support-widget-inbox .support-chat-head .support-back{font-size:22px!important;color:#172c50}
+ .support-widget-inbox .support-chat-head>.support-quiet{font-size:20px!important;color:#2854de}
+ .support-widget-inbox[data-view=conversation] .support-timeline{padding:12px 12px 8px!important}
+ .support-widget-inbox .support-date-line{font-size:12px!important;margin:0 auto 14px!important}
+ .support-widget-inbox .support-message{margin:0 0 12px}
+ .support-widget-inbox .support-bubble{max-width:86%!important;padding:10px 13px!important}
+ .support-widget-inbox .support-bubble p{font-size:15px!important;line-height:1.55}
+ .support-widget-inbox .support-message-meta{font-size:12px!important;gap:8px}
+ .support-widget-inbox .support-composer{grid-template-columns:minmax(0,1fr) auto!important;align-items:end;gap:8px!important;padding:8px 10px!important}
+ .support-widget-inbox .support-composer textarea{grid-column:auto!important;font-size:16px!important;min-height:44px!important;height:44px;max-height:132px;padding:10px 12px;line-height:1.4;border-radius:12px}
+ .support-widget-inbox .support-composer-hint{display:none}
+ .support-widget-inbox .support-composer .support-primary{min-height:44px;padding:0 16px;font-size:15px!important;border-radius:12px}
+ .support-widget-inbox .support-new{align-content:start!important;min-height:0!important;padding:16px!important;gap:10px!important}
+ .support-widget-inbox .support-new>h2{font-size:17px!important;margin:0}
+ .support-widget-inbox .support-new>p{font-size:14px!important;line-height:1.6}
+ .support-widget-inbox .support-new>textarea{font-size:16px!important;min-height:160px!important;border-radius:12px}
+ .support-widget-inbox .support-new .support-primary{min-height:48px;font-size:15px!important}
+ .support-widget-inbox .support-new .support-quiet{min-height:44px;background:transparent!important;border:0!important;color:#2854de!important;font-size:14px!important}
+ .support-widget-inbox .support-status:not(:empty){font-size:13px;padding:8px 16px}
+}
+/* The site's global header{max-width;margin:auto} shrank the chat head into a centred box inside the flex column. */
+.support-widget-inbox .support-chat-head{margin:0!important;max-width:none!important;width:auto!important;align-self:stretch;justify-content:flex-start}
+.support-widget-inbox .support-chat-head>div{flex:1;min-width:0}
+@media (max-width:640px){
+ .support-widget-window .support-widget-tabs button{display:flex;align-items:center;justify-content:center}
+ .support-widget-inbox .support-new{background:#fff!important}
+ .support-actions-inline .support-quiet{min-height:36px!important}
+}
+/* 2026-11-19: on phones the hours box is one line — '월–금 09:00–18:00 · 지금은 상담 시간이 아니에요'. */
+.support-hours .support-hours-line{display:none}
+@media (max-width:640px){
+ .support-widget-window .support-hours{padding:9px 16px!important}
+ .support-widget-window .support-hours>strong,.support-widget-window .support-hours>p:not(.support-hours-line){display:none!important}
+ .support-widget-window .support-hours .support-hours-line{display:flex!important;align-items:center;gap:6px;margin:0!important;font-size:13px!important;line-height:1.4!important;white-space:nowrap;overflow:hidden;-webkit-line-clamp:unset}
+ .support-hours-line b{font-weight:700;color:#172c50;flex-shrink:0}
+ .support-hours-line span{color:#5d6a85;overflow:hidden;text-overflow:ellipsis}
+ .support-hours-line span::before{content:'·';margin-right:6px;color:#9da5b5}
+}

@@ -3,3 +3,21 @@
 .login-links{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:20px 0;font-size:12px}.login-links a{color:#2854df}.legacy-login{margin-top:24px;border-top:1px solid #e1e6ee;padding-top:18px}.legacy-login summary{cursor:pointer;color:#748197;font-size:12px}
 
 #credential-status.auth-error{border:1px solid #efc9c6;border-left:3px solid #c2483f;border-radius:7px;background:#fff8f7;color:#852d26;padding:12px 15px;line-height:1.8}
+.settings-close{margin-top:24px;padding-top:18px;border-top:1px solid #e6ebf3}.settings-close h2{font-size:16px}#settings-close{color:#a8231a;border-color:#f1b5b0}
+.account-grid.single{grid-template-columns:minmax(0,480px)}/* 할인 코드 (2026-11-08, draft 066) */
+.order-discount-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.order-discount-input{flex:1 1 180px;min-width:0;box-sizing:border-box;padding:10px 12px;border:1px solid #c9d5ea;border-radius:10px;font:inherit;font-size:15px;text-transform:uppercase;letter-spacing:.04em}
+.order-discount-row .button{width:auto;margin:0}
+.order-discount-tag{display:inline-flex;flex-wrap:wrap;gap:4px 10px;align-items:center;padding:8px 12px;border-radius:10px;background:#e7f6ec;color:#146c2e;font-size:14px}
+.order-discount-tag strong{letter-spacing:.04em}
+.order-discount-error{margin:6px 0 0;color:#a8231a;font-size:13px}
+.order-total .order-list-price{display:block;color:#8a96ab;font-size:13px}
+/* 친구 초대 (2026-11-08) */
+.settings-referral{margin-top:16px;padding:16px 18px;border:1px solid #d9e2f2;border-radius:14px;background:#fff}
+.settings-referral h3{margin:0 0 6px;font-size:16px}
+.settings-referral-rule{margin:0 0 10px;font-size:14px;color:#3b4a66}
+.settings-referral-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.settings-referral-row .button{width:auto;margin:0}
+.settings-referral-code{padding:8px 14px;border-radius:10px;background:#eef3ff;color:#1d3f99;font-size:18px;letter-spacing:.12em;user-select:all}
+.settings-referral-copied{display:block;min-height:18px;margin-top:6px;color:#146c2e;font-size:13px}
+.settings-referral-stats{margin:4px 0 0;color:#5b6b86;font-size:13px}

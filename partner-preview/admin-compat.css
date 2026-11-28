@@ -1,0 +1,40 @@
+/* 관리자 화면 공통 스타일 순서 (8단계, A-63·결정 Q-21): every administrator screen loads
+     fonts.css → admin.css → admin-compat.css → (its own file) → ieum-ui.css → admin-nav.css
+   The 결제·이용권, 1:1 문의, 장애 보상 and 중국 접속 점검 screens used the customer site's customer-portal.css instead of
+   admin.css; 키 관리 and 보안·기록 used neither. Moving them onto admin.css must not change how they look, so this file
+   (checked element by element against the old order, PC and phone) keeps what they had:
+   - the few customer-portal.css rules those screens use (links, .panel titles, .button links), and
+   - admin.css's old element defaults (h1–h3, forms, tables, .danger) taken back to the browser's, as they were.
+   Every selector is wrapped in :where(), so each counts only as much as the rule it replaces, and the screens' own
+   files and ieum-ui.css still win as before. */
+:where(html.ieum-admin .account-page) a{color:var(--blue);text-underline-offset:4px}
+:where(html.ieum-admin .account-page) .panel h2{font-size:16px;letter-spacing:-.5px;margin:0 0 9px}
+:where(html.ieum-admin .account-page) .button{display:inline-flex;justify-content:center;align-items:center;min-height:44px;padding:12px 17px;font-size:12px;font-weight:600;line-height:1.5;border:1px solid #dfe4ee;border-radius:7px;text-decoration:none;gap:8px}
+:where(html.ieum-admin .account-page) .secondary{color:#5d6a85;background:#fff}
+:where(html.ieum-admin .account-page) .primary{color:#fff;background:var(--blue);border-color:var(--blue)}
+:where(html.ieum-admin .account-page) button{line-height:normal}
+:where(html.ieum-admin .account-page) .ops-summary{margin-bottom:revert}
+:where(html.ieum-admin :is(.account-page,.key-page,.sec-main)) h1{font-size:revert;margin:revert;letter-spacing:revert}
+:where(html.ieum-admin :is(.account-page,.key-page,.sec-main)) h2{font-size:revert}
+:where(html.ieum-admin :is(.account-page,.key-page,.sec-main)) h3{font-size:revert;margin-top:revert}
+:where(html.ieum-admin :is(.account-page,.sec-main)) form label{display:revert;font-size:revert;margin:revert}
+:where(html.ieum-admin :is(.account-page,.sec-main)) form input{width:revert;padding:revert;margin-top:revert;border:revert;border-radius:revert;font-size:revert}
+:where(html.ieum-admin :is(.account-page,.sec-main)) form button{width:revert;margin-top:revert}
+:where(html.ieum-admin :is(.account-page,.key-page,.sec-main)) table{border-collapse:revert;width:revert;font-size:revert;white-space:revert}
+:where(html.ieum-admin :is(.account-page,.key-page,.sec-main)) :is(th,td){text-align:revert;padding:revert;border-bottom:revert}
+:where(html.ieum-admin :is(.account-page,.key-page,.sec-main)) th{background:revert;color:revert;font-size:revert}
+:where(html.ieum-admin :is(.account-page,.key-page,.sec-main)) .danger{background:revert;border-color:revert;color:revert}
+:where(html.ieum-admin :is(.account-page,.key-page,.sec-main)) .sr-only{margin:revert}
+:where(html.ieum-admin .key-page) #identity{display:revert;align-items:revert;gap:revert;font-size:revert;width:revert;justify-content:revert;margin-top:revert}
+/* 키 관리: its buttons are key-admin.css's plain ones; admin.css's red .danger fill never applied there. */
+:where(html.ieum-admin .key-page) .danger{background:#fff;border-color:#dfe4ee;color:#14213d}
+/* 키 관리 forms: the values key-admin.css gave them before admin.css's 'form label/input/button' (which outrank its
+   plain 'label' and 'input' rules) — measured on the old screen. */
+:where(html.ieum-admin .key-page) form label{display:grid;gap:8px;color:#5d6a85;font-size:12px}
+:where(html.ieum-admin .key-page) form :is(input:not([type=checkbox]),select){display:block;width:100%;padding:11px 12px;margin-top:0;border:1px solid #dfe4ee;border-radius:8px;font-size:inherit}
+:where(html.ieum-admin .key-page) form input[type=checkbox]{width:auto;padding:0;border:revert;border-radius:revert;font-size:inherit}
+:where(html.ieum-admin .key-page) form button{width:auto;margin-top:0}
+:where(html.ieum-admin .key-page) .consent{font-size:12px;line-height:normal}
+:where(html.ieum-admin .key-page) .consent input{height:revert}
+:where(html.ieum-admin .key-page) .warning{border:revert;margin:revert;font-size:12px}
+:where(html.ieum-admin .key-page) tbody tr:last-child td{border-bottom:1px solid #dfe4ee}

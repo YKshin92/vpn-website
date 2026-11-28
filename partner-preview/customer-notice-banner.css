@@ -1,0 +1,13 @@
+/* 고객 공지 띠 (dist/customer-notice-banner.mjs): 페이지 맨 위 한 줄, 종류는 굵게, 닫기 ×. */
+.ieum-notices{position:relative;z-index:40;background:#fff7e6;border-bottom:1px solid #f1d9a8;color:#3d2c08;font-size:14px;line-height:1.55}
+.ieum-notices .ieum-notice{display:flex;align-items:flex-start;gap:10px;max-width:1120px;margin:0 auto;padding:9px 16px}
+.ieum-notices .ieum-notice+.ieum-notice{border-top:1px solid #f4e3bf}
+.ieum-notices .ieum-notice strong{flex:none;font-weight:750;color:#8a4b00}
+.ieum-notices .ieum-notice[data-kind=outage] strong{color:#a1271b}
+.ieum-notices .ieum-notice[data-kind=general] strong,.ieum-notices .ieum-notice[data-kind=policy] strong{color:#1d3a8a}
+.ieum-notices .ieum-notice span{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.ieum-notices .ieum-notice-close{flex:none;width:28px;height:28px;min-width:28px;min-height:28px;margin:-3px -6px -3px 0;padding:0;border:0;border-radius:6px;background:transparent;color:#7a5a1a;font:inherit;font-size:18px;line-height:1;cursor:pointer;box-shadow:none}
+.ieum-notices .ieum-notice-close:hover{background:#f6e6c4}
+.ieum-notices .ieum-notice-close:focus-visible{outline:3px solid #9bb6ff;outline-offset:1px}
+@media (max-width:640px){.ieum-notices{font-size:13px}.ieum-notices .ieum-notice{flex-wrap:wrap;gap:2px 8px;padding:8px 12px}.ieum-notices .ieum-notice span{flex-basis:calc(100% - 40px);order:3}.ieum-notices .ieum-notice-close{margin-left:auto;order:2}}
+@media print{.ieum-notices{display:none}}

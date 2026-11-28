@@ -1,0 +1,100 @@
+/* 관리자 화면 한 모양 (관리자 화면 검토 9단계, 2026-11-10). Loaded last on every administrator screen, after
+   admin-nav.css, so the same part looks the same on every screen. Decisions: A-64 글자 4단계, A-65 버튼 2종,
+   A-66 위험 빨강·정상 초록 하나씩, A-72 탭 두 종류, A-73 요약 숫자 칸 한 모양, Q-22 결제 '현재 이용권'은 흰 숫자 칸.
+   Selectors start with :root.ieum-admin so they outrank each screen's own file; only administrator pages carry it. */
+:root.ieum-admin{--ad-danger:var(--ieum-danger,#ad2c3a);--ad-danger-hover:#ad2c3a;--ad-danger-bg:var(--ieum-danger-bg,#ffeeed);--ad-ok:var(--ieum-ok,#14213d);--ad-ok-bg:var(--ieum-ok-bg,#edf0f7);--ad-line:var(--ieum-line,#dfe4ee);--ad-ink:var(--ieum-ink,#14213d);--ad-muted:var(--ieum-muted,#5d6a85)}
+
+/* A-64 글자 4단계: 화면 제목 26px (휴대폰 23px) · 구역 제목 17px · 소제목 14px · 본문 13.5px · 보조 12px · 창 제목 17px */
+:root.ieum-admin main h1{font-size:26px;line-height:1.3;letter-spacing:-.02em}
+:root.ieum-admin main h2{font-size:17px;line-height:1.4;font-weight:700;letter-spacing:-.01em}
+:root.ieum-admin main h3{font-size:14px;line-height:1.45;font-weight:700}
+:root.ieum-admin main h4{font-size:13.5px;line-height:1.45;font-weight:700}
+:root.ieum-admin :is(dialog,.cx-modal,.fin-modal,.promo-modal,[role=dialog]) :is(h2,h3):first-of-type{font-size:17px;line-height:1.4;font-weight:700}
+/* The open customer's name heads the detail: a 구역 제목, not a 소제목. */
+:root.ieum-admin main .cx-detail-head h3{font-size:17px;line-height:1.4}
+@media (max-width:640px){:root.ieum-admin main h1{font-size:23px}}
+
+/* A-65 버튼 2종: 기본 36px, 표 안 작은 버튼 32px, 휴대폰 최소 44px, 모서리 8px. Text buttons (.cx-link 등) keep 8단계's
+   own size; cards, tabs, filters and the 24-hour cells are not buttons in this sense. */
+:root.ieum-admin main :is(.primary,.secondary,.danger,.button,.sec-primary,.sec-secondary,.oa-link,.support-primary,.support-quiet,.support-actions button,.pd-search button),
+:root.ieum-admin .key-page main :is(.toolbar,.inventory-head,header,.heading-actions,.detail-actions,.drawer-actions) button,
+:root.ieum-admin :is(dialog) :is(.primary,.secondary,.danger,.button,button[type=submit],button[value]){min-height:36px;padding:6px 14px;line-height:22px;font-size:13.5px;border-radius:8px;box-sizing:border-box}
+:root.ieum-admin main :is(td,th) :is(.primary,.secondary,.danger,.button,button):not(.cx-link):not(.cx-tab){min-height:32px;padding:4px 12px;line-height:22px;font-size:13px;border-radius:8px}
+@media (max-width:640px){
+ :root.ieum-admin main :is(.primary,.secondary,.danger,.button,.sec-primary,.sec-secondary,.oa-link,.support-primary,.support-quiet,.support-actions button,.pd-search button),
+ :root.ieum-admin .key-page main :is(.toolbar,.inventory-head,header,.heading-actions,.detail-actions,.drawer-actions) button,
+ :root.ieum-admin main :is(td,th) :is(.primary,.secondary,.danger,.button,button):not(.cx-link):not(.cx-tab),
+ :root.ieum-admin dialog :is(.primary,.secondary,.danger,.button,button[type=submit],button[value]){min-height:44px;padding-top:10px;padding-bottom:10px}
+}
+/* 비활성은 색 대신 흐리게 하나로 */
+:root.ieum-admin main :is(button,.button):disabled,:root.ieum-admin dialog :is(button,.button):disabled{opacity:.45;cursor:not-allowed}
+
+/* A-66 위험 빨강·정상 초록 하나씩 (결제 환불 버튼의 주황 포함) */
+:root.ieum-admin :is(main,dialog) :is(.danger,.button.danger,button.danger,.oa-actions .button.danger,.oa-inline-confirm .button.danger,.pe-danger,.refund-button,.sec-danger){background:var(--ad-danger);border-color:var(--ad-danger);color:#fff}
+:root.ieum-admin :is(main,dialog) :is(.danger,.button.danger,button.danger,.pe-danger,.refund-button,.sec-danger):hover:not(:disabled){background:var(--ad-danger-hover);border-color:var(--ad-danger-hover);color:#fff}
+:root.ieum-admin .cx-link.danger,:root.ieum-admin .mon-turn-off{background:transparent;color:var(--ad-danger)}
+:root.ieum-admin .cx-link.danger:hover{background:var(--ad-danger-bg)}
+/* A-58: '서버 응답 없음' is the worst state, so it is red in the 24-hour strip and its key, like 서버 관리's '문제'. */
+:root.ieum-admin .mon-cell[data-status=server_down]{background:var(--ad-danger)}
+
+/* Q-22 (A-49): 결제 상세 '현재 이용권' is a white number tile like the 고객 detail, not a blue filled box. */
+:root.ieum-admin .wallet-hero,:root.ieum-admin .wallet-hero[data-state]{background:#fff;color:var(--ad-ink);border:1px solid var(--ad-line);box-shadow:none}
+:root.ieum-admin .wallet-hero .wallet-big,:root.ieum-admin .wallet-hero:not([data-state=active]) .wallet-big{font-size:22px;color:var(--ad-ink)}
+:root.ieum-admin .wallet-hero .wallet-message{opacity:1;color:var(--ad-muted)}
+:root.ieum-admin .wallet-hero[data-state=active] .wallet-data[data-low=true]{color:#14213d}
+:root.ieum-admin .wallet-hero[data-state=active] .wallet-action.button.primary{background:var(--ieum-blue,#2858cd);border-color:var(--ieum-blue,#2858cd);color:#fff}
+:root.ieum-admin .wallet-hero[data-state=active] .wallet-action.button.secondary{background:#fff;color:var(--ad-ink);border-color:var(--ieum-line-strong,#dfe4ee)}
+:root.ieum-admin .wallet-hero[data-state=active] .wallet-action.button.secondary:hover{background:var(--ieum-blue-soft,#ecf3ff)}
+
+/* A-71: numbers in tables line up on the right (wide screens; phones show the rows stacked). */
+@media (min-width:641px){
+ :root.ieum-admin .cx-table :is(th,td).cx-use,
+ :root.ieum-admin .fleet-table :is(th,td):is(:nth-child(4),:nth-child(5)),
+ :root.ieum-admin .key-page table.ieum-stack :is(th,td):is(:nth-child(3),:nth-child(4),:nth-child(5),:nth-child(6)){text-align:right;font-variant-numeric:tabular-nums}
+}
+
+/* A-72 탭 두 종류: 목록 거르기 = 알약 (고객 상태 탭, 그대로), 내용 바꾸기 = 밑줄 (화면 묶음 탭과 같은 모양). */
+:root.ieum-admin .cx-dtabs{gap:4px;margin:12px 0 0;padding:0;border-bottom:1px solid var(--ad-line)}
+:root.ieum-admin .cx-dtabs .cx-tab.cx-dtab,:root.ieum-admin .cx-dtabs .cx-tab.cx-dtab:hover{margin:0 0 -1px;padding:10px 12px 9px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;box-shadow:none;color:#5d6a85;font-weight:500}
+:root.ieum-admin .cx-dtabs .cx-tab.cx-dtab:hover{color:var(--ad-ink)}
+:root.ieum-admin .cx-dtabs .cx-tab.cx-dtab[aria-selected=true],:root.ieum-admin .cx-dtabs .cx-tab.cx-dtab[aria-selected=true]:hover{background:transparent;color:var(--ad-ink);font-weight:650;border-bottom-color:#2858cd;box-shadow:none}
+:root.ieum-admin .cx-dtabs .cx-tab.cx-dtab[aria-selected=true] .cx-count{background:#ecf3ff;color:#2858cd}
+
+/* A-73 요약 숫자 칸 한 모양: 1px 선 격자, 이름 12px, 숫자 22px (고객 '오늘 할 일'은 누르는 카드라 그대로). */
+:root.ieum-admin :is(.key-page section.summary,.ops-summary,.fleet-summary){display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;padding:0;background:#fff;border:1px solid var(--ad-line);border-radius:12px;overflow:hidden;box-shadow:none}
+:root.ieum-admin :is(.key-page section.summary>article,.ops-summary>div,.fleet-summary>div){margin:0;padding:14px 16px;background:#fff;border:0;border-radius:0;box-shadow:1px 0 0 var(--ad-line),0 1px 0 var(--ad-line);min-width:0}
+:root.ieum-admin :is(.key-page section.summary>article,.ops-summary>div,.fleet-summary>div)>strong{display:block;font-size:22px;line-height:1.3;font-weight:750;color:var(--ad-ink);font-variant-numeric:tabular-nums}
+:root.ieum-admin :is(.key-page section.summary>article,.ops-summary>div,.fleet-summary>div)>:is(small,span,p,em):not(.summary-sub){font-size:12px;color:var(--ad-muted)}
+@media (max-width:640px){:root.ieum-admin :is(.key-page section.summary,.ops-summary,.fleet-summary){grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* A-24: 1:1 문의 on a phone — at least 12px, 16px side margins, no 'Ctrl+Enter' line, a 44px customer link. */
+@media (max-width:700px){
+ :root.ieum-admin .support-admin-page{padding-left:16px!important;padding-right:16px!important}
+ :root.ieum-admin .support-admin :is(.support-chat-subject,.support-back,.support-chat-head>.support-quiet,.support-composer-hint,.support-context>p,.support-context>.support-context-note,.support-readonly,.support-chat-email,.support-chat-head .support-pill),:root.ieum-admin .support-facts dd{font-size:12px}
+ :root.ieum-admin .support-admin .with-templates .support-composer-hint{display:none}
+ :root.ieum-admin .support-admin .support-customer-link{display:inline-flex;align-items:center;min-height:44px}
+ :root.ieum-admin .support-admin .support-chat-head>.support-quiet{white-space:nowrap}
+}
+
+/* A-67: 오늘 할 일 — '→' on cards that open another screen; cards that filter the list below show it, and look pressed. */
+:root.ieum-admin .cx-card-go-mark{margin-left:6px;color:#2858cd;font-weight:700}
+:root.ieum-admin .cx-card-hint{color:var(--ad-muted);font-size:12px}
+:root.ieum-admin .cx-card-filter[aria-pressed=true]{border-color:#2858cd;box-shadow:inset 0 0 0 1px #2858cd;background:#f4f6fa}
+:root.ieum-admin .cx-card-filter[aria-pressed=true] .cx-card-hint{color:#2858cd;font-weight:600}
+/* 화면 다듬기 (2026-11-24): phone-size admin — top-bar controls and filter chips a finger tall; the server address and
+   IP on separate lines in the stacked server card. */
+@media (max-width:640px){
+ .ieum-admin-nav-operator select,.ieum-admin-nav-logout{min-height:36px}
+ .cx-filter,.cx-toolbar select,.cx-toolbar input,.cx-search input{min-height:40px}
+ td.fleet-address{display:grid!important;gap:2px}
+ td.fleet-address>span,td.fleet-address>small{display:block;overflow-wrap:anywhere}
+}
+/* 깊은 점검 (2026-11-24, 창까지 열어 봄) — phone-size admin:
+   - 매출·지출의 CSV 메뉴가 화면 왼쪽 밖으로 잘렸음 → 휴대폰에서는 모든 펼침 메뉴를 화면 아래에 붙여 보여 줌
+   - 메뉴 항목·고객 개요의 '탭에서 보기' 화살표·'← 결제 고객 목록'이 손가락보다 작았음 */
+@media (max-width:640px){
+ .cx-menu{position:fixed!important;left:12px!important;right:12px!important;top:auto!important;bottom:12px!important;min-width:0!important;z-index:1000;max-height:70vh;overflow:auto}
+ .cx-menu-item{min-height:44px;font-size:15px}
+ .cx-feed-go{width:40px!important;height:40px!important}
+ .pe-back{min-height:40px!important;display:inline-flex!important;align-items:center}
+}

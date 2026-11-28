@@ -1,28 +1,97 @@
 /* Administrator menu bar shared by every administrator screen (2026-11-05). Loaded with ieum-ui.css. */
-.ieum-admin-nav{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;min-height:52px;padding:8px max(16px,calc((100% - 1180px)/2));background:#172746;color:#fff;font-size:14px;font-family:"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
+.ieum-admin-nav{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;min-height:52px;padding:8px max(16px,calc((100% - 1180px)/2));background:#14213d;color:#fff;font-size:14px;font-family:"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
 .ieum-admin-nav-brand{color:#fff;text-decoration:none;font-weight:700;font-size:15px;white-space:nowrap}
 .ieum-admin-nav-list{display:flex;flex-wrap:wrap;gap:2px 4px;list-style:none;margin:0;padding:0;align-items:center}
 .ieum-admin-nav-list>li{position:relative;display:flex;align-items:center;gap:6px}
-.ieum-admin-nav-list a{color:#dbe4ff;text-decoration:none;padding:7px 10px;border-radius:8px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.ieum-admin-nav-list a{color:#dfe4ee;text-decoration:none;padding:7px 10px;border-radius:8px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .ieum-admin-nav-list a:hover{background:rgba(255,255,255,.08);color:#fff}
 .ieum-admin-nav-list a[aria-current=page]{background:rgba(255,255,255,.16);color:#fff;font-weight:600}
 .ieum-admin-nav-sub{display:inline-flex;gap:2px;margin-left:-4px}
-.ieum-admin-nav-sub a{font-size:13px;color:#b7c4ea;padding:6px 8px}
-.ieum-admin-nav-sub a::before{content:"·";margin-right:6px;color:#6f7fa8}
-.ieum-admin-nav-badge{display:inline-block;min-width:18px;padding:0 5px;border-radius:999px;background:#ff8a4c;color:#1b1b1b;font-size:11.5px;font-weight:700;line-height:18px;text-align:center}
+.ieum-admin-nav-sub a{font-size:13px;color:#dfe4ee;padding:6px 8px}
+.ieum-admin-nav-sub a::before{content:"·";margin-right:6px;color:#5d6a85}
+.ieum-admin-nav-badge{display:inline-block;min-width:18px;padding:0 5px;border-radius:999px;background:#fff;color:#14213d;font-size:11.5px;font-weight:700;line-height:18px;text-align:center}
 .ieum-admin-nav-dev details{position:relative}
-.ieum-admin-nav-dev summary{list-style:none;cursor:pointer;color:#9fb0d8;padding:7px 10px;border-radius:8px;font-size:13px;white-space:nowrap}
+.ieum-admin-nav-dev summary{list-style:none;cursor:pointer;color:#9da5b5;padding:7px 10px;border-radius:8px;font-size:13px;white-space:nowrap}
 .ieum-admin-nav-dev summary::-webkit-details-marker{display:none}
 .ieum-admin-nav-dev summary::after{content:" ▾";font-size:11px}
 .ieum-admin-nav-dev summary:hover{background:rgba(255,255,255,.08);color:#fff}
-.ieum-admin-nav-menu{position:absolute;top:100%;left:0;z-index:30;display:grid;min-width:180px;padding:6px;border-radius:10px;background:#fff;box-shadow:0 10px 30px rgba(10,20,50,.22)}
-.ieum-admin-nav-menu a{color:#16233d;font-size:13.5px;padding:8px 10px}
-.ieum-admin-nav-menu a:hover{background:#eef2fb;color:#16233d}
+.ieum-admin-nav-menu{position:absolute;top:100%;left:0;z-index:30;display:grid;min-width:180px;padding:6px;border-radius:10px;background:#fff;box-shadow:0 10px 30px rgba(20,33,61,.22)}
+.ieum-admin-nav-menu a{color:#14213d;font-size:13.5px;padding:8px 10px}
+.ieum-admin-nav-menu a:hover{background:#edf0f7;color:#14213d}
 .ieum-admin-nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.ieum-admin-nav-right a{color:#dbe4ff;text-decoration:none}
-.ieum-admin-nav-user{color:#b7c4ea;font-size:13px}
+.ieum-admin-nav-right a{color:#dfe4ee;text-decoration:none}
+.ieum-admin-nav-user{color:#dfe4ee;font-size:13px}
 .ieum-admin-nav-logout{font:inherit;font-size:13px;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:5px 10px;cursor:pointer}
 .ieum-admin-nav-logout:hover{background:rgba(255,255,255,.1)}
-.ieum-admin-nav-note{margin:0;padding:10px max(16px,calc((100% - 1180px)/2));background:#fff4e0;color:#8a4b00;font-size:14px}
-.ieum-admin-nav-note a{color:#8a4b00;font-weight:600}
+.ieum-admin-nav-note{margin:0;padding:10px max(16px,calc((100% - 1180px)/2));background:#f4f6fa;color:#14213d;font-size:14px}
+.ieum-admin-nav-note a{color:#14213d;font-weight:600}
 @media (max-width:640px){.ieum-admin-nav{padding:6px 12px;gap:6px 10px}.ieum-admin-nav-list a{padding:6px 8px;font-size:13.5px}.ieum-admin-nav-user{display:none}.ieum-admin-nav-sub{display:none}}
+.ieum-admin-nav-env{display:inline-block;padding:1px 8px;border-radius:999px;background:#edf0f7;color:#14213d;font-size:11.5px;font-weight:700;line-height:18px}
+/* One frame for every administrator screen (2026-11-06): the bar lines up with the page content (24px gutter,
+   1440px content), no page adds its own gap under the bar, and every heading sits the same way. */
+.ieum-admin-nav{margin:0!important;padding-left:max(24px,calc((100% - 1440px)/2));padding-right:max(24px,calc((100% - 1440px)/2))}
+html.ieum-admin body>main{margin-left:auto;margin-right:auto}
+html.ieum-admin main>#notice:empty{display:none}
+html.ieum-admin main .eyebrow,html.ieum-admin main .support-eyebrow{margin:0 0 4px}
+html.ieum-admin main h1{margin:0 0 6px}
+html.ieum-admin main .ieum-page-intro,html.ieum-admin main .view-head .intro,html.ieum-admin main .page-heading .subtitle{margin:0 0 20px}
+@media (max-width:640px){.ieum-admin-nav{padding-left:16px;padding-right:16px}}
+/* The bar keeps its place while the signed-in name loads; screens of one group as tabs under the bar. */
+#ieum-admin-nav-host{min-height:52px;background:#14213d}
+.ieum-admin-tabs{display:flex;gap:4px;overflow-x:auto;padding:0 max(24px,calc((100% - 1440px)/2));background:#fff;border-bottom:1px solid #dfe4ee;font-family:"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;scrollbar-width:none}
+.ieum-admin-tabs a{flex:none;padding:12px 12px 10px;margin-bottom:-1px;border-bottom:2px solid transparent;color:#5d6a85;font-size:14px;text-decoration:none;white-space:nowrap}
+.ieum-admin-tabs a:hover{color:#14213d}
+.ieum-admin-tabs a[aria-current=page]{color:#14213d;font-weight:650;border-bottom-color:#2858cd}
+@media (max-width:640px){.ieum-admin-tabs{padding:0 16px}}
+/* Phones: name and sign-out on the first line, the menu on the next (the same items in the same order). */
+@media (max-width:640px){.ieum-admin-nav-brand{order:0}.ieum-admin-nav-right{order:1;margin-left:auto}.ieum-admin-nav-list{order:2;flex-basis:100%}}
+/* 이음 mark in the brand (2026-11-07) */
+.ieum-admin-nav-brand{display:inline-flex;align-items:center;gap:8px}
+.ieum-admin-nav-mark{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#2858cd;color:#fff;font-size:18px;font-weight:700;line-height:1;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.ieum-admin-nav-name{font-weight:800;font-size:16px;letter-spacing:-.01em}
+.ieum-admin-nav-role{font-weight:500;font-size:13px;opacity:.75}
+/* 3단계 B-1: 서버 배지 (서버 모니터링과 같은 색) */
+.ieum-admin-nav-badge[data-tone=bad]{background:#ad2c3a;color:#fff}
+.ieum-admin-nav-badge[data-tone=blocked]{background:#2858cd;color:#fff}
+.ieum-admin-nav-badge[data-tone=warn]{background:#fff;color:#14213d}
+/* 4단계: 처리하는 사람, 로그인 끝남·5분 전 알림 */
+.ieum-admin-nav-operator{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#dfe4ee}
+.ieum-admin-nav-operator select{width:auto;min-height:30px;margin:0;padding:2px 6px;border-radius:6px;font-size:12.5px}
+.ieum-admin-nav-operator[data-missing=true] select{outline:2px solid #dfe4ee}
+.ieum-admin-session{position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 16px;background:#edf0f7;color:#14213d;font-size:13.5px;border-bottom:1px solid #dfe4ee}
+.ieum-admin-session[data-kind=ended]{background:#ffeeed;color:#ad2c3a;border-color:#ffeeed}
+.ieum-admin-session button,.ieum-admin-session a{width:auto;min-height:32px;padding:4px 12px;border-radius:8px;border:1px solid currentColor;background:#fff;color:inherit;font-weight:650;text-decoration:none}
+
+/* 8단계 (A-39, decision Q-23 한 줄): on phones the menu is one row that scrolls sideways (117px → about 84px);
+   the 개발 도구 list opens under the bar, outside the row. */
+@media (max-width:640px){
+ .ieum-admin-nav{position:relative;flex-wrap:wrap}
+ .ieum-admin-nav-list{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px;--more-bg:#14213d;--more-ink:#dfe4ee}
+ .ieum-admin-nav-list::-webkit-scrollbar{display:none}
+ .ieum-admin-nav-list>li,.ieum-admin-nav-dev details{position:static}
+ .ieum-admin-nav-list>li{flex:none}
+ .ieum-admin-nav-menu{top:100%;left:auto;right:12px}
+ .ieum-admin-nav-operator>span{display:none}
+}
+/* A row with more to the right (or left): a fade and '›' at that edge, in the row's own colour. */
+.ieum-admin-tabs{--more-bg:#fff;--more-ink:#5d6a85}
+.cx-tabs{--more-bg:#fff;--more-ink:#5d6a85}
+[data-more~=right]::after{content:'›';position:sticky;right:0;flex:none;display:flex;align-items:center;margin-left:auto;padding:0 4px 0 30px;background:linear-gradient(to right,transparent,var(--more-bg,#fff) 55%);color:var(--more-ink,#5d6a85);font-size:20px;font-weight:600;pointer-events:none}
+[data-more~=left]{-webkit-mask-image:linear-gradient(to right,transparent,#000 24px);mask-image:linear-gradient(to right,transparent,#000 24px)}
+
+/* 8단계 (A-6): one text button on every administrator screen — 32px tall (44px on phones), blue text, a soft
+   background on hover; '← 목록' looks the same in 고객 and 1:1 문의; turning a check off reads red, apart from 수정. */
+html.ieum-admin .cx-link,html.ieum-admin .cx-back,html.ieum-admin .support-back{min-height:32px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:#2858cd;font:inherit;font-size:13.5px;font-weight:600;line-height:1.2;cursor:pointer;width:auto;box-shadow:none}
+html.ieum-admin .cx-link{display:inline-flex;align-items:center}
+html.ieum-admin .cx-link:hover,html.ieum-admin .cx-back:hover,html.ieum-admin .support-back:hover{background:#ecf3ff;text-decoration:none}
+html.ieum-admin .cx-link:focus-visible,html.ieum-admin .cx-back:focus-visible,html.ieum-admin .support-back:focus-visible{outline:3px solid #2858cd;outline-offset:1px}
+html.ieum-admin .cx-link.danger,html.ieum-admin .mon-turn-off{color:#ad2c3a}
+html.ieum-admin .cx-link.danger:hover{background:#ffeeed}
+@media (max-width:640px){html.ieum-admin .cx-link,html.ieum-admin .cx-back,html.ieum-admin .support-back{min-height:44px}}
+
+/* 8단계 (A-17): dates, amounts and emails stay whole; a long email is cut with '…' (whole address in the title). */
+.ieum-keep,.ieum-keep-el{white-space:nowrap}
+.ieum-keep-email{display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:bottom}
+/* 8단계 (A-39·A-63): admin.css's old 'nav' rule (wrap, 30px under) no longer reaches the screen tabs on any screen,
+   so 서버 관리 · 키 관리 · 서버 모니터링 · 장애 보상 · 중국 접속 점검 stay on one row everywhere. */
+html.ieum-admin nav.ieum-admin-tabs{flex-wrap:nowrap;margin:0}
