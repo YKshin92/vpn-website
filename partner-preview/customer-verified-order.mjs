@@ -42,10 +42,10 @@ for(const [k,v] of Object.entries({
 // Won and yuan (2026-11-07): the price shown big is in the currency the chosen payment method charges, the other
 // currency sits under it; the line under the methods says which method pays in which currency.
 for(const [k,v] of Object.entries({
- ko:{currencyNote:'위챗페이·알리페이는 위안(元), 카카오페이·계좌이체는 원화로 결제돼요'},
- en:{currencyNote:'WeChat Pay and Alipay charge in yuan (元); KakaoPay and bank transfer in won'},
- zh:{currencyNote:'微信支付和支付宝以人民币（元）付款，KakaoPay 和银行转账以韩元付款'},
- ja:{currencyNote:'WeChat Pay・Alipayは人民元（元）、KakaoPay・銀行振込はウォンで決済されます'}}))Object.assign(text[k],v);
+ ko:{currencyNote:'위챗페이·알리페이는 위안(元), 계좌이체는 원화로 결제돼요'},
+ en:{currencyNote:'WeChat Pay and Alipay charge in yuan (元); bank transfer in won'},
+ zh:{currencyNote:'微信支付和支付宝以人民币（元）付款，银行转账以韩元付款'},
+ ja:{currencyNote:'WeChat Pay・Alipayは人民元（元）、銀行振込はウォンで決済されます'}}))Object.assign(text[k],v);
 // 담당자 입금 확인 (2026-11-24): no payment gateway. 신청하기 makes the order; the screen shows the receiving account or
 // QR (only here, never in chat) with a 4-digit order number; '입금했어요' tells the staff, who confirm the deposit.
 // KakaoPay is not offered.

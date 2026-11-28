@@ -3090,7 +3090,6 @@ Object.assign(pageMessages,{
  "데이터가 부족하면 어떻게 하나요?":["What if I run out of data?","流量不够怎么办？","データが足りないときは？"],
  "이용 중이라면 내 이용권에서 데이터 10 GB를 3,000원에 추가할 수 있습니다 추가한 데이터는 이번 사용 주기가 끝날 때까지 쓸 수 있고 내 이용권의 이번 달 제공량에 바로 반영됩니다":["While your pass is active, you can add 10 GB for ₩3,000 in My pass. Added data lasts until the current usage cycle ends and shows up right away in this cycle’s allowance.","套餐使用期间，可在“我的套餐”中以 3,000 韩元追加 10 GB。追加的流量可使用到本使用周期结束，并会立即反映到本周期流量中。","利用中であれば、利用券ページでデータ10 GBを3,000ウォンで追加できます。追加したデータは今期の利用周期が終わるまで使え、今期のデータ量にすぐ反映されます。"],
  "어떤 결제 수단을 쓸 수 있나요?":["Which payment methods can I use?","可以使用哪些付款方式？","どの決済方法が使えますか？"],
- "카카오페이·계좌이체·위챗페이·알리페이를 준비하고 있습니다 실제 결제 연결은 출시 전에 확정됩니다":["We are preparing KakaoPay, bank transfer, WeChat Pay and Alipay. The actual payment connection will be confirmed before launch.","我们正在准备 KakaoPay、银行转账、微信支付和支付宝。实际付款对接将在上线前确定。","KakaoPay・銀行振込・WeChat Pay・Alipayを準備しています。実際の決済連携はリリース前に確定します。"],
  "결제하면 언제 반영되나요?":["When does my payment take effect?","付款后何时生效？","決済はいつ反映されますか？"],
  "결제가 확인되면 바로 내 이용권에 반영됩니다 처리 상태는 내 이용권의 결제 처리 내역에서 확인할 수 있습니다":["As soon as the payment is confirmed, it is applied to My pass. You can follow the status under Payment updates in My pass.","付款确认后会立即反映到“我的套餐”。处理状态可在“我的套餐”的付款处理记录中查看。","決済が確認されるとすぐに利用券ページへ反映されます。処理状況は利用券ページの決済処理履歴で確認できます。"]
 });
@@ -3112,7 +3111,6 @@ Object.assign(pageMessages,{
 Object.assign(pageMessages,{
   "월 데이터":["Monthly data","每月流量","月間データ"],
   ". 앱만 설치해서는 연결되지 않습니다":[". Installing the app alone does not connect you",". 仅安装应用无法连接",". アプリを入れただけでは接続されません"],
-  "위챗페이·알리페이·카카오페이·계좌이체로 결제할 수 있도록 준비하고 있습니다":["We are preparing WeChat Pay, Alipay, KakaoPay and bank transfer","我们正在准备微信支付、支付宝、KakaoPay 和银行转账","WeChat Pay・Alipay・KakaoPay・銀行振込でのお支払いを準備しています"],
   "회원 탈퇴 시까지":["Until you close your account","保留至注销账户","退会するまで"],
   "8~128자로 입력하세요":["Use 8–128 characters","请输入 8~128 个字符","8〜128文字で入力してください"],
   "인증 코드 받기":["Get verification code","获取验证码","認証コードを受け取る"],
@@ -3224,7 +3222,6 @@ Object.assign(pageMessages,{
   "단순 변심 환불은 없어요. 회사 사정(장애로 계속 제공하기 어려울 때·운영 중단·중복/잘못된 결제)이면 환불해요. 고객 기기·통신망 문제가 아닌 장애로 하루(한국시간) 합계 4시간 넘게 이용하지 못한 날은 그날마다 1일 연장해 드려요": ["No refunds for a change of mind. We refund for reasons on our side (an outage we cannot fix, closing the service, a duplicate or wrong payment). For each day an outage not caused by your device or network stops you for over 4 hours in total (Korea time), we add 1 day","不支持因个人原因退款。因公司原因（故障无法继续提供、停止运营、重复/错误付款）可退款。非顾客设备或网络原因的故障导致当天（韩国时间）累计超过 4 小时无法使用时，每天延长 1 天","お客様都合による返金はできません。当社都合（障害で提供を続けられない場合・運営終了・重複/誤った決済）の場合は返金します。お客様の端末・回線以外の障害で1日（韓国時間）合計4時間を超えて利用できなかった日は、その日ごとに1日延長します"],
   "자세한 기준과 계산 예시:": ["Full rules and calculation examples:","详细标准和计算示例：","詳しい基準と計算例："],
   "이용 중이라면 내 이용권에서 데이터 10GB를 3,000원에 추가할 수 있어요 추가한 데이터는 이번 사용 주기가 끝날 때까지 쓸 수 있고 남은 데이터에 바로 반영돼요": ["While your pass is active, you can add 10GB of data for KRW 3,000 in My pass. Added data lasts until the end of the current cycle and shows in your data left right away","套餐使用中可在“我的套餐”中以 3,000 韩元追加 10GB 流量。追加的流量可用到本周期结束，并立即计入剩余流量","利用中なら利用券の画面でデータ10GBを3,000ウォンで追加できます。追加したデータは今回の利用周期の終わりまで使え、残りデータにすぐ反映されます"],
-  "위챗페이·알리페이·카카오페이·계좌이체로 결제할 수 있어요": ["You can pay with WeChat Pay, Alipay, KakaoPay or bank transfer","可使用微信支付、支付宝、KakaoPay 或银行转账付款","WeChat Pay・Alipay・カカオペイ・口座振込でお支払いいただけます"],
   "이용권 신청은 내 이용권에서 할 수 있어요": ["You can get a pass in My pass","可在“我的套餐”中申请套餐","利用券の申し込みは利用券の画面からできます"],
   "ID로 로그인하고, 인증한 이메일로 ID를 찾거나 비밀번호를 다시 정할 수 있어요": ["Log in with your ID; your verified email lets you find your ID or reset your password","使用 ID 登录，可通过已验证的邮箱找回 ID 或重置密码","IDでログインし、認証したメールでIDの確認やパスワードの再設定ができます"],
   "닉네임은 꼭 입력하고, 상담 메신저는 원할 때만 입력해요": ["A nickname is required; a support messenger is optional","昵称为必填，咨询聊天软件可选填","ニックネームは必須、相談用メッセンジャーは任意です"],
@@ -3265,7 +3262,6 @@ Object.assign(pageMessages,{
   "검토 중인 초안이에요 · 동의하면 이 문서가 가입 기록에 함께 저장돼요": ["This is a draft under review · if you agree, this document is saved with your sign-up record","这是审核中的草案 · 同意后此文件会一并保存在注册记录中","検討中の草案です · 同意するとこの文書が登録記録に保存されます"],
   "기간 연장은 내 이용권에서 직접 결제하면 남은 기간에 바로 더해져요. 단순 변심 환불은 없어요. 회사 사정(장애로 계속 제공하기 어려울 때·운영 중단·중복/잘못된 결제)이면 환불해요. 결제 상황을 문의에 남겨 주세요. 비밀번호·카드 정보·VPN 접속 키 전체는 보내지 마세요.": ["Pay in My pass to extend, and the days are added to what you have left. There are no refunds for a change of mind; we refund for reasons on our side (an outage we cannot fix, closing the service, a duplicate or wrong payment). Describe the payment in your message. Never send your password, card details or full VPN access key.","在“我的套餐”中直接付款即可延长，天数会立即加到剩余期限上。不支持因个人原因退款；因公司原因（故障无法继续提供、停止运营、重复/错误付款）可退款。请在咨询中说明付款情况。请勿发送密码、银行卡信息或完整的 VPN 访问密钥。","期間延長は利用券の画面で直接お支払いいただくと、残り期間にすぐ加算されます。お客様都合の返金はできません。当社都合（障害で提供を続けられない場合・運営終了・重複/誤った決済）の場合は返金します。決済の状況をお問い合わせに書いてください。パスワード・カード情報・VPNアクセスキー全体は送らないでください。"],
   "결제": ["Payment","付款","お支払い"],
-  "위챗페이 · 알리페이 · 카카오페이 · 계좌이체": ["WeChat Pay · Alipay · KakaoPay · bank transfer","微信支付 · 支付宝 · KakaoPay · 银行转账","WeChat Pay · Alipay · カカオペイ · 口座振込"],
   "(자동 결제 없음)": ["(no automatic charges)","（无自动扣款）","（自動決済なし）"],
   "App Store(한국)에서 설치 ↗": ["Install from the App Store (Korea) ↗","从 App Store（韩国）安装 ↗","App Store（韓国）でインストール ↗"],
   "중국 지역 App Store에는 VPN 앱이 없어요 · 한국 Apple ID(App Store 지역이 한국인 계정)로 로그인해 설치하세요 · 가능하면 중국에 가기 전에 설치해 두세요": ["VPN apps are not in the China App Store · sign in with a Korean Apple ID (an account whose App Store region is Korea) to install · if you can, install it before you go to China","中国区 App Store 没有 VPN 应用 · 请使用韩国 Apple ID（App Store 地区为韩国的账户）登录后安装 · 最好在前往中国之前安装好","中国地域のApp StoreにはVPNアプリがありません · 韓国のApple ID（App Storeの地域が韓国のアカウント）でサインインしてインストールしてください · できれば中国に行く前にインストールしておいてください"],
@@ -3406,7 +3402,6 @@ Object.assign(pageMessages,{
   "월 8,000원 · 40元": ["KRW 8,000 · CNY 40 a month","每月 8,000 韩元 · 40元","月 8,000ウォン · 40元"],
   "10% 할인": ["10% off","9折","10%割引"],
   "20% 할인": ["20% off","8折","20%割引"],
-  "원화는 카카오페이·계좌이체, 위안(元)은 위챗페이·알리페이": ["Won via KakaoPay or bank transfer, yuan (元) via WeChat Pay or Alipay","韩元通过 KakaoPay、银行转账，人民币（元）通过微信支付、支付宝","ウォンはKakaoPay・銀行振込、人民元（元）はWeChat Pay・Alipay"],
   "(한 번 결제 · 자동 결제 없음)": ["(one payment · no automatic billing)","（一次付款 · 无自动扣款）","（1回払い · 自動決済なし）"],
   "이용 중이라면 내 이용권에서 데이터 10GB를 3,000원(15元)에 추가할 수 있어요. 추가한 데이터는 이번 사용 주기가 끝날 때까지 쓸 수 있고, 남은 데이터에 바로 반영돼요.": ["While your pass is active, you can add 10GB of data for KRW 3,000 (CNY 15) in My pass. Added data lasts until the end of the current cycle and shows in your data left right away.","套餐使用中可在“我的套餐”中以 3,000 韩元（15元）追加 10GB 流量。追加的流量可用到本周期结束，并立即计入剩余流量。","利用中なら利用券の画面でデータ10GBを3,000ウォン（15元）で追加できます。追加したデータは今回の利用周期の終わりまで使え、残りデータにすぐ反映されます。"],
   "변경": ["Change","更改","変更"],
@@ -3430,4 +3425,9 @@ Object.assign(pageMessages,{
   "친구 초대": ["Invite friends","邀请好友","友だち招待"],
   "코드 복사": ["Copy code","复制推荐码","コードをコピー"],
   "초대 링크 복사": ["Copy invite link","复制邀请链接","招待リンクをコピー"],
+  "총 결제금액 · 자동 갱신 없음": ["Total price · no auto-renewal", "总付款金额 · 不自动续费", "お支払い総額 · 自動更新なし"],
+  "100GB · 부족하면 내 이용권에서 데이터를 추가할 수 있어요": ["100GB · if you need more, add data in My pass", "100GB · 不够时可在“我的套餐”中追加流量", "100GB · 足りないときは利用券の画面でデータを追加できます"],
+  "1:1 문의 · 월–금 09:00–18:00 (한국시간)": ["1:1 support · Mon–Fri 09:00–18:00 (Korea time)", "一对一咨询 · 周一至周五 09:00–18:00（韩国时间）", "1:1お問い合わせ · 月–金 09:00–18:00（韓国時間）"],
+  "개인정보 처리방침 보기 ↗": ["View the Privacy Policy ↗", "查看隐私政策 ↗", "プライバシーポリシーを見る ↗"],
+  "인증 코드는 5분 동안 유효해요 · 다시 받으면 이전 코드는 쓸 수 없어요": ["The code is valid for 5 minutes · requesting a new one cancels the previous code", "验证码 5 分钟内有效 · 重新获取后之前的验证码将失效", "認証コードは5分間有効です · 再送すると前のコードは使えなくなります"],
 });
