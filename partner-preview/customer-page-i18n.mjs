@@ -1,4 +1,4 @@
-import {pageMessages} from './customer-page-messages.mjs';
+import {pageMessages,pagePatterns} from './customer-page-messages.mjs';
 export const localeCodes=['ko','en','zh-CN','ja'];
 const escape=value=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const fragments=new RegExp(Object.keys(pageMessages).filter(k=>k.length>=3).sort((a,b)=>b.length-a.length).map(escape).join('|'),'g');
@@ -8,6 +8,7 @@ export function translatePageText(text,locale){
  const key=text.trim(),translated=pageMessages[key]?.[index];
  if(translated)return text.replace(key,translated);
  if(!/[가-힣]/.test(text))return text;
+ for(const [pattern,outputs] of pagePatterns){const match=key.match(pattern);if(match)return text.replace(key,outputs[index](...match.slice(1)));}
  return text.replace(fragments,match=>pageMessages[match][index])
   .replace(/약\s*(\d+)시간/g,(_m,n)=>["About "+n+" hours","约 "+n+" 小时","約"+n+"時間"][index])
   .replace(/(\d+)일/g,(_m,n)=>[n+' days',n+' 天',n+'日'][index])
