@@ -1,4 +1,6 @@
-import {pageMessages,pagePatterns} from './customer-page-messages.mjs';
+import * as messages from './customer-page-messages.mjs';
+// Namespace import: a browser still holding an older cached message table (without pagePatterns) keeps working.
+const pageMessages=messages.pageMessages,pagePatterns=messages.pagePatterns??[];
 export const localeCodes=['ko','en','zh-CN','ja'];
 const escape=value=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const fragments=new RegExp(Object.keys(pageMessages).filter(k=>k.length>=3).sort((a,b)=>b.length-a.length).map(escape).join('|'),'g');
